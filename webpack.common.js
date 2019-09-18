@@ -20,7 +20,7 @@ module.exports = {
     ],
   },
   resolve: {
-    extensions: ['.js', '.jsx'],
+    extensions: ['.js', '.jsx', '.scss'],
     alias: {
       Atoms: path.resolve(__dirname, 'src/components/atoms'),
       Components: path.resolve(__dirname, 'src/components'),
