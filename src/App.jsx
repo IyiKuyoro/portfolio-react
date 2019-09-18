@@ -1,7 +1,13 @@
 import React from 'react';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+import Home from './pages/Home';
 
-import styles from './App.styles';
-
-export default function App() {
-  return (<p className={styles.red}>React works</p>);
+function App() {
+  return (
+    <Router>
+      <Route component={Home} />
+    </Router>
+  );
 }
+
+export default App;
