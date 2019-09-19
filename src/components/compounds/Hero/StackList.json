@@ -1,0 +1,87 @@
+[
+  {
+    "id": 0,
+    "name": "Angular",
+    "imageUrl": "../../../static/images/angular.png"
+  },
+  {
+    "id": 1,
+    "name": "React",
+    "imageUrl": "../../../static/images/react.png"
+  },
+  {
+    "id": 2,
+    "name": "C#",
+    "imageUrl": "../../../static/images/csharp.png"
+  },
+  {
+    "id": 3,
+    "name": "NodeJS",
+    "imageUrl": "../../../static/images/nodejs.png"
+  },
+  {
+    "id": 4,
+    "name": "TypeScript",
+    "imageUrl": "../../../static/images/typescript.png"
+  },
+  {
+    "id": 5,
+    "name": "Express",
+    "imageUrl": "../../../static/images/express.png"
+  },
+  {
+    "id": 6,
+    "name": "CircleCI",
+    "imageUrl": "../../../static/images/circleci.png"
+  },
+  {
+    "id": 7,
+    "name": "Docker",
+    "imageUrl": "../../../static/images/docker.png"
+  },
+  {
+    "id": 8,
+    "name": "Jira",
+    "imageUrl": "../../../static/images/jira.jpg"
+  },
+  {
+    "id": 9,
+    "name": "Jest",
+    "imageUrl": "../../../static/images/jest.png"
+  },
+  {
+    "id": 10,
+    "name": "Jasmine",
+    "imageUrl": "../../../static/images/jasmine.png"
+  },
+  {
+    "id": 11,
+    "name": "Cypress",
+    "imageUrl": "../../../static/images/cypress.jpg"
+  },
+  {
+    "id": 12,
+    "name": "Travis",
+    "imageUrl": "../../../static/images/travis.png"
+  },
+  {
+    "id": 13,
+    "name": "Postgres",
+    "imageUrl": "../../../static/images/postgres.jpg"
+  },
+  {
+    "id": 15,
+    "name": "MySQL",
+    "imageUrl": "../../../static/images/mysql.png"
+  },
+  {
+    "id": 14,
+    "name": "redis",
+    "imageUrl": "../../../static/images/redis.png"
+  },
+  {
+    "id": 15,
+    "name": "javascript",
+    "imageUrl": "../../../static/images/javascript.png"
+  }
+]
