@@ -70,18 +70,28 @@
     "imageUrl": "https://res.cloudinary.com/iyikuyoro/image/upload/v1568903891/portfolio-assets/postgres.png"
   },
   {
-    "id": 15,
+    "id": 14,
     "name": "MySQL",
     "imageUrl": "https://res.cloudinary.com/iyikuyoro/image/upload/v1568902033/portfolio-assets/mysql.png"
   },
   {
-    "id": 14,
+    "id": 15,
     "name": "redis",
     "imageUrl": "https://res.cloudinary.com/iyikuyoro/image/upload/v1568903464/portfolio-assets/redis.png"
   },
   {
-    "id": 15,
+    "id": 16,
     "name": "javascript",
     "imageUrl": "https://res.cloudinary.com/iyikuyoro/image/upload/v1568902033/portfolio-assets/javascript.png"
+  },
+  {
+    "id": 17,
+    "name": "slack",
+    "imageUrl": "https://res.cloudinary.com/iyikuyoro/image/upload/v1568933550/portfolio-assets/slack.jpg"
+  },
+  {
+    "id": 18,
+    "name": "heroku",
+    "imageUrl": "https://res.cloudinary.com/iyikuyoro/image/upload/v1568934092/portfolio-assets/heroku.png"
   }
 ]

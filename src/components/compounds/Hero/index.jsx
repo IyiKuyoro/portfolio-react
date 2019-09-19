@@ -16,12 +16,10 @@ export default class Hero extends Component {
   }
 
   hookupShuffling() {
-    const maxStack = 15;
-
     setInterval(() => {
       const { currentStack } = this.state;
 
-      if (currentStack === maxStack + 1) {
+      if (currentStack === stacks.length - 1) {
         this.setState({
           currentStack: 0,
         });
