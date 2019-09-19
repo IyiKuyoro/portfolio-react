@@ -4,5 +4,38 @@
 }
 
 .content {
-  background: black;
+  background: #88EAFF;
+  position: relative;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.textWrapper {
+  position: absolute;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  left: 0;
+}
+
+.text {
+  text-align: center;
+  max-width: 650px;
+  margin: 0;
+}
+
+.addAnimation {
+  animation-name: add-text;
+  animation-fill-mode: forwards;
+  animation-duration: 1s;
+  -webkit-animation-name: add-text;
+  -webkit-animation-fill-mode: forwards;
+  -webkit-animation-duration: 1s;
+}
+
+@keyframes add-text {
+  0% {left: 0;}
+  50% {left: -100vw;}
+  100% {left: 0;}
 }

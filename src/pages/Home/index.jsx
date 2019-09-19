@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
+
 import Header from 'Components/compounds/Header';
 import Hero from 'Components/compounds/Hero';
-import Education from '../../components/compounds/Education';
+import Education from 'Components/compounds/Education';
 
 export default class Home extends Component {
   constructor(props) {
