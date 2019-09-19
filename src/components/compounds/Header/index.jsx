@@ -1,11 +1,13 @@
 import React from 'react';
-import Avatar from 'Atoms/Avatar';
+import Button from 'Atoms/Button';
+
+import Styles from './header.styles';
 
 export default function Header() {
   return (
-    <div>
-      <h1>Opeoluwa Iyi-Kuyoro</h1>
-      <Avatar />
+    <div className={Styles.header}>
+      <h1 className={Styles.title}>Opeoluwa Iyi-Kuyoro</h1>
+      <Button />
     </div>
   );
 }

@@ -1,0 +1,21 @@
+.btn {
+  background: #88EAFF;
+  border: none;
+  border-radius: 25px;
+  height: 40px;
+  width: 280px;
+  font-size: 0.55em;
+}
+
+.btn:hover {
+  cursor: pointer;
+  outline: none;
+  background: rgb(88, 224, 255);
+  border: 1px solid rgb(196, 244, 255);
+}
+
+.btn:focus {
+  outline: none;
+  background: rgb(88, 224, 255);
+  border: 1px solid rgb(196, 244, 255);
+}
