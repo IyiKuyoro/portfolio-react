@@ -2,86 +2,86 @@
   {
     "id": 0,
     "name": "Angular",
-    "imageUrl": "../../../static/images/angular.png"
+    "imageUrl": "https://res.cloudinary.com/iyikuyoro/image/upload/v1568902032/portfolio-assets/angular.png"
   },
   {
     "id": 1,
     "name": "React",
-    "imageUrl": "../../../static/images/react.png"
+    "imageUrl": "https://res.cloudinary.com/iyikuyoro/image/upload/v1568903388/portfolio-assets/react.png"
   },
   {
     "id": 2,
     "name": "C#",
-    "imageUrl": "../../../static/images/csharp.png"
+    "imageUrl": "https://res.cloudinary.com/iyikuyoro/image/upload/v1568902032/portfolio-assets/csharp.png"
   },
   {
     "id": 3,
     "name": "NodeJS",
-    "imageUrl": "../../../static/images/nodejs.png"
+    "imageUrl": "https://res.cloudinary.com/iyikuyoro/image/upload/v1568902033/portfolio-assets/nodejs.png"
   },
   {
     "id": 4,
     "name": "TypeScript",
-    "imageUrl": "../../../static/images/typescript.png"
+    "imageUrl": "https://res.cloudinary.com/iyikuyoro/image/upload/v1568902034/portfolio-assets/typescript.png"
   },
   {
     "id": 5,
     "name": "Express",
-    "imageUrl": "../../../static/images/express.png"
+    "imageUrl": "https://res.cloudinary.com/iyikuyoro/image/upload/v1568903558/portfolio-assets/express.png"
   },
   {
     "id": 6,
     "name": "CircleCI",
-    "imageUrl": "../../../static/images/circleci.png"
+    "imageUrl": "https://res.cloudinary.com/iyikuyoro/image/upload/v1568902032/portfolio-assets/circleci.png"
   },
   {
     "id": 7,
     "name": "Docker",
-    "imageUrl": "../../../static/images/docker.png"
+    "imageUrl": "https://res.cloudinary.com/iyikuyoro/image/upload/v1568903180/portfolio-assets/docker.png"
   },
   {
     "id": 8,
     "name": "Jira",
-    "imageUrl": "../../../static/images/jira.jpg"
+    "imageUrl": "https://res.cloudinary.com/iyikuyoro/image/upload/v1568904013/portfolio-assets/jira.jpg"
   },
   {
     "id": 9,
     "name": "Jest",
-    "imageUrl": "../../../static/images/jest.png"
+    "imageUrl": "https://res.cloudinary.com/iyikuyoro/image/upload/v1568902033/portfolio-assets/jest.png"
   },
   {
     "id": 10,
     "name": "Jasmine",
-    "imageUrl": "../../../static/images/jasmine.png"
+    "imageUrl": "https://res.cloudinary.com/iyikuyoro/image/upload/v1568902033/portfolio-assets/jasmine.png"
   },
   {
     "id": 11,
     "name": "Cypress",
-    "imageUrl": "../../../static/images/cypress.jpg"
+    "imageUrl": "https://res.cloudinary.com/iyikuyoro/image/upload/v1568902032/portfolio-assets/cypress.jpg"
   },
   {
     "id": 12,
     "name": "Travis",
-    "imageUrl": "../../../static/images/travis.png"
+    "imageUrl": "https://res.cloudinary.com/iyikuyoro/image/upload/v1568902035/portfolio-assets/travis.png"
   },
   {
     "id": 13,
     "name": "Postgres",
-    "imageUrl": "../../../static/images/postgres.jpg"
+    "imageUrl": "https://res.cloudinary.com/iyikuyoro/image/upload/v1568903891/portfolio-assets/postgres.png"
   },
   {
     "id": 15,
     "name": "MySQL",
-    "imageUrl": "../../../static/images/mysql.png"
+    "imageUrl": "https://res.cloudinary.com/iyikuyoro/image/upload/v1568902033/portfolio-assets/mysql.png"
   },
   {
     "id": 14,
     "name": "redis",
-    "imageUrl": "../../../static/images/redis.png"
+    "imageUrl": "https://res.cloudinary.com/iyikuyoro/image/upload/v1568903464/portfolio-assets/redis.png"
   },
   {
     "id": 15,
     "name": "javascript",
-    "imageUrl": "../../../static/images/javascript.png"
+    "imageUrl": "https://res.cloudinary.com/iyikuyoro/image/upload/v1568902033/portfolio-assets/javascript.png"
   }
 ]

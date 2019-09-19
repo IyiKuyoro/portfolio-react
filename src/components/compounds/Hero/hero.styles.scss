@@ -1,6 +1,7 @@
 .hero {
   height: 92.5vh;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
@@ -14,4 +15,10 @@
 .name {
   font-weight: bold;
   color: #007089;
+}
+
+.langImage {
+  width: 100px;
+  height: 100px;
+  margin-top: 77px;
 }
