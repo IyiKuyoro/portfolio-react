@@ -1,0 +1,17 @@
+.hero {
+  height: 92.5vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hero_text {
+  width: 60%;
+  text-align: center;
+  font-weight: lighter;
+}
+
+.name {
+  font-weight: bold;
+  color: #007089;
+}
