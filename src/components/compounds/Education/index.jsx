@@ -9,7 +9,8 @@ export default class Education extends Component {
     super(props);
     this.state = {
       currentId: 0,
-      classList: [Styles.textWrapper],
+      textClassList: [Styles.textWrapper],
+      iconClassList: [Styles.iconWrapper],
     };
   }
 
@@ -21,7 +22,8 @@ export default class Education extends Component {
   animateText() {
     setInterval(() => {
       this.setState({
-        classList: [Styles.textWrapper],
+        textClassList: [Styles.textWrapper],
+        iconClassList: [Styles.iconWrapper],
       });
     }, 3000);
 
@@ -30,28 +32,33 @@ export default class Education extends Component {
       const { currentId } = this.state;
       // Run change text animation
       this.setState({
-        classList: [Styles.textWrapper, Styles.addAnimation],
+        textClassList: [Styles.textWrapper, Styles.addAnimation],
+        iconClassList: [Styles.iconWrapper, Styles.addIconAnimation],
       });
-      if (currentId === 2) {
-        this.setState({
-          currentId: 0,
-        });
-      } else {
-        this.setState({
-          currentId: currentId + 1,
-        });
-      }
+
+      setTimeout(() => {
+        if (currentId === 2) {
+          this.setState({
+            currentId: 0,
+          });
+        } else {
+          this.setState({
+            currentId: currentId + 1,
+          });
+        }
+      }, 500);
     }, 4000);
   }
 
   render() {
     const { yScroll } = this.props;
-    const { currentId, classList } = this.state;
+    const { currentId, textClassList, iconClassList } = this.state;
     let pStyle = {
       height: 0,
     };
 
-    const classString = classList.join(' ');
+    const textClassString = textClassList.join(' ');
+    const iconClassString = iconClassList.join(' ');
 
     if (yScroll >= 100) {
       // Change size as you scroll
@@ -63,7 +70,10 @@ export default class Education extends Component {
     return (
       <div className={Styles.education}>
         <div className={Styles.content} style={pStyle}>
-          <div className={classString}>
+          <div className={iconClassString}>
+            <i className={`fas ${EduList[currentId].icon} ${Styles.icon}`} />
+          </div>
+          <div className={textClassString}>
             <p className={Styles.text}>{EduList[currentId].text}</p>
           </div>
         </div>
