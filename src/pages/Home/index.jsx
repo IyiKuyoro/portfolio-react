@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import Header from 'Components/compounds/Header';
 import Hero from 'Components/compounds/Hero';
 import Education from 'Components/compounds/Education';
+import Projects from 'Components/compounds/Projects';
 
 export default class Home extends Component {
   constructor(props) {
@@ -31,6 +32,7 @@ export default class Home extends Component {
         <Header />
         <Hero />
         <Education yScroll={yScroll} />
+        <Projects />
       </div>
     );
   }

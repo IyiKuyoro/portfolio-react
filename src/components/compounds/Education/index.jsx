@@ -60,10 +60,15 @@ export default class Education extends Component {
     const textClassString = textClassList.join(' ');
     const iconClassString = iconClassList.join(' ');
 
-    if (yScroll >= 100) {
+    if (yScroll >= 100 && yScroll < 465) {
       // Change size as you scroll
       pStyle = {
         height: (yScroll - 100),
+      };
+    } else if (yScroll >= 465) {
+      // Change size as you scroll
+      pStyle = {
+        height: 364,
       };
     }
 

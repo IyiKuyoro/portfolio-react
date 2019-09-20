@@ -1,0 +1,31 @@
+.projects {
+  width: 100vw;
+  height: 462px;
+  position: relative;
+}
+
+.heading {
+  font-size: 0.8em;
+  width: 100%;
+  text-align: center;
+}
+
+.btn {
+  width: 30px;
+  height: 30px;
+  border: none;
+  border-radius: 50%;
+  background: #C4C4C4;
+  font-size: 1em;
+  position: absolute;
+  top: calc(50% - 50px);
+  margin: 35px;
+}
+
+.btn:hover {
+  cursor: pointer;
+}
+
+.btnRight {
+  right: 0;
+}
