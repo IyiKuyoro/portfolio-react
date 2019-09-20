@@ -1,13 +1,16 @@
 .projects {
   width: 100vw;
-  height: 462px;
+  height: 400px;
   position: relative;
+  display: flex;
+  flex-direction: column;
 }
 
 .heading {
   font-size: 0.8em;
   width: 100%;
   text-align: center;
+  position: absolute;
 }
 
 .btn {
@@ -28,4 +31,13 @@
 
 .btnRight {
   right: 0;
+}
+
+.link {
+  position: absolute;
+  bottom: 30px;
+  right: 30px;
+  font-size: 0.6em;
+  color: #888888;
+  text-decoration: none;
 }
