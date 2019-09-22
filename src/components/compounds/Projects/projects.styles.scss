@@ -41,3 +41,31 @@
   color: #888888;
   text-decoration: none;
 }
+
+@keyframes remove-project {
+  0% {left: 0;}
+  100% {left: -100vw;}
+}
+
+.removeProject {
+  animation-name: remove-project;
+  animation-fill-mode: forwards;
+  animation-duration: 1s;
+  -webkit-animation-name: remove-project;
+  -webkit-animation-fill-mode: forwards;
+  -webkit-animation-duration: 1s;
+}
+
+@keyframes add-project {
+  0% {left: 100vw;}
+  100% {left: 0;}
+}
+
+.addProject {
+  animation-name: add-project;
+  animation-fill-mode: forwards;
+  animation-duration: 1s;
+  -webkit-animation-name: add-project;
+  -webkit-animation-fill-mode: forwards;
+  -webkit-animation-duration: 1s;
+}

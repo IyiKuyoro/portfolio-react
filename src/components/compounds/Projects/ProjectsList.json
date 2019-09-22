@@ -19,12 +19,6 @@
   },
   {
     "id": 4,
-    "name": "Tiddy",
-    "description": "I go tired of telling folks to post their messages in the right channels on slack, so I built this tool that moves messages automatically based on user reactions after a little setup.",
-    "imageUrl": "https://res.cloudinary.com/iyikuyoro/image/upload/v1568933502/portfolio-assets/slack.jpg"
-  },
-  {
-    "id": 5,
     "name": "Kid Math",
     "description": "When I was starting out a few years ago, I built this simply arithmetic game for kids.",
     "imageUrl": "https://res.cloudinary.com/iyikuyoro/image/upload/v1569007931/portfolio-assets/net.jpg"

@@ -21,32 +21,43 @@ export default class Projects extends Component {
   changeProjectAtIntervals() {
     setInterval(() => {
       // Pull project off screen
-      this.setState({
-        projectClassList: [Styles.removeProject],
-      });
+      this.slideProjectOut();
 
       // Change Project
-      setTimeout(() => {
-        const { currentId } = this.state;
-
-        if (currentId === ProjectList.length - 1) {
-          this.setState({
-            currentId: 0,
-          });
-        } else {
-          this.setState({
-            currentId: currentId + 1,
-          });
-        }
-      }, 500);
+      this.changeProject();
 
       // Bring project back
-      setTimeout(() => {
-        this.setState({
-          projectClassList: [Styles.addProject],
-        });
-      }, 1000);
+      this.slideProjectIn();
     }, 6000);
+  }
+
+  slideProjectOut() {
+    this.setState({
+      projectClassList: [Styles.removeProject],
+    });
+  }
+
+  slideProjectIn() {
+    setTimeout(() => {
+      this.setState({
+        projectClassList: [Styles.addProject],
+      });
+    }, 1000);
+  }
+
+  changeProject() {
+    setTimeout(() => {
+      const { currentId } = this.state;
+      if (currentId === ProjectList.length - 1) {
+        this.setState({
+          currentId: 0,
+        });
+      } else {
+        this.setState({
+          currentId: currentId + 1,
+        });
+      }
+    }, 500);
   }
 
   render() {
