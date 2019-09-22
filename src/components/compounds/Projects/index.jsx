@@ -12,6 +12,7 @@ export default class Projects extends Component {
       currentId: 0,
       projectClassList: [],
     };
+    this.handleChangeButtonClick = this.handleChangeButtonClick.bind(this);
   }
 
   componentDidMount() {
@@ -26,49 +27,46 @@ export default class Projects extends Component {
   }
 
   // Slides the old project out of the screen
-  slideProjectOut() {
+  slideProjectOut(forward) {
     this.setState({
-      projectClassList: [Styles.removeProject],
+      projectClassList: [(forward ? Styles.removeProject : Styles.removeProjectRight)],
     });
   }
 
   // Slides a new project onto the screen
-  slideProjectIn() {
+  slideProjectIn(forward) {
     setTimeout(() => {
       this.setState({
-        projectClassList: [Styles.addProject],
+        projectClassList: [(forward ? Styles.addProject : Styles.addProjectRight)],
       });
     }, 1000);
   }
 
   // Change the displayed project
-  changeProject() {
+  changeProject(forward = true) {
     setTimeout(() => {
       const { currentId } = this.state;
-      if (currentId === ProjectList.length - 1) {
+      if (currentId === (forward ? ProjectList.length - 1 : 0)) {
         this.setState({
-          currentId: 0,
+          currentId: forward ? 0 : ProjectList.length - 1,
         });
       } else {
         this.setState({
-          currentId: currentId + 1,
+          currentId: forward ? currentId + 1 : currentId - 1,
         });
       }
-    }, 500);
+    }, 600);
   }
 
-  // previousProject() {
-  // }
-
-  nextProject() {
+  nextProject(forward = true) {
     // Pull project off screen
-    this.slideProjectOut();
+    this.slideProjectOut(forward);
 
     // Change Project
-    this.changeProject();
+    this.changeProject(forward);
 
     // Bring project back
-    this.slideProjectIn();
+    this.slideProjectIn(forward);
   }
 
   // Reset the project switching interval
@@ -79,21 +77,30 @@ export default class Projects extends Component {
     }, 6000);
   }
 
+  // Handle project change button click
+  handleChangeButtonClick(forward = true) {
+    this.nextProject(forward);
+    this.resetInterval();
+  }
+
   render() {
     const { currentId, projectClassList } = this.state;
     const projectClassString = projectClassList.join(' ');
 
     return (
       <div className={Styles.projects}>
-        <button className={Styles.btn} type="button"> </button>
+        <button
+          className={Styles.btn}
+          onClick={() => this.handleChangeButtonClick(false)}
+          type="button"
+        >
+          {}
+        </button>
         <h2 className={Styles.heading}>See some of my open source projects</h2>
         <Project className={projectClassString} project={ProjectList[currentId]} />
         <button
           className={`${Styles.btn} ${Styles.btnRight}`}
-          onClick={() => {
-            this.nextProject();
-            this.resetInterval();
-          }}
+          onClick={this.handleChangeButtonClick}
           type="button"
         >
           {}

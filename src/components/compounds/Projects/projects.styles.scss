@@ -56,8 +56,36 @@
   -webkit-animation-duration: 1s;
 }
 
+@keyframes remove-project-right {
+  0% {left: 0;}
+  100% {left: 100vw;}
+}
+
+.removeProjectRight {
+  animation-name: remove-project-right;
+  animation-fill-mode: forwards;
+  animation-duration: 1s;
+  -webkit-animation-name: remove-project-right;
+  -webkit-animation-fill-mode: forwards;
+  -webkit-animation-duration: 1s;
+}
+
 @keyframes add-project {
   0% {left: 100vw;}
+  100% {left: 0;}
+}
+
+.addProjectRight {
+  animation-name: add-project-right;
+  animation-fill-mode: forwards;
+  animation-duration: 1s;
+  -webkit-animation-name: add-project-right;
+  -webkit-animation-fill-mode: forwards;
+  -webkit-animation-duration: 1s;
+}
+
+@keyframes add-project-right {
+  0% {left: -100vw;}
   100% {left: 0;}
 }
 
