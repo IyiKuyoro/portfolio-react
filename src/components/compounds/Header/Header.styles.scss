@@ -2,10 +2,15 @@
   height: 7.5vh;
   background: #E5E5E5;
   display: flex;
+}
+
+.headerWrapper {
+  width: 90%;
+  display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding: 0 50px;
+  margin: 0 auto;
 }
 
 .title {
@@ -13,5 +18,12 @@
   font-family: 'Alegreya Sans', sans-serif;
   font-style: normal;
   font-weight: lighter;
-  font-size: 25px;
+  font-size: 0.9em;
+}
+
+@media screen and (max-width: 322px) {
+  .title {
+    width: 100%;
+    text-align: center;
+  }
 }
