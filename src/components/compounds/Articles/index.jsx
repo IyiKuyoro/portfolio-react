@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import Styles from './articles.styles';
+import Styles from './articles.styles.scss';
 import ArticlesList from './ArticlesList.json';
 import ArticleDisplay from './ArticleDisplay';
 import ArticleCards from './ArticleCards';

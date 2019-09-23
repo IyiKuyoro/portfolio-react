@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import Styles from './hero.styles';
+import Styles from './hero.styles.scss';
 import stacks from './StackList.json';
 
 export default class Hero extends Component {

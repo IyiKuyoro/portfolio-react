@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import Styles from './education.styles';
+import Styles from './education.styles.scss';
 import EduList from './EducationList.json';
 
 export default class Education extends Component {

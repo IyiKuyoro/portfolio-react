@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import Project from './Project';
-import Styles from './projects.styles';
+import Styles from './projects.styles.scss';
 import ProjectList from './ProjectsList.json';
 
 export default class Projects extends Component {

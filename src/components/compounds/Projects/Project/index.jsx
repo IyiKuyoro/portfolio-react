@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Styles from './project.styles';
+import Styles from './project.styles.scss';
 
 export default function Project(props) {
   const { project, className } = props;

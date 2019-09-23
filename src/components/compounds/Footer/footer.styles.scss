@@ -9,6 +9,12 @@
   color: #000000;
 }
 
+.anchor:hover,
+.anchor:focus {
+  cursor: pointer;
+  color: rgb(88, 224, 255);
+}
+
 .text {
   margin: 5px 0;
   width: 100%;

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Styles from './card.styles';
+import Styles from './card.styles.scss';
 import truncateText from './Helpers';
 
 export default function Card(props) {

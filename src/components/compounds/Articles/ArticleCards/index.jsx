@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Styles from './articleCards.styles';
+import Styles from './articleCards.styles.scss';
 import Card from './Card';
 
 function generateArticleCards(articles, mouseOver) {

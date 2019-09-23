@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Styles from './articleDisplay.styles';
+import Styles from './articleDisplay.styles.scss';
 
 export default function ArticleDisplay(props) {
   const { article } = props;

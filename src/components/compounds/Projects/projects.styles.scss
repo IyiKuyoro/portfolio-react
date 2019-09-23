@@ -25,8 +25,16 @@
   z-index: 1;
 }
 
+.btn:focus {
+  outline: none;
+  background: rgb(88, 224, 255);
+  border: 1px solid rgb(196, 244, 255);
+}
+
 .btn:hover {
   cursor: pointer;
+  background: rgb(88, 224, 255);
+  border: 1px solid rgb(196, 244, 255);
 }
 
 .btnRight {
@@ -42,58 +50,58 @@
   text-decoration: none;
 }
 
-// @keyframes remove-project {
-//   0% {left: 0;}
-//   100% {left: -100vw;}
-// }
+@keyframes remove-project {
+  0% {left: 0;}
+  100% {left: -100vw;}
+}
 
-// .removeProject {
-//   animation-name: remove-project;
-//   animation-fill-mode: forwards;
-//   animation-duration: 1s;
-//   -webkit-animation-name: remove-project;
-//   -webkit-animation-fill-mode: forwards;
-//   -webkit-animation-duration: 1s;
-// }
+.removeProject {
+  animation-name: remove-project;
+  animation-fill-mode: forwards;
+  animation-duration: 1s;
+  -webkit-animation-name: remove-project;
+  -webkit-animation-fill-mode: forwards;
+  -webkit-animation-duration: 1s;
+}
 
-// @keyframes remove-project-right {
-//   0% {left: 0;}
-//   100% {left: 100vw;}
-// }
+@keyframes remove-project-right {
+  0% {left: 0;}
+  100% {left: 100vw;}
+}
 
-// .removeProjectRight {
-//   animation-name: remove-project-right;
-//   animation-fill-mode: forwards;
-//   animation-duration: 1s;
-//   -webkit-animation-name: remove-project-right;
-//   -webkit-animation-fill-mode: forwards;
-//   -webkit-animation-duration: 1s;
-// }
+.removeProjectRight {
+  animation-name: remove-project-right;
+  animation-fill-mode: forwards;
+  animation-duration: 1s;
+  -webkit-animation-name: remove-project-right;
+  -webkit-animation-fill-mode: forwards;
+  -webkit-animation-duration: 1s;
+}
 
-// @keyframes add-project {
-//   0% {left: 100vw;}
-//   100% {left: 0;}
-// }
+@keyframes add-project {
+  0% {left: 100vw;}
+  100% {left: 0;}
+}
 
-// .addProjectRight {
-//   animation-name: add-project-right;
-//   animation-fill-mode: forwards;
-//   animation-duration: 1s;
-//   -webkit-animation-name: add-project-right;
-//   -webkit-animation-fill-mode: forwards;
-//   -webkit-animation-duration: 1s;
-// }
+.addProjectRight {
+  animation-name: add-project-right;
+  animation-fill-mode: forwards;
+  animation-duration: 1s;
+  -webkit-animation-name: add-project-right;
+  -webkit-animation-fill-mode: forwards;
+  -webkit-animation-duration: 1s;
+}
 
-// @keyframes add-project-right {
-//   0% {left: -100vw;}
-//   100% {left: 0;}
-// }
+@keyframes add-project-right {
+  0% {left: -100vw;}
+  100% {left: 0;}
+}
 
-// .addProject {
-//   animation-name: add-project;
-//   animation-fill-mode: forwards;
-//   animation-duration: 1s;
-//   -webkit-animation-name: add-project;
-//   -webkit-animation-fill-mode: forwards;
-//   -webkit-animation-duration: 1s;
-// }
+.addProject {
+  animation-name: add-project;
+  animation-fill-mode: forwards;
+  animation-duration: 1s;
+  -webkit-animation-name: add-project;
+  -webkit-animation-fill-mode: forwards;
+  -webkit-animation-duration: 1s;
+}

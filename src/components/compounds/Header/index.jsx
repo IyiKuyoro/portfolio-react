@@ -1,7 +1,7 @@
 import React from 'react';
 import Button from 'Atoms/Button';
 
-import Styles from './header.styles';
+import Styles from './header.styles.scss';
 
 export default function Header() {
   return (

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Styles from './video.styles';
+import Styles from './video.styles.scss';
 
 export default function Video() {
   return (
