@@ -5,6 +5,7 @@ import Hero from 'Components/compounds/Hero';
 import Education from 'Components/compounds/Education';
 import Projects from 'Components/compounds/Projects';
 import Articles from 'Components/compounds/Articles';
+import Video from 'Components/compounds/Video';
 
 export default class Home extends Component {
   constructor(props) {
@@ -35,6 +36,7 @@ export default class Home extends Component {
         <Education yScroll={yScroll} />
         <Projects />
         <Articles />
+        <Video />
       </div>
     );
   }

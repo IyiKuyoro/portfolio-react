@@ -1,0 +1,52 @@
+.container {
+  height: 450px;
+  width: 100%;
+  display: flex;
+}
+
+.padding {
+  width: 80%;
+  margin: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.video {
+  width: 60%;
+  height: 315px;
+}
+
+.videoText {
+  width: 40%;
+  text-align: center;
+  margin: 0 0 0 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.title {
+  font-size: 0.8em;
+}
+
+.message {
+  font-size: 0.7em;
+}
+
+@media screen and (max-width: 850px) {
+  .padding {
+    flex-direction: column-reverse;
+    align-items: center;
+    margin: 30px auto;
+  }
+
+  .video {
+    width: 100%;
+  }
+
+  .videoText {
+    width: 70%;
+    margin: auto;
+  }
+}
