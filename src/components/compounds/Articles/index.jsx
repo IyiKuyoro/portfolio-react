@@ -13,6 +13,12 @@ export default class Articles extends Component {
     };
   }
 
+  handleMouseOver(id) {
+    this.setState({
+      currentArticleId: id,
+    });
+  }
+
   render() {
     const { currentArticleId } = this.state;
 
@@ -26,6 +32,7 @@ export default class Articles extends Component {
           <ArticleCards
             currentArticleId={currentArticleId}
             articles={ArticlesList}
+            mouseOver={(id) => this.handleMouseOver(id)}
           />
         </div>
       </div>

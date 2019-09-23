@@ -7,8 +7,7 @@ export default function ArticleDisplay(props) {
   const { article } = props;
 
   const displayStyle = {
-    background: `no-repeat center center url(${article.imageUrl})`,
-    backgroundSize: 'cover',
+    background: `url(${article.imageUrl}) center center / cover no-repeat`,
   };
 
   return (

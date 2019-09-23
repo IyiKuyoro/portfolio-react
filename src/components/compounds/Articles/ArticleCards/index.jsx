@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Styles from './articleCards.styles';
 import Card from './Card';
 
-function generateArticleCards(articles) {
+function generateArticleCards(articles, mouseOver) {
   return articles.map((article) => {
     const style = {
       left: `${30 * (article.id)}px`,
@@ -17,25 +17,26 @@ function generateArticleCards(articles) {
         key={article.id}
         article={article}
         background={article.imageUrl}
+        mouseOver={mouseOver}
       />
     );
   });
 }
 
 export default function ArticleCards(props) {
-  const { articles, currentArticleId } = props;
+  const { articles, mouseOver } = props;
 
   return (
     <div className={Styles.cardGroupWrapper}>
       <div className={Styles.cardGroup}>
-        {generateArticleCards(articles)}
+        {generateArticleCards(articles, mouseOver)}
       </div>
     </div>
   );
 }
 
 ArticleCards.propTypes = {
-  currentArticleId: PropTypes.number.isRequired,
+  mouseOver: PropTypes.func.isRequired,
   articles: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.number.isRequired,
     title: PropTypes.string.isRequired,

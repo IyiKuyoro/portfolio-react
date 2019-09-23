@@ -6,7 +6,8 @@
   font-size: 25px;
 }
 
-.articleCard:hover {
+.articleCard:hover,
+.articleCard:focus {
   z-index: 1;
   cursor: pointer;
 }

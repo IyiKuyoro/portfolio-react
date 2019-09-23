@@ -5,7 +5,7 @@ import Styles from './card.styles';
 import truncateText from './Helpers';
 
 export default function Card(props) {
-  const { article, background } = props;
+  const { article, background, mouseOver } = props;
   const inlineStyle = {
     background: `no-repeat center center url(${background})`,
     backgroundSize: 'cover',
@@ -17,6 +17,8 @@ export default function Card(props) {
       href={article.url}
       className={Styles.articleCard}
       style={inlineStyle}
+      onMouseOver={() => mouseOver(article.id)}
+      onFocus={() => mouseOver(article.id)}
     >
       <div className={Styles.titleWrapper}>
         <h3 className={Styles.articleTitle}>{truncateText(article.title, 30)}</h3>
@@ -36,4 +38,5 @@ Card.propTypes = {
     }).isRequired,
   }).isRequired,
   background: PropTypes.string.isRequired,
+  mouseOver: PropTypes.func.isRequired,
 };
