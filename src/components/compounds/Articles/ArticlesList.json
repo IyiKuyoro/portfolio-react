@@ -1,0 +1,32 @@
+[
+  {
+    "id": 0,
+    "title": "A Detailed Approach to Setting Up CKEditor with Angular",
+    "url": "https://medium.com/swlh/a-detailed-approach-of-setting-up-ckeditor-with-angular-e546610157ba",
+    "imageUrl": "https://res.cloudinary.com/iyikuyoro/image/upload/v1559807282/portfolio-assets/xrddgstelfylpkh5oi3r.jpg"
+  },
+  {
+    "id": 1,
+    "title": ".NET Core CircleCI Config Tutorial for the Absolute DevOps Novice",
+    "url": "https://medium.com/faun/net-core-circleci-config-tutorial-for-the-absolute-devops-novice-e125d5f227c1",
+    "imageUrl": "https://res.cloudinary.com/iyikuyoro/image/upload/v1569192287/portfolio-assets/1_Qpk3P40iVFI5aKgR3fdNkQ.jpg"
+  },
+  {
+    "id": 2,
+    "title": "Implementing a Stack Data Structure in Constant Time",
+    "url": "https://medium.com/@iyikuyoro/implementing-a-stack-data-structure-in-constant-time-216cfbbea36",
+    "imageUrl": "https://res.cloudinary.com/iyikuyoro/image/upload/v1558908672/portfolio-assets/bwwbkozlq1ocmedh6t4d.jpg"
+  },
+  {
+    "id": 3,
+    "title": "Committing to Memory — An Absolute Beginner’s Introduction to Git",
+    "url": "https://medium.com/faun/committing-to-memory-an-absolute-beginners-introduction-to-git-ef3e0ed9f9a6",
+    "imageUrl": "https://res.cloudinary.com/iyikuyoro/image/upload/v1559809584/portfolio-assets/kv2mnonrnv05lbz79wdw.jpg"
+  },
+  {
+    "id": 4,
+    "title": "Git-An Absolute Beginner’s Introduction",
+    "url": "https://medium.com/faun/git-an-absolute-beginners-introduction-d801f496e41a",
+    "imageUrl": "https://res.cloudinary.com/iyikuyoro/image/upload/v1569192510/portfolio-assets/1_oTySOUhld2PJyrp83Pblog.jpg"
+  }
+]

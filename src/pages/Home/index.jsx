@@ -4,6 +4,7 @@ import Header from 'Components/compounds/Header';
 import Hero from 'Components/compounds/Hero';
 import Education from 'Components/compounds/Education';
 import Projects from 'Components/compounds/Projects';
+import Articles from 'Components/compounds/Articles';
 
 export default class Home extends Component {
   constructor(props) {
@@ -33,6 +34,7 @@ export default class Home extends Component {
         <Hero />
         <Education yScroll={yScroll} />
         <Projects />
+        <Articles />
       </div>
     );
   }
