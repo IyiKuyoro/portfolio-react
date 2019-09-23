@@ -6,6 +6,7 @@ import Education from 'Components/compounds/Education';
 import Projects from 'Components/compounds/Projects';
 import Articles from 'Components/compounds/Articles';
 import Video from 'Components/compounds/Video';
+import Footer from 'Components/compounds/Footer';
 
 export default class Home extends Component {
   constructor(props) {
@@ -37,6 +38,7 @@ export default class Home extends Component {
         <Projects />
         <Articles />
         <Video />
+        <Footer />
       </div>
     );
   }
