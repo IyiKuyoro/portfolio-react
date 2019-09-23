@@ -31,6 +31,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
+      title: 'Portfolio App',
       template: './src/static/index.html',
     }),
     new CompressionPlugin(),
