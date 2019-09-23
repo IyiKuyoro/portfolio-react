@@ -25,3 +25,27 @@
   grid-template-rows: auto;
   grid-template-columns: 60% 40%;
 }
+
+@media screen and (max-width: 950px) {
+  .articlesDisplay {
+    grid-template-columns: 50% 50%;
+  }
+}
+
+@media screen and (max-width: 750px) {
+  .articlesDisplay {
+    grid-template-columns: 40% 60%;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .articles {
+    min-height: 300px;
+  }
+
+  .articlesDisplay {
+    border-top: none;
+    border-bottom: none;
+    grid-template-columns: 100%;
+  }
+}

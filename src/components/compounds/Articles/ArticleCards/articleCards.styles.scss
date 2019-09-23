@@ -11,3 +11,20 @@
   display: flex;
   justify-content: center;
 }
+
+@media screen and (max-width: 640px) {
+  .cardGroup {
+    width: fit-content;
+    height: fit-content;
+    max-width: none;
+    display: flex;
+    margin: auto auto auto 40px;
+    overflow-x: scroll;
+  }
+
+  .cardGroupWrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+  }
+}

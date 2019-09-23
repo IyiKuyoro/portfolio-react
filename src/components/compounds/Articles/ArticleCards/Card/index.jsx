@@ -13,9 +13,15 @@ export default function Card(props) {
   };
 
   return (
-    <div className={Styles.articleCard} style={inlineStyle}>
-      <h3 className={Styles.articleTitle}>{truncateText(article.title, 30)}</h3>
-    </div>
+    <a
+      href={article.url}
+      className={Styles.articleCard}
+      style={inlineStyle}
+    >
+      <div className={Styles.titleWrapper}>
+        <h3 className={Styles.articleTitle}>{truncateText(article.title, 30)}</h3>
+      </div>
+    </a>
   );
 }
 
