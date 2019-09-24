@@ -1,17 +1,27 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import Styles from './button.styles.scss';
 
 export default function Button(props) {
-  const { text } = { ...props };
+  const { text, handleClick } = props;
 
   return (
-    <button className={Styles.btn} type="button">
+    <button
+      onClick={handleClick}
+      className={Styles.btn}
+      type="button"
+    >
       {text}
     </button>
   );
 }
 
 Button.defaultProps = {
-  text: 'Get a copy of my CV',
+  text: 'CV',
+};
+
+Button.propTypes = {
+  text: PropTypes.string,
+  handleClick: PropTypes.func.isRequired,
 };
