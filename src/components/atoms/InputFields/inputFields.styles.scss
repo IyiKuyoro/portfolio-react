@@ -1,0 +1,30 @@
+.wrapper {
+  border-bottom: 1px solid #000000;
+  height: 45px;
+  position: relative;
+}
+
+.label {
+  position: absolute;
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+  font-size: 0.7em;
+}
+
+.labelText {
+  display: inline-block;
+  margin: 0;
+  width: 20%;
+  text-align: center;
+}
+
+.input {
+  padding: 0;
+  margin: 0;
+  border: none;
+  height: 100%;
+  width: 80%;
+  font-size: 0.8em;
+  text-indent: 20px;
+}

@@ -4,12 +4,12 @@ import PropTypes from 'prop-types';
 import Styles from './button.styles.scss';
 
 export default function Button(props) {
-  const { text, handleClick } = props;
+  const { text, handleClick, style } = props;
 
   return (
     <button
       onClick={handleClick}
-      className={Styles.btn}
+      className={style}
       type="button"
     >
       {text}
@@ -19,9 +19,11 @@ export default function Button(props) {
 
 Button.defaultProps = {
   text: 'CV',
+  style: Styles.btn,
 };
 
 Button.propTypes = {
   text: PropTypes.string,
   handleClick: PropTypes.func.isRequired,
+  style: PropTypes.string,
 };
