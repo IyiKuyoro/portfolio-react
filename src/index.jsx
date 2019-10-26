@@ -1,8 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
 
 import './static/global';
 import App from './App';
+import store from './store';
 
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
@@ -16,4 +18,4 @@ if ('serviceWorker' in navigator) {
   });
 }
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(<Provider store={store}><App /></Provider>, document.getElementById('root'));

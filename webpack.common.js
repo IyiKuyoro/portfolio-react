@@ -27,6 +27,7 @@ module.exports = {
       Compounds: path.resolve(__dirname, 'src/components/compounds'),
       Images: path.resolve(__dirname, 'src/static/index.html'),
       Pages: path.resolve(__dirname, 'src/pages'),
+      Actions: path.resolve(__dirname, 'src/store/actions'),
     },
   },
   plugins: [
