@@ -1,9 +1,16 @@
-import { USER_AUTH_FAILED, USER_AUTH_STARTED, USER_AUTH_PASSED } from '../constants';
+import {
+  USER_AUTH_FAILED,
+  USER_AUTH_STARTED,
+  SET_CURRENT_USER,
+  SET_NO_USER,
+} from '../constants';
 
 const initialState = {
   userData: {},
   isAuthenticated: false,
   loading: false,
+  errorMessage: '',
+  error: false,
 };
 
 export default function (state = initialState, action) {
@@ -17,13 +24,21 @@ export default function (state = initialState, action) {
       return {
         ...state,
         loading: false,
+        errorMessage: action.payload.message,
+        error: true,
       };
-    case USER_AUTH_PASSED:
+    case SET_CURRENT_USER:
       return {
         ...state,
         loading: false,
         userData: action.payload,
         isAuthenticated: true,
+      };
+    case SET_NO_USER:
+      return {
+        ...state,
+        userData: {},
+        isAuthenticated: false,
       };
     default:
       return state;

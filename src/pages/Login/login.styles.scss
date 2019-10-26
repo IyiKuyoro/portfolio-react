@@ -39,6 +39,21 @@
   margin-top: 30px;
 }
 
+.errorMessage {
+  color: red;
+  text-align: center;
+  font-size: 0.7em;
+  margin: 0;
+}
+
+.errorMessageInvisible {
+  color: red;
+  text-align: center;
+  font-size: 0.7em;
+  margin: 0;
+  display: none;
+}
+
 @media screen and (max-width: 425px) {
   .loginForm {
     width: 90%;

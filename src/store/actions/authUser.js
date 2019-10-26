@@ -1,4 +1,10 @@
-import { USER_AUTH_FAILED, USER_AUTH_STARTED, USER_AUTH_PASSED } from '../constants';
+import { saveUser, getUser } from '../../indexDB/auth';
+import {
+  USER_AUTH_FAILED,
+  USER_AUTH_STARTED,
+  SET_CURRENT_USER,
+  SET_NO_USER,
+} from '../constants';
 
 function authStarted() {
   return {
@@ -6,17 +12,30 @@ function authStarted() {
   };
 }
 
-function authFail() {
+function authFail(message) {
   return {
     type: USER_AUTH_FAILED,
+    payload: {
+      message,
+    },
   };
 }
 
-function authPassed(userData) {
+function setUser(userData) {
   return {
-    type: USER_AUTH_PASSED,
+    type: SET_CURRENT_USER,
     payload: { ...userData },
   };
+}
+
+function noUser() {
+  return {
+    type: SET_NO_USER,
+  };
+}
+
+export function userLogOut() {
+  throw new Error('Not Implemented');
 }
 
 export function authenticateUser(postData) {
@@ -26,18 +45,40 @@ export function authenticateUser(postData) {
       'http://localhost:4000/api/v1/auth/signin',
       {
         method: 'POST',
-        body: postData,
-        headers: new Headers(),
+        body: JSON.stringify(postData),
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
       },
     )
+      .then((res) => res.json())
       .then((res) => {
-        console.log(res);
-        // dispatch(authPassed());
-        console.log('auth passed');
+        if (res.success === false) {
+          dispatch(authFail(res.message));
+        } else {
+          // Save user details to indexDB
+          saveUser(res.data)
+            .then(() => {
+              dispatch(setUser(res.data));
+            })
+            .catch(() => {
+              throw new Error('Auth failed on client side.');
+            });
+        }
       })
-      .catch(() => {
-        dispatch(authFail());
-        console.log('auth failed');
+      .catch((error) => {
+        dispatch(authFail(error.message));
       });
   };
+}
+
+export function resetUser() {
+  return (dispatch) => getUser()
+    .then((userData) => {
+      dispatch(setUser(userData));
+    })
+    .catch(() => {
+      dispatch(noUser());
+    });
 }
