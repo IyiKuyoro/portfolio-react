@@ -1,0 +1,10 @@
+.avatar {
+  border-radius: 50%;
+  display: inline;
+  border: 1px solid rgb(196, 244, 255);
+}
+
+.avatar:hover {
+  border: 1px solid #88EAFF;
+  cursor: pointer;
+}

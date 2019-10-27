@@ -21,6 +21,17 @@
   font-size: 0.9em;
 }
 
+.avatarSize {
+  width: 50px;
+  margin-left: 10px;
+}
+
+.menuControls {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
 @media screen and (max-width: 323px) {
   .title {
     width: 100%;
