@@ -38,7 +38,7 @@ export function userLogOut() {
   throw new Error('Not Implemented');
 }
 
-export function authenticateUser(postData) {
+export function authenticateUser(postData, history) {
   return (dispatch) => {
     dispatch(authStarted());
     return fetch(
@@ -61,6 +61,7 @@ export function authenticateUser(postData) {
           saveUser(res.data)
             .then(() => {
               dispatch(setUser(res.data));
+              history.push('/');
             })
             .catch(() => {
               throw new Error('Auth failed on client side.');
@@ -76,7 +77,11 @@ export function authenticateUser(postData) {
 export function resetUser() {
   return (dispatch) => getUser()
     .then((userData) => {
-      dispatch(setUser(userData));
+      if (userData) {
+        dispatch(setUser(userData));
+      } else {
+        dispatch(noUser());
+      }
     })
     .catch(() => {
       dispatch(noUser());

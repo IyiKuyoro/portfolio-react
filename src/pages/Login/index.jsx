@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import { authenticateUser } from 'Actions/authUser';
@@ -28,14 +29,14 @@ class Login extends Component {
 
   handleLogin() {
     const { userName, password } = this.state;
-    const { createLoginAction } = this.props;
+    const { createLoginAction, history } = this.props;
 
     const userInfo = {
       userName,
       password,
     };
 
-    createLoginAction(userInfo);
+    createLoginAction(userInfo, history);
   }
 
   editUserName(userName) {
@@ -142,10 +143,13 @@ Login.propTypes = {
   loading: PropTypes.bool.isRequired,
   error: PropTypes.bool.isRequired,
   errorMessage: PropTypes.string.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  createLoginAction: (loginData) => dispatch(authenticateUser(loginData)),
+  createLoginAction: (loginData, history) => dispatch(authenticateUser(loginData, history)),
 });
 
 const mapStateToProps = (state) => ({
@@ -155,4 +159,4 @@ const mapStateToProps = (state) => ({
   isAuthenticated: state.authUser.isAuthenticated,
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Login));
