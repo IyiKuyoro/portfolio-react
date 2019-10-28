@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 
 import Avatar from 'Atoms/Avatar';
 import Button from 'Atoms/Button';
+import toggleMenu from 'Actions/controls';
 import Styles from './header.styles.scss';
 
 function handleGetCV() {
@@ -11,7 +12,7 @@ function handleGetCV() {
 }
 
 function Header(props) {
-  const { isAuthenticated } = props;
+  const { isAuthenticated, toggleUserMenu } = props;
 
   return (
     <div className={Styles.header}>
@@ -19,7 +20,17 @@ function Header(props) {
         <h1 className={Styles.title}>Opeoluwa Iyi-Kuyoro</h1>
         <div className={Styles.menuControls}>
           <Button handleClick={handleGetCV} />
-          { isAuthenticated && <Avatar sizeStyle={Styles.avatarSize} /> }
+          { isAuthenticated && (
+          <Avatar
+            sizeStyle={Styles.avatarSize}
+            handleClick={() => {
+              toggleUserMenu();
+            }}
+            handleKeyPress={() => {
+              toggleUserMenu();
+            }}
+          />
+          ) }
         </div>
       </div>
     </div>
@@ -27,8 +38,15 @@ function Header(props) {
 }
 
 Header.propTypes = {
+  toggleUserMenu: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
 };
+
+function mapDispatchToProps(dispatch) {
+  return ({
+    toggleUserMenu: () => dispatch(toggleMenu()),
+  });
+}
 
 function mapStateToProps(state) {
   return ({
@@ -36,4 +54,4 @@ function mapStateToProps(state) {
   });
 }
 
-export default connect(mapStateToProps)(Header);
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

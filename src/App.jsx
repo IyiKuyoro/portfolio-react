@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import Home from 'Pages/Home';
 import Login from 'Pages/Login';
 import noAuthCheck from 'HOC/noAuthCheck';
+import UserMenu from 'Compounds/UserMenu';
 import { resetUser } from './store/actions/authUser';
 
 class App extends Component {
@@ -19,6 +20,7 @@ class App extends Component {
     return (
       <div>
         <Router>
+          <UserMenu />
           <Route exact path="/" component={Home} />
           <Route path="/login" component={noAuthCheck(Login)} />
         </Router>
