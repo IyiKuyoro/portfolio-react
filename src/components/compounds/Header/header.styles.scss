@@ -22,7 +22,9 @@
 }
 
 .avatarSize {
-  width: 50px;
+  width: 4em;
+  height: 4em;
+  padding: 0;
   margin-left: 10px;
 }
 
@@ -33,8 +35,4 @@
 }
 
 @media screen and (max-width: 323px) {
-  .title {
-    width: 100%;
-    text-align: center;
-  }
 }

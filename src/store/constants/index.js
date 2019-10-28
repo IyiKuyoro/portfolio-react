@@ -2,3 +2,4 @@ export const USER_AUTH_STARTED = 'USER_AUTH_STARTED';
 export const USER_AUTH_FAILED = 'USER_AUTH_FAILED';
 export const SET_CURRENT_USER = 'SET_CURRENT_USER';
 export const SET_NO_USER = 'SET_NO_USER';
+export const TOGGLE_MENU = 'TOGGLE_MENU';
