@@ -1,4 +1,4 @@
-import { saveUser, getUser } from '../../indexDB/auth';
+import { saveUser, getUser, clearUser } from '../../indexDB/auth';
 import {
   USER_AUTH_FAILED,
   USER_AUTH_STARTED,
@@ -35,7 +35,13 @@ function noUser() {
 }
 
 export function userLogOut() {
-  throw new Error('Not Implemented');
+  return (dispatch) => clearUser()
+    .then(() => {
+      dispatch(noUser());
+    })
+    .catch(() => {
+      console.log('Cannot log user out');
+    });
 }
 
 export function authenticateUser(postData, history) {

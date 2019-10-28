@@ -84,3 +84,41 @@ export function getUser() {
     };
   });
 }
+
+export function clearUser() {
+  return new Promise((resolve, reject) => {
+    const openRequest = indexedDB.open('iyikuyoro-portfolio-database', 1);
+
+    openRequest.onupgradeneeded = () => {
+      const db = openRequest.result;
+      if (!db.objectStoreNames.contains('users')) {
+        reject();
+      }
+    };
+
+    openRequest.onerror = () => {
+      console.error('Error', openRequest.error);
+    };
+
+    openRequest.onsuccess = () => {
+      const db = openRequest.result;
+      db.onversionchange = () => {
+        db.close();
+        alert('Database is outdated, please reload the page.');
+      };
+
+      // DB is ready for use
+      const transaction = db.transaction('users', 'readwrite');
+      const users = transaction.objectStore('users');
+      const request = users.clear();
+
+      request.onsuccess = () => {
+        resolve();
+      };
+
+      request.onerror = () => {
+        reject();
+      };
+    };
+  });
+}
