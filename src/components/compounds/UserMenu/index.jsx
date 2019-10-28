@@ -3,10 +3,11 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import toggleMenu from 'Actions/controls';
+import { userLogOut } from 'Actions/authUser';
 import Styles from './usermenu.styles.scss';
 
 function UserMenu(props) {
-  const { userMenuOpen, toggleUserMenu } = props;
+  const { userMenuOpen, toggleUserMenu, logUserOut } = props;
 
   return (
     <div
@@ -21,7 +22,7 @@ function UserMenu(props) {
       className={`${Styles.wrapper} ${userMenuOpen ? Styles.visible : Styles.invisible}`}
     >
       <div className={Styles.menuList}>
-        <button className={Styles.menuItem} type="button">Logout</button>
+        <button onClick={logUserOut} className={Styles.menuItem} type="button">Logout</button>
       </div>
     </div>
   );
@@ -30,11 +31,13 @@ function UserMenu(props) {
 UserMenu.propTypes = {
   userMenuOpen: PropTypes.bool.isRequired,
   toggleUserMenu: PropTypes.func.isRequired,
+  logUserOut: PropTypes.func.isRequired,
 };
 
 function mapDispatchToProps(dispatch) {
   return {
     toggleUserMenu: () => dispatch(toggleMenu()),
+    logUserOut: () => dispatch(userLogOut()),
   };
 }
 
