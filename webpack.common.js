@@ -1,12 +1,14 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
+const Dotenv = require('dotenv-webpack');
 
 module.exports = {
-  entry: './src/index.jsx',
+  entry: ['@babel/polyfill', './src/index.jsx'],
   output: {
     path: path.join(__dirname, '/dist'),
     filename: 'bundle.js',
+    publicPath: '/',
   },
   module: {
     rules: [
@@ -29,6 +31,7 @@ module.exports = {
       Pages: path.resolve(__dirname, 'src/pages'),
       Actions: path.resolve(__dirname, 'src/store/actions'),
       HOC: path.resolve(__dirname, 'src/HOC'),
+      Services: path.resolve(__dirname, 'src/services'),
     },
   },
   plugins: [
@@ -37,5 +40,6 @@ module.exports = {
       template: './src/static/index.html',
     }),
     new CompressionPlugin(),
+    new Dotenv(),
   ],
 };

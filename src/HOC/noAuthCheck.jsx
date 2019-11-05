@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 
 export default function (ComposedComponent) {
   class RequireAuth extends Component {
-    componentWillMount() {
+    componentDidMount() {
       const { isAuthenticated, history } = this.props;
 
       if (isAuthenticated) {
@@ -13,7 +13,7 @@ export default function (ComposedComponent) {
       }
     }
 
-    componentWillUpdate() {
+    componentDidUpdate() {
       const { isAuthenticated, history } = this.props;
 
       if (isAuthenticated) {
