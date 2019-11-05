@@ -5,30 +5,22 @@ import Styles from './articleCards.styles.scss';
 import Card from './Card';
 
 function generateArticleCards(articles, mouseOver) {
-  return articles.map((article) => {
-    const style = {
-      left: `${30 * (article.id)}px`,
-      bottom: `${30 * (article.id)}px`,
-    };
-    Object.assign(article, { style });
-
-    return (
-      <Card
-        key={article.id}
-        article={article}
-        background={article.imageUrl}
-        mouseOver={mouseOver}
-      />
-    );
-  });
+  return articles.map((article) => (
+    <Card
+      key={article.id}
+      article={article}
+      background={article.imageUrl}
+      mouseOver={mouseOver}
+    />
+  ));
 }
 
 export default function ArticleCards(props) {
   const { articles, mouseOver } = props;
 
   return (
-    <div className={Styles.cardGroupWrapper}>
-      <div className={Styles.cardGroup}>
+    <div className={Styles.cardsWrapper}>
+      <div className={Styles.cardPadding}>
         {generateArticleCards(articles, mouseOver)}
       </div>
     </div>
