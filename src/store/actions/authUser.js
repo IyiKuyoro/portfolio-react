@@ -1,4 +1,3 @@
-import { saveUser, getUser, clearUser } from '../../indexDB/auth';
 import {
   USER_AUTH_FAILED,
   USER_AUTH_STARTED,
@@ -35,13 +34,10 @@ function noUser() {
 }
 
 export function userLogOut() {
-  return (dispatch) => clearUser()
-    .then(() => {
-      dispatch(noUser());
-    })
-    .catch(() => {
-      console.log('Cannot log user out');
-    });
+  return (dispatch) => {
+    localStorage.removeItem('user');
+    dispatch(noUser());
+  };
 }
 
 export function authenticateUser(postData, history) {
@@ -63,15 +59,9 @@ export function authenticateUser(postData, history) {
         if (res.success === false) {
           dispatch(authFail(res.message));
         } else {
-          // Save user details to indexDB
-          saveUser(res.data)
-            .then(() => {
-              dispatch(setUser(res.data));
-              history.push('/');
-            })
-            .catch(() => {
-              throw new Error('Auth failed on client side.');
-            });
+          localStorage.setItem('user', JSON.stringify(res.data));
+          dispatch(setUser(res.data));
+          history.goBack();
         }
       })
       .catch((error) => {
@@ -81,15 +71,13 @@ export function authenticateUser(postData, history) {
 }
 
 export function resetUser() {
-  return (dispatch) => getUser()
-    .then((userData) => {
-      if (userData) {
-        dispatch(setUser(userData));
-      } else {
-        dispatch(noUser());
-      }
-    })
-    .catch(() => {
+  return (dispatch) => {
+    const user = JSON.parse(localStorage.getItem('user'));
+
+    if (user) {
+      dispatch(setUser(user));
+    } else {
       dispatch(noUser());
-    });
+    }
+  };
 }
