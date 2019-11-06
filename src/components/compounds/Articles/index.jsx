@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
+import ArticlesService from 'Services/Articles';
 import Styles from './articles.styles.scss';
-import ArticlesList from './ArticlesList.json';
-import ArticleDisplay from './ArticleDisplay';
 import ArticleCards from './ArticleCards';
 
 export default class Articles extends Component {
@@ -10,32 +10,43 @@ export default class Articles extends Component {
     super(props);
     this.state = {
       currentArticleId: 0,
+      articlesList: [],
     };
   }
 
-  handleMouseOver(id) {
-    this.setState({
-      currentArticleId: id,
-    });
+  componentWillMount() {
+    ArticlesService.getAllArticles()
+      .then((res) => {
+        this.setState({
+          articlesList: res.data.articles,
+        });
+      })
+      .catch((e) => {
+        console.log('ERROR:', e);
+      });
   }
 
   render() {
-    const { currentArticleId } = this.state;
+    const { currentArticleId, articlesList } = this.state;
+
+    const { noHeading } = this.props;
 
     return (
       <div className={Styles.articles}>
-        <h2 className={Styles.heading}>Did I mention that I Write?</h2>
-        <div className={Styles.articlesDisplay}>
-          <ArticleDisplay
-            article={ArticlesList[currentArticleId]}
-          />
-          <ArticleCards
-            currentArticleId={currentArticleId}
-            articles={ArticlesList}
-            mouseOver={(id) => this.handleMouseOver(id)}
-          />
-        </div>
+        {noHeading || <h2 className={Styles.heading}>Did I mention that I Write?</h2>}
+        <ArticleCards
+          currentArticleId={currentArticleId}
+          articles={articlesList}
+        />
       </div>
     );
   }
 }
+
+Articles.propTypes = {
+  noHeading: PropTypes.bool,
+};
+
+Articles.defaultProps = {
+  noHeading: false,
+};
