@@ -8,7 +8,7 @@ const config = () => {
       };
     default:
       return {
-        backendUrl: 'http://localhost:4000/api/v1',
+        backendUrl: 'https://iyikuyoro-be.herokuapp.com/api/v1',
       };
   }
 };

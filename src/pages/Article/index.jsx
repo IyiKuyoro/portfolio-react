@@ -4,7 +4,8 @@ import TimePast from 'time_past';
 import CKEditor from '@ckeditor/ckeditor5-react';
 import BallonEditor from '@ckeditor/ckeditor5-build-balloon';
 
-import Header from 'Components/compounds/Header';
+import Header from 'Compounds/Header';
+import Disqus from 'Compounds/Disqus';
 import Styles from './article.styles.scss';
 
 function Article(props) {
@@ -15,6 +16,7 @@ function Article(props) {
       updatedAt,
       body,
       imageUrl,
+      slug,
     },
   } = props;
 
@@ -46,6 +48,7 @@ function Article(props) {
           disabled
         />
       </div>
+      <Disqus title={title} slug={slug} />
     </div>
   );
 }
@@ -58,6 +61,7 @@ Article.propTypes = {
     authors: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
     imageUrl: PropTypes.string,
     updatedAt: PropTypes.string.isRequired,
+    slug: PropTypes.string.isRequired,
   }).isRequired,
 };
 
