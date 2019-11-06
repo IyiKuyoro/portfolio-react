@@ -1,5 +1,10 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import {
+  shape,
+  string,
+  number,
+  bool,
+} from 'prop-types';
 import { Link } from 'react-router-dom';
 
 import Styles from './card.styles.scss';
@@ -49,15 +54,15 @@ export default function Card(props) {
 }
 
 Card.propTypes = {
-  article: PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    title: PropTypes.string.isRequired,
-    imageUrl: PropTypes.string,
-    link: PropTypes.string,
-    slug: PropTypes.string.isRequired,
-    external: PropTypes.bool.isRequired,
+  article: shape({
+    id: number.isRequired,
+    title: string.isRequired,
+    imageUrl: string,
+    link: string,
+    slug: string.isRequired,
+    external: bool.isRequired,
   }).isRequired,
-  backgroundImage: PropTypes.string,
+  backgroundImage: string,
 };
 
 

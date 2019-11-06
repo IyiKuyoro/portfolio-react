@@ -7,7 +7,7 @@
     "clear": "rm -rf dist",
     "start": "http-server dist",
     "dev": "NODE_ENV=development webpack-dev-server --mode development --open --hot",
-    "build": "npm run clear && webpack --config webpack.prod.js"
+    "build": "npm run clear && webpack --config webpack.prod.js && cp netlify_redirects.txt dist/_redirects"
   },
   "author": "Opeoluwa Iyi-Kuyoro",
   "license": "ISC",

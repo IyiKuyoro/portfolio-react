@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import { bool } from 'prop-types';
 
 import ArticlesService from 'Services/Articles';
 import Styles from './articles.styles.scss';
@@ -14,7 +14,7 @@ export default class Articles extends Component {
     };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     ArticlesService.getAllArticles()
       .then((res) => {
         this.setState({
@@ -44,7 +44,7 @@ export default class Articles extends Component {
 }
 
 Articles.propTypes = {
-  noHeading: PropTypes.bool,
+  noHeading: bool,
 };
 
 Articles.defaultProps = {

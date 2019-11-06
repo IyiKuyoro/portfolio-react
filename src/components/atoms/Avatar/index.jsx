@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { string, func } from 'prop-types';
 
 import Styles from './avatar.styles.scss';
 
@@ -26,7 +26,7 @@ export default function Avatar(props) {
 }
 
 Avatar.propTypes = {
-  sizeStyle: PropTypes.string.isRequired,
-  handleClick: PropTypes.func.isRequired,
-  handleKeyPress: PropTypes.func.isRequired,
+  sizeStyle: string.isRequired,
+  handleClick: func.isRequired,
+  handleKeyPress: func.isRequired,
 };
