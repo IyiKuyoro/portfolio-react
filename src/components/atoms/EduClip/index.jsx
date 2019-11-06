@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { string } from 'prop-types';
 
 export default function EduClip(props) {
   const { text } = props;
@@ -12,5 +12,5 @@ export default function EduClip(props) {
 }
 
 EduClip.propTypes = {
-  text: PropTypes.string.isRequired,
+  text: string.isRequired,
 };

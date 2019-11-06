@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { string, bool, func } from 'prop-types';
 
 import Styles from './inputFields.styles.scss';
 
@@ -60,17 +60,17 @@ Input.defaultProps = {
 };
 
 Input.propTypes = {
-  type: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  label: PropTypes.string.isRequired,
-  wrapperStyle: PropTypes.string,
-  inputStyle: PropTypes.string,
-  labelStyle: PropTypes.string,
-  labelTextStyle: PropTypes.string,
-  addedWrapperStyle: PropTypes.string,
-  value: PropTypes.string.isRequired,
-  editValue: PropTypes.func.isRequired,
-  validateInput: PropTypes.func.isRequired,
-  error: PropTypes.bool.isRequired,
-  errorMessage: PropTypes.string.isRequired,
+  type: string.isRequired,
+  name: string.isRequired,
+  label: string.isRequired,
+  wrapperStyle: string,
+  inputStyle: string,
+  labelStyle: string,
+  labelTextStyle: string,
+  addedWrapperStyle: string,
+  value: string.isRequired,
+  editValue: func.isRequired,
+  validateInput: func.isRequired,
+  error: bool.isRequired,
+  errorMessage: string.isRequired,
 };

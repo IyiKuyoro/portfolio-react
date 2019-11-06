@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { string, func } from 'prop-types';
 
 import Styles from './button.styles.scss';
 
@@ -23,7 +23,7 @@ Button.defaultProps = {
 };
 
 Button.propTypes = {
-  text: PropTypes.string,
-  handleClick: PropTypes.func.isRequired,
-  style: PropTypes.string,
+  text: string,
+  handleClick: func.isRequired,
+  style: string,
 };

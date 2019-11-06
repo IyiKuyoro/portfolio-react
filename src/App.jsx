@@ -1,16 +1,19 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
-import PropTypes from 'prop-types';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { func } from 'prop-types';
 
+import Article from 'Pages/Article';
 import Home from 'Pages/Home';
 import Login from 'Pages/Login';
+import notFound from 'Pages/404';
 import noAuthCheck from 'HOC/noAuthCheck';
+import preLoadArticle from 'HOC/preLoadArticle';
 import UserMenu from 'Compounds/UserMenu';
 import { resetUser } from './store/actions/authUser';
 
 class App extends Component {
-  componentWillMount() {
+  componentDidMount() {
     const { createSetUserAction } = this.props;
 
     createSetUserAction();
@@ -18,19 +21,23 @@ class App extends Component {
 
   render() {
     return (
-      <div>
-        <Router>
+      <Router>
+        <>
           <UserMenu />
-          <Route exact path="/" component={Home} />
-          <Route path="/login" component={noAuthCheck(Login)} />
-        </Router>
-      </div>
+          <Switch>
+            <Route exact path="/" component={Home} />
+            <Route path="/login" component={noAuthCheck(Login)} />
+            <Route exact path="/read/:slug" component={preLoadArticle(Article)} />
+            <Route component={notFound} />
+          </Switch>
+        </>
+      </Router>
     );
   }
 }
 
 App.propTypes = {
-  createSetUserAction: PropTypes.func.isRequired,
+  createSetUserAction: func.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
