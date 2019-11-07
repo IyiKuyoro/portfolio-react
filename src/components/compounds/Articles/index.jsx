@@ -4,6 +4,7 @@ import { bool } from 'prop-types';
 import ArticlesService from 'Services/Articles';
 import Styles from './articles.styles.scss';
 import ArticleCards from './ArticleCards';
+import LoadingSpinner from '../../atoms/LoadingSpinner';
 
 export default class Articles extends Component {
   constructor(props) {
@@ -11,6 +12,8 @@ export default class Articles extends Component {
     this.state = {
       currentArticleId: 0,
       articlesList: [],
+      loading: true,
+      error: false,
     };
   }
 
@@ -19,25 +22,37 @@ export default class Articles extends Component {
       .then((res) => {
         this.setState({
           articlesList: res.data.articles,
+          loading: false,
         });
       })
       .catch((e) => {
         console.log('ERROR:', e);
+        this.setState({
+          loading: false,
+          error: true,
+        });
       });
   }
 
   render() {
-    const { currentArticleId, articlesList } = this.state;
+    const {
+      currentArticleId, articlesList, loading, error,
+    } = this.state;
 
     const { noHeading } = this.props;
 
+    console.log(error);
+
     return (
-      <div className={Styles.articles}>
+      <div className={!error ? Styles.articles : Styles.noArticles}>
         {noHeading || <h2 className={Styles.heading}>Did I mention that I Write?</h2>}
+        {loading && <LoadingSpinner />}
+        {!loading && !error && (
         <ArticleCards
           currentArticleId={currentArticleId}
           articles={articlesList}
         />
+        )}
       </div>
     );
   }
