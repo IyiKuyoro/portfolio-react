@@ -1,0 +1,59 @@
+.overlay {
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(54, 54, 54, 0.308);
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+}
+
+.noOverlay {
+  display: none;
+}
+
+.modal {
+  min-width: 50%;
+  max-width: 70%;
+  background-color: #FFFFFF;
+  margin: auto;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+}
+
+.info {
+  border: 1px solid #7EFF84;
+}
+
+.caution {
+  border: 1px solid #FFB52C;
+}
+
+.error {
+  border: 1px solid #FD0B0B;
+}
+
+.closeButton {
+  width: 150px;
+  height: 30px;
+  margin: 0 auto;
+  margin-bottom: 20px;
+  border: none;
+  font-size: 0.6em;
+  background-color: #88EAFF;
+  border-radius: 2.5px;
+}
+
+.closeButton:hover,
+.closeButton:focus {
+  cursor: pointer;
+  outline: none;
+  background: rgb(88, 224, 255);
+  border: 1px solid rgb(196, 244, 255);
+}
+
+.message {
+  text-align: center;
+  margin: 50px;
+}
