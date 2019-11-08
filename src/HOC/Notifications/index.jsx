@@ -1,4 +1,6 @@
 import React from 'react';
+import { string } from 'prop-types';
+
 import ModalNotification from './Modal';
 import AnchorNotification from './Anchor';
 
@@ -13,11 +15,13 @@ export const NotificationSeverity = {
   caution: 'caution',
 };
 
-export function Notification(
-  message,
-  type = NotificationType.anchor,
-  severity = NotificationSeverity.info,
-) {
+export function Notification(props) {
+  const {
+    message,
+    type,
+    severity,
+  } = props;
+
   let notification = {};
   if (type === NotificationType.anchor) {
     notification = <ModalNotification type={type} severity={severity} message={message} />;
@@ -25,5 +29,16 @@ export function Notification(
     notification = <AnchorNotification type={type} severity={severity} message={message} />;
   }
 
-  return notification;
+  return (notification);
 }
+
+Notification.propTypes = {
+  type: string,
+  message: string.isRequired,
+  severity: string,
+};
+
+Notification.defaultProps = {
+  type: NotificationType.anchor,
+  severity: NotificationSeverity.info,
+};

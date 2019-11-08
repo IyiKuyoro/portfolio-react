@@ -5,6 +5,7 @@ import ArticlesService from 'Services/Articles';
 import Styles from './articles.styles.scss';
 import ArticleCards from './ArticleCards';
 import LoadingSpinner from '../../atoms/LoadingSpinner';
+import { Notification } from 'HOC/Notifications';
 
 export default class Articles extends Component {
   constructor(props) {
@@ -41,19 +42,20 @@ export default class Articles extends Component {
 
     const { noHeading } = this.props;
 
-    console.log(error);
-
     return (
-      <div className={!error ? Styles.articles : Styles.noArticles}>
-        {noHeading || <h2 className={Styles.heading}>Did I mention that I Write?</h2>}
-        {loading && <LoadingSpinner />}
-        {!loading && !error && (
-        <ArticleCards
-          currentArticleId={currentArticleId}
-          articles={articlesList}
-        />
-        )}
-      </div>
+      <>
+        <div className={!error ? Styles.articles : Styles.noArticles}>
+          {noHeading || <h2 className={Styles.heading}>Did I mention that I Write?</h2>}
+          {loading && <LoadingSpinner />}
+          {!loading && !error && (
+          <ArticleCards
+            currentArticleId={currentArticleId}
+            articles={articlesList}
+          />
+          )}
+        </div>
+        {error && <Notification message="Could not load articles..." />}
+      </>
     );
   }
 }
