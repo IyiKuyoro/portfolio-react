@@ -1,0 +1,58 @@
+@keyframes show-notification {
+  0% {right: -100%;}
+  25% {right: 2.5%;}
+  50% {right: 2.5%;}
+  65% {right: 2.5%;}
+  100% {right: -100%;}
+}
+
+.anchor {
+  position: fixed;
+  top: 20px;
+  right: 2.5%;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 0.7em;
+  max-width: 95%;
+  margin-left: 2.5%;
+  animation-name: show-notification;
+  animation-fill-mode: forwards;
+  animation-duration: 8s;
+  -webkit-animation-name: show-notification;
+  -webkit-animation-fill-mode: forwards;
+  -webkit-animation-duration: 8s;
+}
+
+.info {
+  background-color: #7EFF84;
+}
+
+.caution {
+  background-color: #FFB52C;
+}
+
+.error {
+  background-color: #FD0B0B;
+}
+
+.error .closeButton {
+  color: black;
+}
+
+.message {
+  margin: 5px;
+}
+
+.closeButton {
+  border: none;
+  background: none;
+  padding: 0;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  color: red;
+}
+
+.closeButton:hover {
+  cursor: pointer;
+}
