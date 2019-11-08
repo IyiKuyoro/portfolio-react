@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { bool } from 'prop-types';
 
-import ArticlesService from 'Services/Articles';
-import Styles from './articles.styles.scss';
-import ArticleCards from './ArticleCards';
-import LoadingSpinner from '../../atoms/LoadingSpinner';
+import LoadingSpinner from 'Atoms/LoadingSpinner';
 import { Notification } from 'HOC/Notifications';
+import ArticlesService from 'Services/Articles';
+
+import ArticleCards from './ArticleCards';
+import Styles from './articles.styles.scss';
 
 export default class Articles extends Component {
   constructor(props) {
@@ -26,8 +27,7 @@ export default class Articles extends Component {
           loading: false,
         });
       })
-      .catch((e) => {
-        console.log('ERROR:', e);
+      .catch(() => {
         this.setState({
           loading: false,
           error: true,

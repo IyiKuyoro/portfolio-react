@@ -24,9 +24,9 @@ export function Notification(props) {
 
   let notification = {};
   if (type === NotificationType.anchor) {
-    notification = <ModalNotification type={type} severity={severity} message={message} />;
+    notification = <AnchorNotification severity={severity} message={message} />;
   } else {
-    notification = <AnchorNotification type={type} severity={severity} message={message} />;
+    notification = <ModalNotification severity={severity} message={message} />;
   }
 
   return (notification);
