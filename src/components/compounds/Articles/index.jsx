@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import { bool } from 'prop-types';
 
+import LoadingSpinner from 'Atoms/LoadingSpinner';
+import { Notification } from 'HOC/Notifications';
 import ArticlesService from 'Services/Articles';
-import Styles from './articles.styles.scss';
+
 import ArticleCards from './ArticleCards';
+import Styles from './articles.styles.scss';
 
 export default class Articles extends Component {
   constructor(props) {
@@ -11,6 +14,8 @@ export default class Articles extends Component {
     this.state = {
       currentArticleId: 0,
       articlesList: [],
+      loading: true,
+      error: false,
     };
   }
 
@@ -19,26 +24,38 @@ export default class Articles extends Component {
       .then((res) => {
         this.setState({
           articlesList: res.data.articles,
+          loading: false,
         });
       })
-      .catch((e) => {
-        console.log('ERROR:', e);
+      .catch(() => {
+        this.setState({
+          loading: false,
+          error: true,
+        });
       });
   }
 
   render() {
-    const { currentArticleId, articlesList } = this.state;
+    const {
+      currentArticleId, articlesList, loading, error,
+    } = this.state;
 
     const { noHeading } = this.props;
 
     return (
-      <div className={Styles.articles}>
-        {noHeading || <h2 className={Styles.heading}>Did I mention that I Write?</h2>}
-        <ArticleCards
-          currentArticleId={currentArticleId}
-          articles={articlesList}
-        />
-      </div>
+      <>
+        <div className={!error ? Styles.articles : Styles.noArticles}>
+          {noHeading || <h2 className={Styles.heading}>Did I mention that I Write?</h2>}
+          {loading && <LoadingSpinner />}
+          {!loading && !error && (
+          <ArticleCards
+            currentArticleId={currentArticleId}
+            articles={articlesList}
+          />
+          )}
+        </div>
+        {error && <Notification message="Could not load articles..." />}
+      </>
     );
   }
 }
