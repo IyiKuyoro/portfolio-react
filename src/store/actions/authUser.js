@@ -41,6 +41,8 @@ export function userLogOut() {
 }
 
 export function authenticateUser(postData, history) {
+  const { push, location: { state } } = history;
+
   return (dispatch) => {
     dispatch(authStarted());
     return fetch(
@@ -61,7 +63,11 @@ export function authenticateUser(postData, history) {
         } else {
           localStorage.setItem('user', JSON.stringify(res.data));
           dispatch(setUser(res.data));
-          history.goBack();
+          if (state.errorMessage) {
+            push(state.prevPath);
+          } else {
+            push('/');
+          }
         }
       })
       .catch((error) => {
