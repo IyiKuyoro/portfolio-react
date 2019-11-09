@@ -9,14 +9,19 @@ export default class Hero extends Component {
     this.state = {
       currentStack: 0,
     };
+    this.animationInterval = undefined;
   }
 
   componentDidMount() {
     this.hookupShuffling();
   }
 
+  componentWillUnmount() {
+    clearInterval(this.animationInterval);
+  }
+
   hookupShuffling() {
-    setInterval(() => {
+    this.animationInterval = setInterval(() => {
       const { currentStack } = this.state;
 
       if (currentStack === stacks.length - 1) {

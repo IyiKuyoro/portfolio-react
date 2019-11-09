@@ -12,6 +12,9 @@ export default class Education extends Component {
       textClassList: [Styles.textWrapper],
       iconClassList: [Styles.iconWrapper],
     };
+    this.interval1 = undefined;
+    this.interval2 = undefined;
+    this.timeout = undefined;
   }
 
   componentDidMount() {
@@ -19,8 +22,14 @@ export default class Education extends Component {
     this.animateText();
   }
 
+  componentWillUnmount() {
+    clearInterval(this.interval1);
+    clearInterval(this.interval2);
+    clearTimeout(this.timeout);
+  }
+
   animateText() {
-    setInterval(() => {
+    this.interval1 = setInterval(() => {
       this.setState({
         textClassList: [Styles.textWrapper],
         iconClassList: [Styles.iconWrapper],
@@ -28,7 +37,7 @@ export default class Education extends Component {
     }, 3000);
 
     // Change text
-    setInterval(() => {
+    this.interval2 = setInterval(() => {
       const { currentId } = this.state;
       // Run change text animation
       this.setState({
@@ -36,7 +45,7 @@ export default class Education extends Component {
         iconClassList: [Styles.iconWrapper, Styles.addIconAnimation],
       });
 
-      setTimeout(() => {
+      this.timeout = setTimeout(() => {
         if (currentId === 2) {
           this.setState({
             currentId: 0,

@@ -19,6 +19,10 @@ export default class Projects extends Component {
     this.changeProjectAtIntervals();
   }
 
+  componentWillUnmount() {
+    clearInterval(this.projectInterval);
+  }
+
   // Hooks up the changing of projects at a 6 secs interval
   changeProjectAtIntervals() {
     this.projectInterval = setInterval(() => {

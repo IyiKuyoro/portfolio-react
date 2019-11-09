@@ -7,7 +7,7 @@ import Projects from 'Components/compounds/Projects';
 import Articles from 'Components/compounds/Articles';
 import Video from 'Components/compounds/Video';
 import Footer from 'Components/compounds/Footer';
-import UserMenu from '../../components/compounds/UserMenu';
+import UserMenu from 'Components/compounds/UserMenu';
 
 export default class Home extends Component {
   constructor(props) {
