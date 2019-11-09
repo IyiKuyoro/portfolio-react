@@ -6,16 +6,18 @@ import { func } from 'prop-types';
 import Article from 'Pages/Article';
 import Home from 'Pages/Home';
 import Login from 'Pages/Login';
+import EditArticle from 'Pages/EditArticle';
 import notFound from 'Pages/404';
+import isLoggedInCheck from 'HOC/isLoggedInCheck';
 import noAuthCheck from 'HOC/noAuthCheck';
 import preLoadArticle from 'HOC/preLoadArticle';
 import UserMenu from 'Compounds/UserMenu';
 import { resetUser } from './store/actions/authUser';
 
 class App extends Component {
-  componentDidMount() {
+  constructor(props) {
+    super(props);
     const { createSetUserAction } = this.props;
-
     createSetUserAction();
   }
 
@@ -28,6 +30,7 @@ class App extends Component {
             <Route exact path="/" component={Home} />
             <Route path="/login" component={noAuthCheck(Login)} />
             <Route exact path="/read/:slug" component={preLoadArticle(Article)} />
+            <Route exact path="/write" component={isLoggedInCheck(EditArticle)} />
             <Route component={notFound} />
           </Switch>
         </>
