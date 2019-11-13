@@ -13,32 +13,69 @@ export default class ArticleBanner extends Component {
     this.state = {
       noImage: true,
       imageUrl: '',
-      uploading: false,
+      loading: false,
       errorMessage: '',
+      imagePublicId: '',
     };
     this.handleUpload = this.handleUpload.bind(this);
+    this.handleImageDelete = this.handleImageDelete.bind(this);
+  }
+
+  handleImageDelete() {
+    const { imagePublicId } = this.state;
+
+    this.setState({
+      loading: true,
+      errorMessage: '',
+    });
+
+    ImageService.deleteImage(imagePublicId)
+      .then((res) => {
+        if (res.success) {
+          this.setState({
+            loading: false,
+            imagePublicId: '',
+            imageUrl: '',
+            noImage: true,
+            errorMessage: '',
+          });
+        } else {
+          throw Error('Error uploading');
+        }
+      })
+      .catch(() => {
+        this.setState({
+          loading: false,
+          errorMessage: 'Could not delete this image...',
+        });
+      });
   }
 
   handleUpload(file) {
     ImageService.uploadImage(file)
       .then((res) => {
-        this.setState({
-          noImage: false,
-          uploading: false,
-          imageUrl: res.data.imageUrl,
-        });
+        if (res.success) {
+          this.setState({
+            noImage: false,
+            loading: false,
+            imageUrl: res.data.imageUrl,
+            imagePublicId: res.data.publicId,
+          });
+        } else {
+          throw Error('Error uploading');
+        }
       })
       .catch(() => {
         this.setState({
-          uploading: false,
-          errorMessage: 'Sorry, could not upload image',
+          loading: false,
+          errorMessage: 'Sorry, could not upload image.',
         });
       });
   }
 
   render() {
     const {
-      noImage, imageUrl, uploading, errorMessage,
+      noImage, imageUrl, loading, errorMessage,
     } = this.state;
 
     return (
@@ -47,19 +84,29 @@ export default class ArticleBanner extends Component {
           id="image"
           className={Styles.imageInput}
           type="file"
+          accept="image/*"
           tabIndex="-1"
           onChange={(e) => {
             this.setState({
-              uploading: true,
+              loading: true,
             });
             this.handleUpload(e.target.files[0]);
           }}
         />
-        { uploading && <div className={Styles.loader}><div className={Styles.loadingBar} /></div>}
-        { noImage && !uploading && <label htmlFor="image"><i className={`fas fa-image ${Styles.uploadImage}`} /></label> }
-        { noImage || <i className={`fas fa-trash-alt ${Styles.deleteImage}`} /> }
+        { loading && <div className={Styles.loader}><div className={Styles.loadingBar} /></div>}
+        { noImage && !loading && <label htmlFor="image"><i className={`fas fa-image ${Styles.uploadImage}`} /></label> }
+        { noImage || (
+        <i
+          onClick={this.handleImageDelete}
+          onKeyPress={this.handleImageDelete}
+          role="button"
+          tabIndex="0"
+          className={`fas fa-trash-alt ${Styles.deleteImage}`}
+        />
+        ) }
         { noImage || <img className={Styles.image} src={imageUrl} alt="article banner" /> }
-        {errorMessage && <Notification severity={NotificationSeverity.error} message="Error uploading image..." />}
+        {errorMessage
+        && <Notification severity={NotificationSeverity.error} message={errorMessage} />}
       </div>
     );
   }
