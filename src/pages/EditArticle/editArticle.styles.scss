@@ -1,0 +1,15 @@
+.title {
+  width: 95%;
+  padding: 0;
+  margin: 0 2.5%;
+  border: none;
+  height: 45px;
+  text-align: center;
+  font-size: 0.8em;
+  font-weight: bold;
+}
+
+.title:focus {
+  outline: none;
+  border: 0.5px solid black;
+}

@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/control-has-associated-label */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import ImageService from 'Services/Image';
 import { Notification, NotificationSeverity } from 'HOC/Notifications';
@@ -23,6 +24,7 @@ export default class ArticleBanner extends Component {
 
   handleImageDelete() {
     const { imagePublicId } = this.state;
+    const { updateBannerUrl } = this.props;
 
     this.setState({
       loading: true,
@@ -39,8 +41,9 @@ export default class ArticleBanner extends Component {
             noImage: true,
             errorMessage: '',
           });
+          updateBannerUrl('');
         } else {
-          throw Error('Error uploading');
+          throw Error('Error deleting');
         }
       })
       .catch(() => {
@@ -52,6 +55,8 @@ export default class ArticleBanner extends Component {
   }
 
   handleUpload(file) {
+    const { updateBannerUrl } = this.props;
+
     ImageService.uploadImage(file)
       .then((res) => {
         if (res.success) {
@@ -61,6 +66,7 @@ export default class ArticleBanner extends Component {
             imageUrl: res.data.imageUrl,
             imagePublicId: res.data.publicId,
           });
+          updateBannerUrl(res.data.imageUrl);
         } else {
           throw Error('Error uploading');
         }
@@ -111,3 +117,7 @@ export default class ArticleBanner extends Component {
     );
   }
 }
+
+ArticleBanner.propTypes = {
+  updateBannerUrl: PropTypes.func.isRequired,
+};
