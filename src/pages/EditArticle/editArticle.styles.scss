@@ -11,5 +11,12 @@
 
 .title:focus {
   outline: none;
-  border: 0.5px solid black;
+  border: 0.5px solid #53a0e4;
+}
+
+.articleBody {
+  font-size: 0.8em;
+  width: 95%;
+  max-width: 1200px;
+  margin: 0 auto;
 }
