@@ -66,7 +66,7 @@ export default class ArticleBanner extends Component {
             imageUrl: res.data.imageUrl,
             imagePublicId: res.data.publicId,
           });
-          updateBannerUrl(res.data.imageUrl);
+          updateBannerUrl(res.data.imageUrl, res.data.publicId);
         } else {
           throw Error('Error uploading');
         }

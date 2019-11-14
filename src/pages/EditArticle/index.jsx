@@ -1,41 +1,85 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 import CKEditor from '@ckeditor/ckeditor5-react';
 import BalloonEditor from '@ckeditor/ckeditor5-build-balloon';
 import { CloudinaryImageUploadAdapter } from 'ckeditor-cloudinary-uploader-adapter';
+import PropTypes from 'prop-types';
 
+import ImageService from 'Services/Image';
 import Header from 'Compounds/Header';
+import { saveArticle } from 'IndexDB/articles';
 import ArticleBanner from './ArticleBanner';
 
 import Styles from './editArticle.styles.scss';
 
-export default class EditArticle extends Component {
+class EditArticle extends Component {
   constructor(props) {
     super(props);
     this.state = ({
       title: '',
       articleBannerUrl: '',
+      articleImagePublicId: '',
       body: '',
+      newArticle: true,
+      changed: false,
     });
     this.handleBannerChange = this.handleBannerChange.bind(this);
     this.handleTitleChange = this.handleTitleChange.bind(this);
     this.handleBodyChange = this.handleBodyChange.bind(this);
+    this.saveArticle = this.saveArticle.bind(this);
   }
 
-  handleBannerChange(newImageUrl) {
+  componentWillMount() {
+    setInterval(this.saveArticle, 10000);
+  }
+
+
+  componentWillUnmount() {
+    const { articleImagePublicId, newArticle } = this.state;
+
+    if (articleImagePublicId && newArticle) {
+      ImageService.deleteImage(articleImagePublicId);
+    }
+    clearInterval(this.saveArticle);
+  }
+
+  saveArticle() {
+    const {
+      changed, title, articleBannerUrl, articleImagePublicId, body,
+    } = this.state;
+
+    if (changed) {
+      this.setState({
+        changed: false,
+      });
+      saveArticle({
+        title,
+        articleBannerUrl,
+        articleImagePublicId,
+        body,
+      });
+    }
+  }
+
+  handleBannerChange(newImageUrl, newImagePublicId) {
     this.setState({
       articleBannerUrl: newImageUrl,
+      articleImagePublicId: newImagePublicId,
+      changed: true,
     });
   }
 
   handleTitleChange(event) {
     this.setState({
       title: event.target.value,
+      changed: true,
     });
   }
 
-  handleBodyChange(event, editor) {
+  handleBodyChange(_, editor) {
     this.setState({
       body: editor.getData(),
+      changed: true,
     });
   }
 
@@ -44,7 +88,9 @@ export default class EditArticle extends Component {
       editor.plugins.get('FileRepository').createUploadAdapter = (loader) => new CloudinaryImageUploadAdapter(loader, 'iyikuyoro', 'example');
     }
 
-    const { title, articleBannerUrl, body } = this.state;
+    const {
+      title, articleBannerUrl, articleImagePublicId, body,
+    } = this.state;
     const config = {
       extraPlugins: [imagePluginFactory],
     };
@@ -52,7 +98,11 @@ export default class EditArticle extends Component {
     return (
       <>
         <Header />
-        <ArticleBanner updateBannerUrl={this.handleBannerChange} imageUrl={articleBannerUrl} />
+        <ArticleBanner
+          updateBannerUrl={this.handleBannerChange}
+          imageUrl={articleBannerUrl}
+          imagePublicId={articleImagePublicId}
+        />
         <input onChange={this.handleTitleChange} className={Styles.title} type="text" placeholder="Article Title..." value={title} />
         <div className={Styles.articleBody}>
           <CKEditor
@@ -66,3 +116,9 @@ export default class EditArticle extends Component {
     );
   }
 }
+
+EditArticle.propTypes = {
+  history: PropTypes.shape({}).isRequired,
+};
+
+export default withRouter(EditArticle);
