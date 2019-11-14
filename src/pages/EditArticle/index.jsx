@@ -5,9 +5,9 @@ import BalloonEditor from '@ckeditor/ckeditor5-build-balloon';
 import { CloudinaryImageUploadAdapter } from 'ckeditor-cloudinary-uploader-adapter';
 import PropTypes from 'prop-types';
 
-import ImageService from 'Services/Image';
 import Header from 'Compounds/Header';
-import { saveArticle } from 'IndexDB/articles';
+import { saveArticle, getArticle } from 'IndexDB/articles';
+import { Notification, NotificationSeverity } from 'HOC/Notifications';
 import ArticleBanner from './ArticleBanner';
 
 import Styles from './editArticle.styles.scss';
@@ -20,8 +20,8 @@ class EditArticle extends Component {
       articleBannerUrl: '',
       articleImagePublicId: '',
       body: '',
-      newArticle: true,
       changed: false,
+      errorMessage: '',
     });
     this.handleBannerChange = this.handleBannerChange.bind(this);
     this.handleTitleChange = this.handleTitleChange.bind(this);
@@ -30,16 +30,26 @@ class EditArticle extends Component {
   }
 
   componentWillMount() {
-    setInterval(this.saveArticle, 10000);
+    getArticle()
+      .then((article) => {
+        if (article) {
+          this.setState({
+            title: article.title,
+            articleBannerUrl: article.articleBannerUrl,
+            articleImagePublicId: article.articleImagePublicId,
+            body: article.body,
+          });
+        }
+      })
+      .catch(() => {
+        this.setState({
+          errorMessage: 'Something went wrong trying to retrieve you last work.',
+        });
+      });
+    setInterval(this.saveArticle, 5000);
   }
 
-
   componentWillUnmount() {
-    const { articleImagePublicId, newArticle } = this.state;
-
-    if (articleImagePublicId && newArticle) {
-      ImageService.deleteImage(articleImagePublicId);
-    }
     clearInterval(this.saveArticle);
   }
 
@@ -53,6 +63,7 @@ class EditArticle extends Component {
         changed: false,
       });
       saveArticle({
+        key: 'name',
         title,
         articleBannerUrl,
         articleImagePublicId,
@@ -89,7 +100,7 @@ class EditArticle extends Component {
     }
 
     const {
-      title, articleBannerUrl, articleImagePublicId, body,
+      title, articleBannerUrl, articleImagePublicId, body, errorMessage,
     } = this.state;
     const config = {
       extraPlugins: [imagePluginFactory],
@@ -112,6 +123,8 @@ class EditArticle extends Component {
             config={config}
           />
         </div>
+        {errorMessage
+        && <Notification severity={NotificationSeverity.caution} message={errorMessage} />}
       </>
     );
   }

@@ -12,19 +12,15 @@ export default class ArticleBanner extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      noImage: true,
-      imageUrl: '',
       loading: false,
       errorMessage: '',
-      imagePublicId: '',
     };
     this.handleUpload = this.handleUpload.bind(this);
     this.handleImageDelete = this.handleImageDelete.bind(this);
   }
 
   handleImageDelete() {
-    const { imagePublicId } = this.state;
-    const { updateBannerUrl } = this.props;
+    const { updateBannerUrl, imagePublicId } = this.props;
 
     this.setState({
       loading: true,
@@ -36,12 +32,9 @@ export default class ArticleBanner extends Component {
         if (res.success) {
           this.setState({
             loading: false,
-            imagePublicId: '',
-            imageUrl: '',
-            noImage: true,
             errorMessage: '',
           });
-          updateBannerUrl('');
+          updateBannerUrl('', '');
         } else {
           throw Error('Error deleting');
         }
@@ -61,10 +54,7 @@ export default class ArticleBanner extends Component {
       .then((res) => {
         if (res.success) {
           this.setState({
-            noImage: false,
             loading: false,
-            imageUrl: res.data.imageUrl,
-            imagePublicId: res.data.publicId,
           });
           updateBannerUrl(res.data.imageUrl, res.data.publicId);
         } else {
@@ -81,8 +71,9 @@ export default class ArticleBanner extends Component {
 
   render() {
     const {
-      noImage, imageUrl, loading, errorMessage,
+      loading, errorMessage,
     } = this.state;
+    const { imageUrl } = this.props;
 
     return (
       <div className={Styles.imageContainer}>
@@ -100,8 +91,8 @@ export default class ArticleBanner extends Component {
           }}
         />
         { loading && <div className={Styles.loader}><div className={Styles.loadingBar} /></div>}
-        { noImage && !loading && <label htmlFor="image"><i className={`fas fa-image ${Styles.uploadImage}`} /></label> }
-        { noImage || (
+        { imageUrl === '' && !loading && <label htmlFor="image"><i className={`fas fa-image ${Styles.uploadImage}`} /></label> }
+        { imageUrl === '' || (
         <i
           onClick={this.handleImageDelete}
           onKeyPress={this.handleImageDelete}
@@ -110,7 +101,7 @@ export default class ArticleBanner extends Component {
           className={`fas fa-trash-alt ${Styles.deleteImage}`}
         />
         ) }
-        { noImage || <img className={Styles.image} src={imageUrl} alt="article banner" /> }
+        { imageUrl === '' || <img className={Styles.image} src={imageUrl} alt="article banner" /> }
         {errorMessage
         && <Notification severity={NotificationSeverity.error} message={errorMessage} />}
       </div>
@@ -120,4 +111,6 @@ export default class ArticleBanner extends Component {
 
 ArticleBanner.propTypes = {
   updateBannerUrl: PropTypes.func.isRequired,
+  imageUrl: PropTypes.string.isRequired,
+  imagePublicId: PropTypes.string.isRequired,
 };
