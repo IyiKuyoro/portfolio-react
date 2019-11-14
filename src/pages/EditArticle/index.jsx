@@ -5,6 +5,7 @@ import BalloonEditor from '@ckeditor/ckeditor5-build-balloon';
 import { CloudinaryImageUploadAdapter } from 'ckeditor-cloudinary-uploader-adapter';
 import PropTypes from 'prop-types';
 
+import Button from 'Atoms/Button';
 import Header from 'Compounds/Header';
 import { saveArticle, getArticle } from 'IndexDB/articles';
 import { Notification, NotificationSeverity } from 'HOC/Notifications';
@@ -27,6 +28,9 @@ class EditArticle extends Component {
     this.handleTitleChange = this.handleTitleChange.bind(this);
     this.handleBodyChange = this.handleBodyChange.bind(this);
     this.saveArticle = this.saveArticle.bind(this);
+    this.handleArticlePublish = this.handleArticlePublish.bind(this);
+    this.handleArticleSaveDraft = this.handleArticleSaveDraft.bind(this);
+    this.validateArticle = this.validateArticle.bind(this);
   }
 
   componentWillMount() {
@@ -94,6 +98,24 @@ class EditArticle extends Component {
     });
   }
 
+  handleArticlePublish(event) {
+
+  }
+
+  handleArticleSaveDraft(event) {
+
+  }
+
+  validateArticle() {
+    const { title, body } = this.state;
+
+    if (title === '' || body === '') {
+      return false;
+    }
+
+    return true;
+  }
+
   render() {
     function imagePluginFactory(editor) {
       editor.plugins.get('FileRepository').createUploadAdapter = (loader) => new CloudinaryImageUploadAdapter(loader, 'iyikuyoro', 'example');
@@ -125,6 +147,13 @@ class EditArticle extends Component {
         </div>
         {errorMessage
         && <Notification severity={NotificationSeverity.caution} message={errorMessage} />}
+        {this.validateArticle()
+        && (
+        <>
+          <Button handleClick={this.handleArticlePublish} text="Publish" />
+          <Button handleClick={this.handleArticleSaveDraft} text="Save Draft" />
+        </>
+        )}
       </>
     );
   }
