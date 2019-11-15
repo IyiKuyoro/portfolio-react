@@ -79,5 +79,26 @@ export function getArticle() {
 }
 
 export function deleteArticle() {
+  return new Promise((resolve, reject) => {
+    const openRequest = indexedDB.open('iyikuyoro-portfolio-database', 1);
+    openRequest.onupgradeneeded = () => upgradeNeeded(openRequest);
+    openRequest.onerror = () => onError(openRequest);
 
+    openRequest.onsuccess = () => {
+      const db = openRequest.result;
+      db.onversionchange = () => onVersionChange(db);
+
+      const transaction = db.transaction('articles', 'readwrite');
+      const articles = transaction.objectStore('articles');
+      const request = articles.clear();
+
+      request.onsuccess = () => {
+        resolve();
+      };
+
+      request.onerror = () => {
+        reject();
+      };
+    };
+  });
 }

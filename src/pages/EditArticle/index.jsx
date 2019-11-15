@@ -1,16 +1,18 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
 import CKEditor from '@ckeditor/ckeditor5-react';
 import BalloonEditor from '@ckeditor/ckeditor5-build-balloon';
-import { CloudinaryImageUploadAdapter } from 'ckeditor-cloudinary-uploader-adapter';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { CloudinaryImageUploadAdapter } from 'ckeditor-cloudinary-uploader-adapter';
+import { withRouter } from 'react-router-dom';
 
+import ArticleService from 'Services/Articles';
 import Button from 'Atoms/Button';
 import Header from 'Compounds/Header';
-import { saveArticle, getArticle } from 'IndexDB/articles';
+import { saveArticle, getArticle, deleteArticle } from 'IndexDB/articles';
 import { Notification, NotificationSeverity } from 'HOC/Notifications';
-import ArticleBanner from './ArticleBanner';
 
+import ArticleBanner from './ArticleBanner';
 import Styles from './editArticle.styles.scss';
 
 class EditArticle extends Component {
@@ -21,19 +23,22 @@ class EditArticle extends Component {
       articleBannerUrl: '',
       articleImagePublicId: '',
       body: '',
+      category: '',
       changed: false,
       errorMessage: '',
+      errorSeverity: NotificationSeverity.caution,
     });
     this.handleBannerChange = this.handleBannerChange.bind(this);
     this.handleTitleChange = this.handleTitleChange.bind(this);
     this.handleBodyChange = this.handleBodyChange.bind(this);
     this.saveArticle = this.saveArticle.bind(this);
     this.handleArticlePublish = this.handleArticlePublish.bind(this);
-    this.handleArticleSaveDraft = this.handleArticleSaveDraft.bind(this);
+    // this.handleArticleSaveDraft = this.handleArticleSaveDraft.bind(this);
     this.validateArticle = this.validateArticle.bind(this);
+    this.handleCategoryChange = this.handleCategoryChange.bind(this);
   }
 
-  componentWillMount() {
+  componentDidMount() {
     getArticle()
       .then((article) => {
         if (article) {
@@ -42,6 +47,7 @@ class EditArticle extends Component {
             articleBannerUrl: article.articleBannerUrl,
             articleImagePublicId: article.articleImagePublicId,
             body: article.body,
+            category: article.category,
           });
         }
       })
@@ -59,7 +65,7 @@ class EditArticle extends Component {
 
   saveArticle() {
     const {
-      changed, title, articleBannerUrl, articleImagePublicId, body,
+      changed, title, articleBannerUrl, articleImagePublicId, body, category,
     } = this.state;
 
     if (changed) {
@@ -72,6 +78,7 @@ class EditArticle extends Component {
         articleBannerUrl,
         articleImagePublicId,
         body,
+        category,
       });
     }
   }
@@ -98,13 +105,50 @@ class EditArticle extends Component {
     });
   }
 
-  handleArticlePublish(event) {
-
+  handleCategoryChange(newCategory) {
+    this.setState({
+      category: newCategory,
+      changed: true,
+    });
   }
 
-  handleArticleSaveDraft(event) {
+  handleArticlePublish() {
+    const { userData: { firstName, lastName, token }, history } = this.props;
+    const {
+      title, articleBannerUrl, articleImagePublicId, body, category,
+    } = this.state;
 
+    const article = {
+      title,
+      category,
+      body,
+      imageUrl: articleBannerUrl,
+      imageID: articleImagePublicId,
+      authors: `${firstName} ${lastName}`,
+    };
+
+    ArticleService.publishArticle(article, token)
+      .then((res) => {
+        if (res.success) {
+          deleteArticle();
+          history.push(`/read/${res.data.slug}`);
+        } else {
+          this.setState({
+            errorMessage: 'Oops! Could not publish that...',
+            errorSeverity: NotificationSeverity.error,
+          });
+        }
+      })
+      .catch(() => {
+        this.setState({
+          errorMessage: 'Oops! Could not publish that...',
+        });
+      });
   }
+
+  // handleArticleSaveDraft(event) {
+
+  // }
 
   validateArticle() {
     const { title, body } = this.state;
@@ -122,7 +166,7 @@ class EditArticle extends Component {
     }
 
     const {
-      title, articleBannerUrl, articleImagePublicId, body, errorMessage,
+      title, articleBannerUrl, articleImagePublicId, body, errorMessage, errorSeverity, category,
     } = this.state;
     const config = {
       extraPlugins: [imagePluginFactory],
@@ -146,13 +190,17 @@ class EditArticle extends Component {
           />
         </div>
         {errorMessage
-        && <Notification severity={NotificationSeverity.caution} message={errorMessage} />}
+        && <Notification severity={errorSeverity} message={errorMessage} />}
+        <div className={Styles.buttons}>
+          <input onChange={() => this.handleCategoryChange('tech')} className={`${Styles.categoryRadio} ${Styles.tech}`} type="radio" name="category" checked={category === 'tech'} />
+          <input onChange={() => this.handleCategoryChange('inspirational')} className={`${Styles.categoryRadio} ${Styles.inspirational}`} type="radio" name="category" checked={category === 'inspirational'} />
+        </div>
         {this.validateArticle()
         && (
-        <>
+        <div className={Styles.buttons}>
           <Button handleClick={this.handleArticlePublish} text="Publish" />
-          <Button handleClick={this.handleArticleSaveDraft} text="Save Draft" />
-        </>
+          {/* <Button handleClick={this.handleArticleSaveDraft} text="Save Draft" /> */}
+        </div>
         )}
       </>
     );
@@ -160,7 +208,16 @@ class EditArticle extends Component {
 }
 
 EditArticle.propTypes = {
-  history: PropTypes.shape({}).isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+  userData: PropTypes.objectOf(PropTypes.string).isRequired,
 };
 
-export default withRouter(EditArticle);
+function mapStateToProps(state) {
+  return ({
+    userData: state.authUser.userData,
+  });
+}
+
+export default connect(mapStateToProps)(withRouter(EditArticle));
