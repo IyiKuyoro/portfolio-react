@@ -32,6 +32,7 @@ module.exports = {
       Actions: path.resolve(__dirname, 'src/store/actions'),
       HOC: path.resolve(__dirname, 'src/HOC'),
       Services: path.resolve(__dirname, 'src/services'),
+      IndexDB: path.resolve(__dirname, 'src/indexDB'),
     },
   },
   plugins: [

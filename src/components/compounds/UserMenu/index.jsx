@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 import toggleMenu from 'Actions/controls';
 import { userLogOut } from 'Actions/authUser';
@@ -22,6 +23,9 @@ function UserMenu(props) {
       className={`${Styles.wrapper} ${userMenuOpen ? Styles.visible : Styles.invisible}`}
     >
       <div className={Styles.menuList}>
+        <Link to="/write" className={Styles.menuItemLink} type="button">
+          <div>Write</div>
+        </Link>
         <button onClick={logUserOut} className={Styles.menuItem} type="button">Logout</button>
       </div>
     </div>

@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 import Avatar from 'Atoms/Avatar';
 import Button from 'Atoms/Button';
@@ -17,7 +18,7 @@ function Header(props) {
   return (
     <div className={Styles.header}>
       <div className={Styles.headerWrapper}>
-        <h1 className={Styles.title}>Opeoluwa Iyi-Kuyoro</h1>
+        <Link className={Styles.homeLink} to="/"><h1 className={Styles.title}>Opeoluwa Iyi-Kuyoro</h1></Link>
         <div className={Styles.menuControls}>
           <Button handleClick={handleGetCV} />
           { isAuthenticated && (
