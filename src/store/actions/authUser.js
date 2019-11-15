@@ -1,3 +1,4 @@
+import config from '../../config';
 import {
   USER_AUTH_FAILED,
   USER_AUTH_STARTED,
@@ -46,7 +47,7 @@ export function authenticateUser(postData, history) {
   return (dispatch) => {
     dispatch(authStarted());
     return fetch(
-      'http://localhost:4000/api/v1/auth/signin',
+      `${config.backendUrl}/auth/signin`,
       {
         method: 'POST',
         body: JSON.stringify(postData),
