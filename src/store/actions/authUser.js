@@ -34,10 +34,15 @@ function noUser() {
   };
 }
 
-export function userLogOut() {
+export function userLogOut(history) {
+  const forbiddenPaths = ['/write'];
+
   return (dispatch) => {
     localStorage.removeItem('user');
     dispatch(noUser());
+    if (forbiddenPaths.indexOf(history.location.pathname) >= 0) {
+      history.push('/');
+    }
   };
 }
 
