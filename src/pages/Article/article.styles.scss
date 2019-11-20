@@ -36,3 +36,22 @@
   max-height: 450px;
   object-fit: cover;
 }
+
+.btn {
+  background: #88EAFF;
+  border: none;
+  border-radius: 25px;
+  height: 35px;
+  padding: 0 20px;
+  font-size: 0.6em;
+  display: block;
+  left: 5%;
+  margin-top: 2.5%;
+  position: absolute;
+}
+
+.btn:hover {
+  cursor: pointer;
+  outline: none;
+  background: rgb(88, 224, 255);
+}
