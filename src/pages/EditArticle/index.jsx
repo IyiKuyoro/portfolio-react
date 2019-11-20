@@ -18,21 +18,25 @@ import Styles from './editArticle.styles.scss';
 class EditArticle extends Component {
   constructor(props) {
     super(props);
+    const { state } = props.history.location;
     this.state = ({
-      title: '',
-      articleBannerUrl: '',
-      articleImagePublicId: '',
-      body: '',
-      category: '',
+      title: state ? state.title : '',
+      articleBannerUrl: state ? state.imageUrl : '',
+      articleImagePublicId: state ? state.imagePublicId : '',
+      body: state ? state.body : '',
+      category: state ? state.category : '',
+      slug: state ? state.slug : '',
       changed: false,
       errorMessage: '',
       errorSeverity: NotificationSeverity.caution,
+      publishedArticle: !!state,
     });
     this.handleBannerChange = this.handleBannerChange.bind(this);
     this.handleTitleChange = this.handleTitleChange.bind(this);
     this.handleBodyChange = this.handleBodyChange.bind(this);
     this.saveArticle = this.saveArticle.bind(this);
     this.handleArticlePublish = this.handleArticlePublish.bind(this);
+    this.handleArticleRepublish = this.handleArticleRepublish.bind(this);
     // this.handleArticleSaveDraft = this.handleArticleSaveDraft.bind(this);
     this.validateArticle = this.validateArticle.bind(this);
     this.handleCategoryChange = this.handleCategoryChange.bind(this);
@@ -65,10 +69,10 @@ class EditArticle extends Component {
 
   saveArticle() {
     const {
-      changed, title, articleBannerUrl, articleImagePublicId, body, category,
+      changed, title, articleBannerUrl, articleImagePublicId, body, category, publishedArticle,
     } = this.state;
 
-    if (changed) {
+    if (changed && !publishedArticle) {
       this.setState({
         changed: false,
       });
@@ -113,7 +117,7 @@ class EditArticle extends Component {
   }
 
   handleArticlePublish() {
-    const { userData: { firstName, lastName, token }, history } = this.props;
+    const { userData: { token }, history } = this.props;
     const {
       title, articleBannerUrl, articleImagePublicId, body, category,
     } = this.state;
@@ -123,8 +127,7 @@ class EditArticle extends Component {
       category,
       body,
       imageUrl: articleBannerUrl,
-      imageID: articleImagePublicId,
-      authors: `${firstName} ${lastName}`,
+      imagePublicId: articleImagePublicId,
     };
 
     ArticleService.publishArticle(article, token)
@@ -132,6 +135,39 @@ class EditArticle extends Component {
         if (res.success) {
           deleteArticle();
           history.push(`/read/${res.data.slug}`);
+        } else {
+          this.setState({
+            errorMessage: 'Oops! Could not publish that...',
+            errorSeverity: NotificationSeverity.error,
+          });
+        }
+      })
+      .catch(() => {
+        this.setState({
+          errorMessage: 'Oops! Could not publish that...',
+        });
+      });
+  }
+
+  handleArticleRepublish() {
+    const { userData: { token }, history } = this.props;
+    const {
+      title, articleBannerUrl, articleImagePublicId, body, category, slug,
+    } = this.state;
+
+    const article = {
+      title,
+      category,
+      body,
+      imageUrl: articleBannerUrl || null,
+      imagePublicId: articleImagePublicId || null,
+    };
+
+    ArticleService.republishArticle(article, slug, token)
+      .then((res) => {
+        if (res.success) {
+          deleteArticle();
+          history.push(`/read/${slug}`);
         } else {
           this.setState({
             errorMessage: 'Oops! Could not publish that...',
@@ -166,7 +202,8 @@ class EditArticle extends Component {
     }
 
     const {
-      title, articleBannerUrl, articleImagePublicId, body, errorMessage, errorSeverity, category,
+      title, articleBannerUrl, articleImagePublicId,
+      body, errorMessage, errorSeverity, category, publishedArticle,
     } = this.state;
     const config = {
       extraPlugins: [imagePluginFactory],
@@ -198,7 +235,8 @@ class EditArticle extends Component {
         {this.validateArticle()
         && (
         <div className={Styles.buttons}>
-          <Button handleClick={this.handleArticlePublish} text="Publish" />
+          {publishedArticle || <Button handleClick={this.handleArticlePublish} text="Publish" />}
+          {publishedArticle && <Button handleClick={this.handleArticleRepublish} text="Republish" />}
           {/* <Button handleClick={this.handleArticleSaveDraft} text="Save Draft" /> */}
         </div>
         )}
@@ -210,8 +248,14 @@ class EditArticle extends Component {
 EditArticle.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
+    location: PropTypes.shape({
+      state: PropTypes.objectOf(PropTypes.string),
+    }).isRequired,
   }).isRequired,
-  userData: PropTypes.objectOf(PropTypes.string).isRequired,
+  userData: PropTypes.shape({
+    token: PropTypes.string.isRequired,
+    id: PropTypes.number.isRequired,
+  }).isRequired,
 };
 
 function mapStateToProps(state) {

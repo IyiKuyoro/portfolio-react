@@ -45,4 +45,21 @@ export default class ArticlesService {
 
     return res.json();
   }
+
+  static async republishArticle(article, slug, userToken) {
+    const res = await fetch(
+      `${config.backendUrl}/articles/${slug}`,
+      {
+        method: 'PUT',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          authorization: `Bearer ${userToken}`,
+        },
+        body: JSON.stringify(article),
+      },
+    );
+
+    return res.json();
+  }
 }

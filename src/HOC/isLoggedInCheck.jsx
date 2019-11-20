@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import {
-  shape, func, bool, objectOf, string,
+  shape, func, bool, number,
 } from 'prop-types';
 
 export default function (ComposedComponent) {
@@ -35,7 +35,9 @@ export default function (ComposedComponent) {
     }).isRequired,
     authUser: shape({
       isAuthenticated: bool.isRequired,
-      userData: objectOf(string).isRequired,
+      userData: shape({
+        id: number.isRequired,
+      }).isRequired,
     }).isRequired,
   };
 
