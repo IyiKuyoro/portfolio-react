@@ -1,3 +1,4 @@
+import config from '../../config';
 import {
   USER_AUTH_FAILED,
   USER_AUTH_STARTED,
@@ -33,18 +34,25 @@ function noUser() {
   };
 }
 
-export function userLogOut() {
+export function userLogOut(history) {
+  const forbiddenPaths = ['/write'];
+
   return (dispatch) => {
     localStorage.removeItem('user');
     dispatch(noUser());
+    if (forbiddenPaths.indexOf(history.location.pathname) >= 0) {
+      history.push('/');
+    }
   };
 }
 
 export function authenticateUser(postData, history) {
+  const { push, location: { state } } = history;
+
   return (dispatch) => {
     dispatch(authStarted());
     return fetch(
-      'http://localhost:4000/api/v1/auth/signin',
+      `${config.backendUrl}/auth/signin`,
       {
         method: 'POST',
         body: JSON.stringify(postData),
@@ -61,7 +69,11 @@ export function authenticateUser(postData, history) {
         } else {
           localStorage.setItem('user', JSON.stringify(res.data));
           dispatch(setUser(res.data));
-          history.goBack();
+          if (state.errorMessage) {
+            push(state.prevPath);
+          } else {
+            push('/');
+          }
         }
       })
       .catch((error) => {

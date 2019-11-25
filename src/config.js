@@ -4,7 +4,7 @@ const config = () => {
   switch (env) {
     case 'production':
       return {
-        backendUrl: 'https://iyikuyoro-be.herokuapp.com/api/v1',
+        backendUrl: 'https://iyikuyoro-staging.herokuapp.com/api/v1',
       };
     default:
       return {

@@ -7,6 +7,7 @@ import { authenticateUser } from 'Actions/authUser';
 import Input from 'Components/atoms/InputFields';
 import Button from 'Components/atoms/Button';
 import Header from 'Components/compounds/Header';
+import { Notification, NotificationSeverity } from 'HOC/Notifications';
 
 import Styles from './login.styles.scss';
 
@@ -90,7 +91,16 @@ class Login extends Component {
   }
 
   render() {
-    const { loading, errorMessage, error } = this.props;
+    const {
+      loading,
+      errorMessage,
+      error,
+      history: {
+        location: {
+          state,
+        },
+      },
+    } = this.props;
     const {
       userName,
       password,
@@ -102,6 +112,11 @@ class Login extends Component {
 
     return (
       <div>
+        {
+          state
+          && state.errorMessage
+          && <Notification severity={NotificationSeverity.error} message={state.errorMessage} />
+        }
         <Header />
         <div className={Styles.formContainer}>
           <form className={Styles.loginForm}>
@@ -145,6 +160,9 @@ Login.propTypes = {
   errorMessage: PropTypes.string.isRequired,
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
+    location: PropTypes.shape({
+      state: PropTypes.objectOf(PropTypes.string),
+    }).isRequired,
   }).isRequired,
 };
 

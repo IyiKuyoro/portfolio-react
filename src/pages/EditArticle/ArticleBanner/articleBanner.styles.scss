@@ -1,0 +1,58 @@
+.imageContainer {
+  min-height: 50px;
+}
+
+.imageInput {
+  position: fixed;
+  top: -100px;
+  left: -200px;
+}
+
+.uploadImage,
+.deleteImage {
+  position: absolute;
+  display: inline-block;
+  margin-left: 2.5%;
+  margin-top: 2%;
+}
+
+.uploadImage:hover,
+.uploadImage:focus {
+  cursor: pointer;
+  color: #88EAFF;
+}
+
+.deleteImage:hover,
+.deleteImage:focus {
+  cursor: pointer;
+  color: red;
+}
+
+.image {
+  width: 100vw;
+  max-height: 450px;
+  object-fit: cover;
+}
+
+.loader {
+  height: 4px;
+  width: 100vw;
+}
+
+.loadingBar {
+  width: 10%;
+  height: 4px;
+  background-color: #88EAFF;
+  animation: loading 4s infinite;
+  animation-fill-mode: forwards;
+  -webkit-animation: loading 4s infinite;
+  -webkit-animation-fill-mode: forwards;
+}
+
+@keyframes loading {
+  0% { width: 0%; margin-left: 0%;}
+  25% { width: 100%; margin-left: 0%;}
+  50% { width: 0%; margin-left: 100%;}
+  75% { width: 100%; margin-left: 0%;}
+  100% { width: 0%; margin-left: 0%;}
+}
