@@ -5,10 +5,12 @@ const config = () => {
     case 'production':
       return {
         backendUrl: 'https://iyikuyoro-be.herokuapp.com/api/v1',
+        imageUploadPreset: 'portfolio-assets',
       };
     default:
       return {
-        backendUrl: 'https://iyikuyoro-be.herokuapp.com/api/v1',
+        backendUrl: 'https://iyikuyoro-staging.herokuapp.com/api/v1',
+        imageUploadPreset: 'example',
       };
   }
 };

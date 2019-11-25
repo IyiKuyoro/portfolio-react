@@ -14,6 +14,7 @@ import { Notification, NotificationSeverity } from 'HOC/Notifications';
 
 import ArticleBanner from './ArticleBanner';
 import Styles from './editArticle.styles.scss';
+import config from '../../config';
 
 class EditArticle extends Component {
   constructor(props) {
@@ -198,14 +199,14 @@ class EditArticle extends Component {
 
   render() {
     function imagePluginFactory(editor) {
-      editor.plugins.get('FileRepository').createUploadAdapter = (loader) => new CloudinaryImageUploadAdapter(loader, 'iyikuyoro', 'example');
+      editor.plugins.get('FileRepository').createUploadAdapter = (loader) => new CloudinaryImageUploadAdapter(loader, 'iyikuyoro', config.imageUploadPreset);
     }
 
     const {
       title, articleBannerUrl, articleImagePublicId,
       body, errorMessage, errorSeverity, category, publishedArticle,
     } = this.state;
-    const config = {
+    const editorConfig = {
       extraPlugins: [imagePluginFactory],
     };
 
@@ -223,7 +224,7 @@ class EditArticle extends Component {
             editor={BalloonEditor}
             data={body}
             onChange={this.handleBodyChange}
-            config={config}
+            config={editorConfig}
           />
         </div>
         {errorMessage
