@@ -4,13 +4,13 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 import Avatar from 'Atoms/Avatar';
-import Button from 'Atoms/Button';
+// import Button from 'Atoms/Button';
 import toggleMenu from 'Actions/controls';
 import Styles from './header.styles.scss';
 
-function handleGetCV() {
-  window.location = 'https://iyikuyoro-be.herokuapp.com/api/v1/files/cv';
-}
+// function handleGetCV() {
+//   window.location = 'https://iyikuyoro-be.herokuapp.com/api/v1/files/cv';
+// }
 
 function Header(props) {
   const { isAuthenticated, toggleUserMenu } = props;
@@ -20,7 +20,7 @@ function Header(props) {
       <div className={Styles.headerWrapper}>
         <Link className={Styles.homeLink} to="/"><h1 className={Styles.title}>Opeoluwa Iyi-Kuyoro</h1></Link>
         <div className={Styles.menuControls}>
-          <Button handleClick={handleGetCV} />
+          {/* <Button handleClick={handleGetCV} /> */}
           { isAuthenticated && (
           <Avatar
             sizeStyle={Styles.avatarSize}
