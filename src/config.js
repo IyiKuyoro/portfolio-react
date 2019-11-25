@@ -4,11 +4,11 @@ const config = () => {
   switch (env) {
     case 'production':
       return {
-        backendUrl: 'https://iyikuyoro-staging.herokuapp.com/api/v1',
+        backendUrl: 'https://iyikuyoro-be.herokuapp.com/api/v1',
       };
     default:
       return {
-        backendUrl: 'http://localhost:4000/api/v1',
+        backendUrl: 'https://iyikuyoro-be.herokuapp.com/api/v1',
       };
   }
 };
