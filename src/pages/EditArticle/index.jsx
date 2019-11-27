@@ -1,35 +1,17 @@
 import React, { Component } from 'react';
-import CKEditor from '@ckeditor/ckeditor5-react';
-import BalloonEditor from '@ckeditor/ckeditor5-editor-balloon/src/ballooneditor';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { CloudinaryImageUploadAdapter } from 'ckeditor-cloudinary-uploader-adapter';
 import { withRouter } from 'react-router-dom';
-import CodeSnippet from 'ckeditor-code-snippet-plugin/dist/codesnippet';
-
-import Essentials from '@ckeditor/ckeditor5-essentials/src/essentials';
-import Bold from '@ckeditor/ckeditor5-basic-styles/src/bold';
-import Italic from '@ckeditor/ckeditor5-basic-styles/src/italic';
-import Link from '@ckeditor/ckeditor5-link/src/link';
-import Heading from '@ckeditor/ckeditor5-heading/src/heading';
-import List from '@ckeditor/ckeditor5-list/src/list';
-import BlockQuote from '@ckeditor/ckeditor5-block-quote/src/blockquote';
-import Image from '@ckeditor/ckeditor5-image/src/image';
-import ImageUpload from '@ckeditor/ckeditor5-image/src/imageupload';
-import Table from '@ckeditor/ckeditor5-table/src/table';
-import Indent from '@ckeditor/ckeditor5-indent/src/indent';
-import Paragraph from '@ckeditor/ckeditor5-paragraph/src/paragraph';
-import FileRepository from '@ckeditor/ckeditor5-upload/src/filerepository';
 
 import ArticleService from 'Services/Articles';
 import Button from 'Atoms/Button';
+import Editor from 'Atoms/Editor';
 import Header from 'Compounds/Header';
 import { saveArticle, getArticle, deleteArticle } from 'IndexDB/articles';
 import { Notification, NotificationSeverity } from 'HOC/Notifications';
 
 import ArticleBanner from './ArticleBanner';
 import Styles from './editArticle.styles.scss';
-import config from '../../config';
 
 class EditArticle extends Component {
   constructor(props) {
@@ -213,20 +195,10 @@ class EditArticle extends Component {
   }
 
   render() {
-    function imagePluginFactory(editor) {
-      editor.plugins.get('FileRepository').createUploadAdapter = (loader) => new CloudinaryImageUploadAdapter(loader, 'iyikuyoro', config.imageUploadPreset);
-    }
-
     const {
       title, articleBannerUrl, articleImagePublicId,
       body, errorMessage, errorSeverity, category, publishedArticle,
     } = this.state;
-    const editorConfig = {
-      plugins: [Essentials, Bold, Italic, Link, Paragraph, CodeSnippet, FileRepository, Heading, List, Indent, Image, ImageUpload, BlockQuote, Table],
-      toolbar: ['heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'insertTable', '|', 'indent', 'imageTextAlternative', 'imageUpload', 'blockQuote', 'codeSnippet', '|', 'undo', 'redo'],
-      styles: ['full', 'alignLeft', 'alignRight'],
-      extraPlugins: [imagePluginFactory],
-    };
 
     return (
       <>
@@ -238,12 +210,7 @@ class EditArticle extends Component {
         />
         <input onChange={this.handleTitleChange} className={Styles.title} type="text" placeholder="Article Title..." value={title} />
         <div className={Styles.articleBody}>
-          <CKEditor
-            editor={BalloonEditor}
-            data={body}
-            onChange={this.handleBodyChange}
-            config={editorConfig}
-          />
+          <Editor body={body} handleBodyChange={this.handleBodyChange} />
         </div>
         {errorMessage
         && <Notification severity={errorSeverity} message={errorMessage} />}
