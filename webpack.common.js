@@ -1,7 +1,9 @@
+/* eslint-disable comma-dangle */
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
+const { styles } = require('@ckeditor/ckeditor5-dev-utils');
 
 module.exports = {
   entry: ['@babel/polyfill', './src/index.jsx'],
@@ -18,6 +20,30 @@ module.exports = {
         use: {
           loader: 'babel-loader',
         },
+      },
+      {
+        test: /ckeditor5-[^/\\]+[/\\]theme[/\\]icons[/\\][^/\\]+\.svg$/,
+        use: ['raw-loader']
+      },
+      {
+        test: /ckeditor5-[^/\\]+[/\\]theme[/\\].+\.css$/,
+        use: [
+          {
+            loader: 'style-loader',
+            options: {
+              injectType: 'singletonStyleTag'
+            }
+          },
+          {
+            loader: 'postcss-loader',
+            options: styles.getPostCssConfig({
+              themeImporter: {
+                themePath: require.resolve('@ckeditor/ckeditor5-theme-lark')
+              },
+              minify: true
+            })
+          }
+        ]
       },
     ],
   },

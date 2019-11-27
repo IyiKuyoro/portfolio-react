@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import TimePast from 'time_past';
 import CKEditor from '@ckeditor/ckeditor5-react';
-import BallonEditor from '@ckeditor/ckeditor5-build-balloon';
+import BalloonEditor from '@ckeditor/ckeditor5-editor-balloon/src/ballooneditor';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
@@ -59,7 +59,7 @@ function Article(props) {
       <p className={Styles.time}>{TimePast.inWords(updatedAt)}</p>
       <div className={Styles.body}>
         <CKEditor
-          editor={BallonEditor}
+          editor={BalloonEditor}
           data={body}
           disabled
         />

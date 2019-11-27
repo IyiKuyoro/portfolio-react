@@ -9,6 +9,9 @@ module.exports = merge(common, {
     rules: [
       {
         test: /\.styles\.s(c|a)ss$/,
+        exclude: [
+          /ckeditor5-[^/\\]+[/\\]theme[/\\].+\.css$/,
+        ],
         loader: [
           'style-loader',
           {
@@ -28,7 +31,10 @@ module.exports = merge(common, {
       },
       {
         test: /\.s(a|c)ss$/,
-        exclude: /\.styles.(s(a|c)ss)$/,
+        exclude: [
+          /ckeditor5-[^/\\]+[/\\]theme[/\\].+\.css$/,
+          /\.styles.(s(a|c)ss)$/,
+        ],
         loader: [
           'style-loader',
           'css-loader',
