@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
-import CKEditor from '@ckeditor/ckeditor5-react';
-import BalloonEditor from '@ckeditor/ckeditor5-build-balloon';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { CloudinaryImageUploadAdapter } from 'ckeditor-cloudinary-uploader-adapter';
 import { withRouter } from 'react-router-dom';
 
 import ArticleService from 'Services/Articles';
 import Button from 'Atoms/Button';
+import Editor from 'Atoms/Editor';
 import Header from 'Compounds/Header';
 import { saveArticle, getArticle, deleteArticle } from 'IndexDB/articles';
 import { Notification, NotificationSeverity } from 'HOC/Notifications';
@@ -197,17 +195,10 @@ class EditArticle extends Component {
   }
 
   render() {
-    function imagePluginFactory(editor) {
-      editor.plugins.get('FileRepository').createUploadAdapter = (loader) => new CloudinaryImageUploadAdapter(loader, 'iyikuyoro', 'example');
-    }
-
     const {
       title, articleBannerUrl, articleImagePublicId,
       body, errorMessage, errorSeverity, category, publishedArticle,
     } = this.state;
-    const config = {
-      extraPlugins: [imagePluginFactory],
-    };
 
     return (
       <>
@@ -219,12 +210,7 @@ class EditArticle extends Component {
         />
         <input onChange={this.handleTitleChange} className={Styles.title} type="text" placeholder="Article Title..." value={title} />
         <div className={Styles.articleBody}>
-          <CKEditor
-            editor={BalloonEditor}
-            data={body}
-            onChange={this.handleBodyChange}
-            config={config}
-          />
+          <Editor body={body} handleBodyChange={this.handleBodyChange} />
         </div>
         {errorMessage
         && <Notification severity={errorSeverity} message={errorMessage} />}

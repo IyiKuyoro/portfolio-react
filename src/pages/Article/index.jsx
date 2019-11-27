@@ -1,12 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import TimePast from 'time_past';
-import CKEditor from '@ckeditor/ckeditor5-react';
-import BallonEditor from '@ckeditor/ckeditor5-build-balloon';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
 import Button from 'Atoms/Button';
+import Editor from 'Atoms/Editor';
 import Header from 'Compounds/Header';
 import Disqus from 'Compounds/Disqus';
 import Styles from './article.styles.scss';
@@ -58,11 +57,7 @@ function Article(props) {
       <p className={Styles.authors}>{authorsString}</p>
       <p className={Styles.time}>{TimePast.inWords(updatedAt)}</p>
       <div className={Styles.body}>
-        <CKEditor
-          editor={BallonEditor}
-          data={body}
-          disabled
-        />
+        <Editor body={body} disabled />
       </div>
       <Disqus title={title} slug={slug} />
     </div>
