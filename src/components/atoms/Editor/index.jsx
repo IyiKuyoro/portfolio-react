@@ -14,6 +14,10 @@ import Heading from '@ckeditor/ckeditor5-heading/src/heading';
 import List from '@ckeditor/ckeditor5-list/src/list';
 import BlockQuote from '@ckeditor/ckeditor5-block-quote/src/blockquote';
 import Image from '@ckeditor/ckeditor5-image/src/image';
+import ImageToolBar from '@ckeditor/ckeditor5-image/src/imagetoolbar';
+import ImageCaption from '@ckeditor/ckeditor5-image/src/imagecaption';
+import ImageStyle from '@ckeditor/ckeditor5-image/src/imagestyle';
+import ImageResize from '@ckeditor/ckeditor5-image/src/imageresize';
 import ImageUpload from '@ckeditor/ckeditor5-image/src/imageupload';
 import Table from '@ckeditor/ckeditor5-table/src/table';
 import Indent from '@ckeditor/ckeditor5-indent/src/indent';
@@ -23,7 +27,12 @@ import FileRepository from '@ckeditor/ckeditor5-upload/src/filerepository';
 import config from '../../../config';
 
 function imagePluginFactory(editor) {
-  editor.plugins.get('FileRepository').createUploadAdapter = (loader) => new CloudinaryImageUploadAdapter(loader, 'iyikuyoro', config.imageUploadPreset);
+  editor.plugins.get('FileRepository').createUploadAdapter = (loader) => new CloudinaryImageUploadAdapter(
+    loader,
+    'iyikuyoro',
+    config.imageUploadPreset,
+    [160, 500, 1000, 1052],
+  );
 }
 
 export default function Editor(props) {
@@ -33,8 +42,13 @@ export default function Editor(props) {
       Essentials, Bold, Italic, Link, Paragraph,
       CodeSnippet, FileRepository, Heading, List,
       Indent, Image, ImageUpload, BlockQuote, Table,
+      ImageToolBar, ImageCaption, ImageStyle, ImageResize,
     ],
-    toolbar: ['heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'insertTable', '|', 'indent', 'imageTextAlternative', 'imageUpload', 'blockQuote', 'codeSnippet', '|', 'undo', 'redo'],
+    image: {
+      toolbar: ['imageTextAlternative', '|', 'imageStyle:alignLeft', 'imageStyle:full', 'imageStyle:alignRight'],
+      styles: ['full', 'alignLeft', 'alignRight'],
+    },
+    toolbar: ['heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'insertTable', '|', 'indent', 'imageUpload', 'blockQuote', 'codeSnippet', '|', 'undo', 'redo'],
     styles: ['full', 'alignLeft', 'alignRight'],
     extraPlugins: [imagePluginFactory],
   };
