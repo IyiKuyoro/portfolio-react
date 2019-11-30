@@ -1,4 +1,6 @@
 defaults: &defaults
+  docker:
+    - image: circleci/node:carbon
   working_directory: ~/repo
 
 cmd_attache_working_dir: &cmd_attache_working_dir
@@ -33,7 +35,7 @@ filters: &filters
   filters:
     branches:
       only:
-        - develop
+        - master
 
 version: 2
 jobs:
@@ -61,6 +63,7 @@ jobs:
     machine: true
     steps:
       - *cmd_attache_working_dir
+      - checkout
       - run:
           name: deploy
           command: |
@@ -75,7 +78,7 @@ workflows:
       - build:
           requires:
             - checkout_code
-      - dock_and_deploy:
+      - deploy:
           requires:
             - checkout_code
             - build
