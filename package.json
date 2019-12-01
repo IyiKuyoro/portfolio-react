@@ -4,10 +4,11 @@
   "description": "My developer portfolio",
   "main": "index.js",
   "scripts": {
+    "build": "npm run clear && webpack --config webpack.prod.js && cp netlify_redirects.txt dist/_redirects",
     "clear": "rm -rf dist",
-    "start": "http-server dist",
+    "cypress:open": "cypress open",
     "dev": "NODE_ENV=development webpack-dev-server --mode development --open --hot",
-    "build": "npm run clear && webpack --config webpack.prod.js && cp netlify_redirects.txt dist/_redirects"
+    "start": "http-server dist"
   },
   "author": "Opeoluwa Iyi-Kuyoro",
   "license": "ISC",
@@ -51,6 +52,7 @@
     "babel-loader": "^8.0.6",
     "compression-webpack-plugin": "^3.0.0",
     "css-loader": "^3.2.0",
+    "cypress": "^3.7.0",
     "eslint": "^6.4.0",
     "eslint-config-airbnb": "^18.0.1",
     "eslint-import-resolver-webpack": "^0.11.1",
