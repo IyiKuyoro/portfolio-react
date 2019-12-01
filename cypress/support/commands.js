@@ -10,7 +10,19 @@
 //
 //
 // -- This is a parent command --
-// Cypress.Commands.add("login", (email, password) => { ... })
+Cypress.Commands.add('serverLogin', (userName = 'testuser', password = 'password') => {
+  cy.request({
+    url: 'http://localhost:4000/api/v1/auth/signin',
+    method: 'POST',
+    body: {
+      userName,
+      password,
+    },
+  })
+    .then((res) => {
+      window.localStorage.setItem('user', JSON.stringify(res.body.data));
+    });
+});
 //
 //
 // -- This is a child command --
