@@ -215,8 +215,8 @@ class EditArticle extends Component {
         {errorMessage
         && <Notification severity={errorSeverity} message={errorMessage} />}
         <div className={Styles.buttons}>
-          <input onChange={() => this.handleCategoryChange('tech')} className={`${Styles.categoryRadio} ${Styles.tech}`} type="radio" name="category" checked={category === 'tech'} />
-          <input onChange={() => this.handleCategoryChange('inspirational')} className={`${Styles.categoryRadio} ${Styles.inspirational}`} type="radio" name="category" checked={category === 'inspirational'} />
+          <input id="tech-btn" onChange={() => this.handleCategoryChange('tech')} className={`${Styles.categoryRadio} ${Styles.tech}`} type="radio" name="category" checked={category === 'tech'} />
+          <input id="inspiration-btn" onChange={() => this.handleCategoryChange('inspirational')} className={`${Styles.categoryRadio} ${Styles.inspirational}`} type="radio" name="category" checked={category === 'inspirational'} />
         </div>
         {this.validateArticle()
         && (

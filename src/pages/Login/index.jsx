@@ -76,7 +76,7 @@ class Login extends Component {
         if (value === '') {
           this.setState({
             passwordError: true,
-            passwordErrorMessage: 'Please please provide a password',
+            passwordErrorMessage: 'Please provide a password',
           });
         } else {
           this.setState({
