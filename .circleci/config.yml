@@ -59,17 +59,6 @@ jobs:
           command: npm run build
       - *persist_workspace
 
-  deploy:
-    machine: true
-    steps:
-      - *cmd_attache_working_dir
-      - checkout
-      - run:
-          name: deploy
-          command: |
-            chmod u+x scripts/deploy.sh
-            scripts/deploy.sh
-
 workflows:
   version: 2
   test_deploy:
@@ -78,9 +67,4 @@ workflows:
       - build:
           requires:
             - checkout_code
-      - deploy:
-          requires:
-            - checkout_code
-            - build
-          <<: *filters
 
