@@ -91,8 +91,8 @@ export default class ArticleBanner extends Component {
           }}
         />
         { loading && <div className={Styles.loader}><div className={Styles.loadingBar} /></div>}
-        { imageUrl === '' && !loading && <label htmlFor="image"><i className={`fas fa-image ${Styles.uploadImage}`} /></label> }
-        { imageUrl === '' || (
+        { !imageUrl && !loading && <label htmlFor="image"><i className={`fas fa-image ${Styles.uploadImage}`} /></label> }
+        { !imageUrl || (
         <i
           onClick={this.handleImageDelete}
           onKeyPress={this.handleImageDelete}
@@ -101,7 +101,7 @@ export default class ArticleBanner extends Component {
           className={`fas fa-trash-alt ${Styles.deleteImage}`}
         />
         ) }
-        { imageUrl === '' || <img className={Styles.image} src={imageUrl} alt="article banner" /> }
+        { !imageUrl || <img className={Styles.image} src={imageUrl} alt="article banner" /> }
         {errorMessage
         && <Notification severity={NotificationSeverity.error} message={errorMessage} />}
       </div>
