@@ -1,6 +1,7 @@
 describe('Write Article', () => {
   beforeEach(() => {
     cy.serverLogin();
+    indexedDB.deleteDatabase('iyikuyoro-portfolio-database');
   });
 
   it('should not publish without category', () => {
@@ -60,5 +61,23 @@ describe('Write Article', () => {
       .type('New Demo Article');
 
     cy.contains('Publish');
+  });
+
+  it('should publish article', () => {
+    cy.visit('/write');
+
+    cy.get('.lX9hHA2LkBu-nb0o7Q5vI')
+      .clear()
+      .type('Title');
+    cy.get('.ck-content')
+      .clear()
+      .type('New Demo Article');
+    cy.get('#tech-btn')
+      .click();
+
+    cy.contains('Publish')
+      .click();
+
+    cy.url().should('include', '/read');
   });
 });
