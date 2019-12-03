@@ -17,7 +17,7 @@ describe('Write Article', () => {
     cy.contains('Publish')
       .click();
 
-    cy.contains('Oops! Could not publish that...');
+    cy.contains('Incomplete request params');
   });
 
   it('should redirect to login', () => {
