@@ -34,14 +34,17 @@ function noUser() {
   };
 }
 
-export function userLogOut(history) {
+export function userLogOut(history, redirectUrl = '/', previousPath = '/', errorMessage = undefined) {
   const forbiddenPaths = ['/write'];
 
   return (dispatch) => {
     localStorage.removeItem('user');
     dispatch(noUser());
     if (forbiddenPaths.indexOf(history.location.pathname) >= 0) {
-      history.push('/');
+      history.push(redirectUrl, {
+        prevPath: previousPath,
+        errorMessage,
+      });
     }
   };
 }

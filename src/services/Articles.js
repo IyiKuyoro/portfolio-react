@@ -43,6 +43,10 @@ export default class ArticlesService {
       },
     );
 
+    if (res.status === 401) {
+      throw Error('Your session has expired.');
+    }
+
     return res.json();
   }
 
@@ -59,6 +63,10 @@ export default class ArticlesService {
         body: JSON.stringify(article),
       },
     );
+
+    if (res.status === 401) {
+      throw Error('Your session has expired.');
+    }
 
     return res.json();
   }

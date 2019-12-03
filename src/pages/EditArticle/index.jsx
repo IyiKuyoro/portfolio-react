@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
 import ArticleService from 'Services/Articles';
+import { userLogOut } from 'Actions/authUser';
 import Button from 'Atoms/Button';
 import Editor from 'Atoms/Editor';
 import Header from 'Compounds/Header';
@@ -115,7 +116,7 @@ class EditArticle extends Component {
   }
 
   handleArticlePublish() {
-    const { userData: { token }, history } = this.props;
+    const { userData: { token }, history, logUserOut } = this.props;
     const {
       title, articleBannerUrl, articleImagePublicId, body, category,
     } = this.state;
@@ -128,27 +129,32 @@ class EditArticle extends Component {
       imagePublicId: articleImagePublicId,
     };
 
-    ArticleService.publishArticle(article, token)
+    ArticleService.publishArticle(article, token, history, logUserOut)
       .then((res) => {
         if (res.success) {
           deleteArticle();
           history.push(`/read/${res.data.slug}`);
         } else {
           this.setState({
-            errorMessage: 'Oops! Could not publish that...',
+            errorMessage: res.message,
             errorSeverity: NotificationSeverity.error,
           });
         }
       })
-      .catch(() => {
-        this.setState({
-          errorMessage: 'Oops! Could not publish that...',
-        });
+      .catch((error) => {
+        if (error.message === 'Your session has expired.') {
+          logUserOut(history, '/login', '/write', 'Your session has expired.');
+        } else {
+          this.setState({
+            errorMessage: 'Server error',
+            errorSeverity: NotificationSeverity.error,
+          });
+        }
       });
   }
 
   handleArticleRepublish() {
-    const { userData: { token }, history } = this.props;
+    const { userData: { token }, history, logUserOut } = this.props;
     const {
       title, articleBannerUrl, articleImagePublicId, body, category, slug,
     } = this.state;
@@ -173,10 +179,15 @@ class EditArticle extends Component {
           });
         }
       })
-      .catch(() => {
-        this.setState({
-          errorMessage: 'Oops! Could not publish that...',
-        });
+      .catch((error) => {
+        if (error.message === 'Your session has expired.') {
+          logUserOut(history, '/login', '/write', 'Your session has expired.');
+        } else {
+          this.setState({
+            errorMessage: 'Server error',
+            errorSeverity: NotificationSeverity.error,
+          });
+        }
       });
   }
 
@@ -242,7 +253,16 @@ EditArticle.propTypes = {
     token: PropTypes.string.isRequired,
     id: PropTypes.number.isRequired,
   }).isRequired,
+  logUserOut: PropTypes.func.isRequired,
 };
+
+function mapDispatchToProps(dispatch) {
+  return {
+    logUserOut: (history, redirectUrl, previousUrl, errorMessage) => dispatch(
+      userLogOut(history, redirectUrl, previousUrl, errorMessage),
+    ),
+  };
+}
 
 function mapStateToProps(state) {
   return ({
@@ -250,4 +270,4 @@ function mapStateToProps(state) {
   });
 }
 
-export default connect(mapStateToProps)(withRouter(EditArticle));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(EditArticle));
