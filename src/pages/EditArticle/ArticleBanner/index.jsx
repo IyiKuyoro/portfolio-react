@@ -109,8 +109,13 @@ export default class ArticleBanner extends Component {
   }
 }
 
+ArticleBanner.defaultProps = {
+  imageUrl: '',
+  imagePublicId: '',
+};
+
 ArticleBanner.propTypes = {
   updateBannerUrl: PropTypes.func.isRequired,
-  imageUrl: PropTypes.string.isRequired,
-  imagePublicId: PropTypes.string.isRequired,
+  imageUrl: PropTypes.string,
+  imagePublicId: PropTypes.string,
 };

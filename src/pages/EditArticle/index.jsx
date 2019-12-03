@@ -246,7 +246,14 @@ EditArticle.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
     location: PropTypes.shape({
-      state: PropTypes.objectOf(PropTypes.string),
+      state: PropTypes.shape({
+        title: PropTypes.string,
+        body: PropTypes.string,
+        category: PropTypes.string,
+        slug: PropTypes.string,
+        imageUrl: PropTypes.string,
+        imagePublicId: PropTypes.string,
+      }),
     }).isRequired,
   }).isRequired,
   userData: PropTypes.shape({
