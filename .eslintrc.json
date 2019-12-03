@@ -34,7 +34,8 @@
         "peerDependencies": false,
         "packageDir": "./"
       }
-    ]
+    ],
+    "no-param-reassign": "off"
   },
   "parser": "babel-eslint",
   "settings": {

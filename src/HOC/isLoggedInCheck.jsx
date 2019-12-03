@@ -36,8 +36,8 @@ export default function (ComposedComponent) {
     authUser: shape({
       isAuthenticated: bool.isRequired,
       userData: shape({
-        id: number.isRequired,
-      }).isRequired,
+        id: number,
+      }),
     }).isRequired,
   };
 
