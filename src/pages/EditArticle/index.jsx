@@ -257,8 +257,8 @@ EditArticle.propTypes = {
     }).isRequired,
   }).isRequired,
   userData: PropTypes.shape({
-    token: PropTypes.string.isRequired,
-    id: PropTypes.number.isRequired,
+    token: PropTypes.string,
+    id: PropTypes.number,
   }).isRequired,
   logUserOut: PropTypes.func.isRequired,
 };
