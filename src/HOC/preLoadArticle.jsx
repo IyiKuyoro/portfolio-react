@@ -23,7 +23,7 @@ export default function (Article) {
           if (!res.success) {
             history.push('/404', {
               error: 404,
-              errorMessage: 'I could not find that exact article. Perhaps you can check one of these.'
+              errorMessage: 'I could not find that exact article. Perhaps you can check one of these.',
             });
           } else {
             this.setState({
@@ -35,7 +35,7 @@ export default function (Article) {
         .catch(() => {
           history.push('/error', {
             error: 500,
-            errorMessage: 'Sorry an error occurred while trying to load that article. Maybe you can try one of these.'
+            errorMessage: 'Sorry an error occurred while trying to load that article. Maybe you can try one of these.',
           });
         });
     }

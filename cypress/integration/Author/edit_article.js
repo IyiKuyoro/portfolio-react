@@ -35,7 +35,7 @@ describe('Edit Article', () => {
     cy.contains('Edit')
       .click();
 
-    cy.url().should('include', '/write');
+    cy.url().should('include', '/edit');
   });
 
   it('should edit article title', () => {

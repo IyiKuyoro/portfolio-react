@@ -8,7 +8,7 @@ import Home from 'Pages/Home';
 import Login from 'Pages/Login';
 import EditArticle from 'Pages/EditArticle';
 import notFound from 'Pages/404';
-import isLoggedInCheck from 'HOC/isLoggedInCheck';
+import articleWriteEditGuard from 'HOC/ArticleWriteEditGuard';
 import noAuthCheck from 'HOC/noAuthCheck';
 import preLoadArticle from 'HOC/preLoadArticle';
 import UserMenu from 'Compounds/UserMenu';
@@ -30,7 +30,8 @@ class App extends Component {
             <Route exact path="/" component={Home} />
             <Route path="/login" component={noAuthCheck(Login)} />
             <Route exact path="/read/:slug" component={preLoadArticle(Article)} />
-            <Route exact path="/write" component={isLoggedInCheck(EditArticle)} />
+            <Route exact path="/write" component={articleWriteEditGuard(EditArticle)} />
+            <Route exact path="/edit/:slug" component={preLoadArticle(articleWriteEditGuard(EditArticle))} />
             <Route component={notFound} />
           </Switch>
         </>

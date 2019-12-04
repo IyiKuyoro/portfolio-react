@@ -17,18 +17,23 @@ import Styles from './editArticle.styles.scss';
 class EditArticle extends Component {
   constructor(props) {
     super(props);
-    const { state } = props.history.location;
+    const {
+      history: {
+        location: { pathname },
+      },
+      article,
+    } = props;
     this.state = ({
-      title: state ? state.title : '',
-      articleBannerUrl: state ? state.imageUrl : '',
-      articleImagePublicId: state ? state.imagePublicId : '',
-      body: state ? state.body : '',
-      category: state ? state.category : '',
-      slug: state ? state.slug : '',
+      title: article.title,
+      articleBannerUrl: article.imageUrl,
+      articleImagePublicId: article.imagePublicId,
+      body: article.body,
+      category: article.category,
+      slug: article.slug,
       changed: false,
       errorMessage: '',
       errorSeverity: NotificationSeverity.caution,
-      publishedArticle: !!state,
+      publishedArticle: /\/edit\/.+/.test(pathname),
     });
     this.handleBannerChange = this.handleBannerChange.bind(this);
     this.handleTitleChange = this.handleTitleChange.bind(this);
@@ -36,30 +41,35 @@ class EditArticle extends Component {
     this.saveArticle = this.saveArticle.bind(this);
     this.handleArticlePublish = this.handleArticlePublish.bind(this);
     this.handleArticleRepublish = this.handleArticleRepublish.bind(this);
-    // this.handleArticleSaveDraft = this.handleArticleSaveDraft.bind(this);
     this.validateArticle = this.validateArticle.bind(this);
     this.handleCategoryChange = this.handleCategoryChange.bind(this);
   }
 
   componentDidMount() {
-    getArticle()
-      .then((article) => {
-        if (article) {
+    const {
+      history: { location },
+    } = this.props;
+
+    if (!/\/edit\/.+/.test(location.pathname)) {
+      getArticle()
+        .then((article) => {
+          if (article) {
+            this.setState({
+              title: article.title,
+              articleBannerUrl: article.articleBannerUrl,
+              articleImagePublicId: article.articleImagePublicId,
+              body: article.body,
+              category: article.category,
+            });
+          }
+        })
+        .catch(() => {
           this.setState({
-            title: article.title,
-            articleBannerUrl: article.articleBannerUrl,
-            articleImagePublicId: article.articleImagePublicId,
-            body: article.body,
-            category: article.category,
+            errorMessage: 'Something went wrong trying to retrieve you last work.',
           });
-        }
-      })
-      .catch(() => {
-        this.setState({
-          errorMessage: 'Something went wrong trying to retrieve you last work.',
         });
-      });
-    setInterval(this.saveArticle, 5000);
+      setInterval(this.saveArticle, 5000);
+    }
   }
 
   componentWillUnmount() {
@@ -68,10 +78,10 @@ class EditArticle extends Component {
 
   saveArticle() {
     const {
-      changed, title, articleBannerUrl, articleImagePublicId, body, category, publishedArticle,
+      changed, title, articleBannerUrl, articleImagePublicId, body, category,
     } = this.state;
 
-    if (changed && !publishedArticle) {
+    if (changed) {
       this.setState({
         changed: false,
       });
@@ -191,10 +201,6 @@ class EditArticle extends Component {
       });
   }
 
-  // handleArticleSaveDraft(event) {
-
-  // }
-
   validateArticle() {
     const { title, body } = this.state;
 
@@ -242,6 +248,20 @@ class EditArticle extends Component {
   }
 }
 
+EditArticle.defaultProps = {
+  article: {
+    title: '',
+    category: '',
+    body: '',
+    authors: [],
+    authorsIds: [],
+    imageUrl: '',
+    imagePublicId: '',
+    updatedAt: '',
+    slug: '',
+  },
+};
+
 EditArticle.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
@@ -254,6 +274,7 @@ EditArticle.propTypes = {
         imageUrl: PropTypes.string,
         imagePublicId: PropTypes.string,
       }),
+      pathname: PropTypes.string,
     }).isRequired,
   }).isRequired,
   userData: PropTypes.shape({
@@ -261,6 +282,17 @@ EditArticle.propTypes = {
     id: PropTypes.number,
   }).isRequired,
   logUserOut: PropTypes.func.isRequired,
+  article: PropTypes.shape({
+    title: PropTypes.string.isRequired,
+    category: PropTypes.string.isRequired,
+    body: PropTypes.string.isRequired,
+    authors: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+    authorsIds: PropTypes.arrayOf(PropTypes.number.isRequired).isRequired,
+    imageUrl: PropTypes.string,
+    imagePublicId: PropTypes.string,
+    updatedAt: PropTypes.string.isRequired,
+    slug: PropTypes.string.isRequired,
+  }),
 };
 
 function mapDispatchToProps(dispatch) {
