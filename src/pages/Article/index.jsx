@@ -15,7 +15,7 @@ function canEdit(authorsIds, id) {
 }
 
 function handleEditArticle(article, history) {
-  history.push('/write', article);
+  history.push(`/edit/${article.slug}`);
 }
 
 function Article(props) {
