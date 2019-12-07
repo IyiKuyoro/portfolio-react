@@ -2,8 +2,11 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import { of } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 
 import ArticleService from 'Services/Articles';
+import { userLogOut } from 'Actions/authUser';
 import Button from 'Atoms/Button';
 import Editor from 'Atoms/Editor';
 import Header from 'Compounds/Header';
@@ -16,18 +19,23 @@ import Styles from './editArticle.styles.scss';
 class EditArticle extends Component {
   constructor(props) {
     super(props);
-    const { state } = props.history.location;
+    const {
+      history: {
+        location: { pathname },
+      },
+      article,
+    } = props;
     this.state = ({
-      title: state ? state.title : '',
-      articleBannerUrl: state ? state.imageUrl : '',
-      articleImagePublicId: state ? state.imagePublicId : '',
-      body: state ? state.body : '',
-      category: state ? state.category : '',
-      slug: state ? state.slug : '',
+      title: article.title,
+      articleBannerUrl: article.imageUrl,
+      articleImagePublicId: article.imagePublicId,
+      body: article.body,
+      category: article.category,
+      slug: article.slug,
       changed: false,
       errorMessage: '',
       errorSeverity: NotificationSeverity.caution,
-      publishedArticle: !!state,
+      publishedArticle: /\/edit\/.+/.test(pathname),
     });
     this.handleBannerChange = this.handleBannerChange.bind(this);
     this.handleTitleChange = this.handleTitleChange.bind(this);
@@ -35,42 +43,47 @@ class EditArticle extends Component {
     this.saveArticle = this.saveArticle.bind(this);
     this.handleArticlePublish = this.handleArticlePublish.bind(this);
     this.handleArticleRepublish = this.handleArticleRepublish.bind(this);
-    // this.handleArticleSaveDraft = this.handleArticleSaveDraft.bind(this);
     this.validateArticle = this.validateArticle.bind(this);
     this.handleCategoryChange = this.handleCategoryChange.bind(this);
   }
 
   componentDidMount() {
-    getArticle()
-      .then((article) => {
-        if (article) {
+    const {
+      history: { location },
+    } = this.props;
+
+    if (!/\/edit\/.+/.test(location.pathname)) {
+      getArticle()
+        .then((article) => {
+          if (article) {
+            this.setState({
+              title: article.title,
+              articleBannerUrl: article.articleBannerUrl,
+              articleImagePublicId: article.articleImagePublicId,
+              body: article.body,
+              category: article.category,
+            });
+          }
+        })
+        .catch(() => {
           this.setState({
-            title: article.title,
-            articleBannerUrl: article.articleBannerUrl,
-            articleImagePublicId: article.articleImagePublicId,
-            body: article.body,
-            category: article.category,
+            errorMessage: 'Something went wrong trying to retrieve you last work.',
           });
-        }
-      })
-      .catch(() => {
-        this.setState({
-          errorMessage: 'Something went wrong trying to retrieve you last work.',
         });
-      });
-    setInterval(this.saveArticle, 5000);
+      this.articleSaveInterval = setInterval(this.saveArticle, 5000);
+    }
   }
 
   componentWillUnmount() {
-    clearInterval(this.saveArticle);
+    clearInterval(this.articleSaveInterval);
   }
 
   saveArticle() {
     const {
-      changed, title, articleBannerUrl, articleImagePublicId, body, category, publishedArticle,
+      changed, title, articleBannerUrl, articleImagePublicId, body, category,
     } = this.state;
 
-    if (changed && !publishedArticle) {
+    if (changed) {
       this.setState({
         changed: false,
       });
@@ -114,8 +127,21 @@ class EditArticle extends Component {
     });
   }
 
+  handleError(error, history, logUserOut) {
+    if (error.status === 401) {
+      logUserOut(history, '/login', history.location.pathname, 'Your session has expired.');
+    } else {
+      this.setState({
+        errorMessage: error.response.message,
+        errorSeverity: NotificationSeverity.error,
+      });
+    }
+
+    return of(error);
+  }
+
   handleArticlePublish() {
-    const { userData: { token }, history } = this.props;
+    const { userData: { token }, history, logUserOut } = this.props;
     const {
       title, articleBannerUrl, articleImagePublicId, body, category,
     } = this.state;
@@ -128,27 +154,22 @@ class EditArticle extends Component {
       imagePublicId: articleImagePublicId,
     };
 
-    ArticleService.publishArticle(article, token)
-      .then((res) => {
+    ArticleService
+      .publishArticle(article, token)
+      .pipe(
+        map((res) => res.response),
+        catchError((error) => this.handleError(error, history, logUserOut)),
+      )
+      .subscribe((res) => {
         if (res.success) {
           deleteArticle();
           history.push(`/read/${res.data.slug}`);
-        } else {
-          this.setState({
-            errorMessage: 'Oops! Could not publish that...',
-            errorSeverity: NotificationSeverity.error,
-          });
         }
-      })
-      .catch(() => {
-        this.setState({
-          errorMessage: 'Oops! Could not publish that...',
-        });
       });
   }
 
   handleArticleRepublish() {
-    const { userData: { token }, history } = this.props;
+    const { userData: { token }, history, logUserOut } = this.props;
     const {
       title, articleBannerUrl, articleImagePublicId, body, category, slug,
     } = this.state;
@@ -161,28 +182,18 @@ class EditArticle extends Component {
       imagePublicId: articleImagePublicId || null,
     };
 
-    ArticleService.republishArticle(article, slug, token)
-      .then((res) => {
+    ArticleService
+      .republishArticle(article, slug, token)
+      .pipe(
+        map((res) => res.response),
+        catchError((error) => this.handleError(error, history, logUserOut)),
+      )
+      .subscribe((res) => {
         if (res.success) {
-          deleteArticle();
           history.push(`/read/${slug}`);
-        } else {
-          this.setState({
-            errorMessage: 'Oops! Could not publish that...',
-            errorSeverity: NotificationSeverity.error,
-          });
         }
-      })
-      .catch(() => {
-        this.setState({
-          errorMessage: 'Oops! Could not publish that...',
-        });
       });
   }
-
-  // handleArticleSaveDraft(event) {
-
-  // }
 
   validateArticle() {
     const { title, body } = this.state;
@@ -215,8 +226,8 @@ class EditArticle extends Component {
         {errorMessage
         && <Notification severity={errorSeverity} message={errorMessage} />}
         <div className={Styles.buttons}>
-          <input onChange={() => this.handleCategoryChange('tech')} className={`${Styles.categoryRadio} ${Styles.tech}`} type="radio" name="category" checked={category === 'tech'} />
-          <input onChange={() => this.handleCategoryChange('inspirational')} className={`${Styles.categoryRadio} ${Styles.inspirational}`} type="radio" name="category" checked={category === 'inspirational'} />
+          <input id="tech-btn" onChange={() => this.handleCategoryChange('tech')} className={`${Styles.categoryRadio} ${Styles.tech}`} type="radio" name="category" checked={category === 'tech'} />
+          <input id="inspiration-btn" onChange={() => this.handleCategoryChange('inspirational')} className={`${Styles.categoryRadio} ${Styles.inspirational}`} type="radio" name="category" checked={category === 'inspirational'} />
         </div>
         {this.validateArticle()
         && (
@@ -231,18 +242,60 @@ class EditArticle extends Component {
   }
 }
 
+EditArticle.defaultProps = {
+  article: {
+    title: '',
+    category: '',
+    body: '',
+    authors: [],
+    authorsIds: [],
+    imageUrl: '',
+    imagePublicId: '',
+    updatedAt: '',
+    slug: '',
+  },
+};
+
 EditArticle.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
     location: PropTypes.shape({
-      state: PropTypes.objectOf(PropTypes.string),
+      state: PropTypes.shape({
+        title: PropTypes.string,
+        body: PropTypes.string,
+        category: PropTypes.string,
+        slug: PropTypes.string,
+        imageUrl: PropTypes.string,
+        imagePublicId: PropTypes.string,
+      }),
+      pathname: PropTypes.string,
     }).isRequired,
   }).isRequired,
   userData: PropTypes.shape({
-    token: PropTypes.string.isRequired,
-    id: PropTypes.number.isRequired,
+    token: PropTypes.string,
+    id: PropTypes.number,
   }).isRequired,
+  logUserOut: PropTypes.func.isRequired,
+  article: PropTypes.shape({
+    title: PropTypes.string.isRequired,
+    category: PropTypes.string.isRequired,
+    body: PropTypes.string.isRequired,
+    authors: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+    authorsIds: PropTypes.arrayOf(PropTypes.number.isRequired).isRequired,
+    imageUrl: PropTypes.string,
+    imagePublicId: PropTypes.string,
+    updatedAt: PropTypes.string.isRequired,
+    slug: PropTypes.string.isRequired,
+  }),
 };
+
+function mapDispatchToProps(dispatch) {
+  return {
+    logUserOut: (history, redirectUrl, previousUrl, errorMessage) => dispatch(
+      userLogOut(history, redirectUrl, previousUrl, errorMessage),
+    ),
+  };
+}
 
 function mapStateToProps(state) {
   return ({
@@ -250,4 +303,4 @@ function mapStateToProps(state) {
   });
 }
 
-export default connect(mapStateToProps)(withRouter(EditArticle));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(EditArticle));

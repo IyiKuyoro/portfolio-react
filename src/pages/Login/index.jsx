@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 
 import { authenticateUser } from 'Actions/authUser';
 import Input from 'Components/atoms/InputFields';
-import Button from 'Components/atoms/Button';
 import Header from 'Components/compounds/Header';
 import { Notification, NotificationSeverity } from 'HOC/Notifications';
 
@@ -28,7 +27,8 @@ class Login extends Component {
     this.validateInput = this.validateInput.bind(this);
   }
 
-  handleLogin() {
+  handleLogin(event) {
+    event.preventDefault();
     const { userName, password } = this.state;
     const { createLoginAction, history } = this.props;
 
@@ -76,7 +76,7 @@ class Login extends Component {
         if (value === '') {
           this.setState({
             passwordError: true,
-            passwordErrorMessage: 'Please please provide a password',
+            passwordErrorMessage: 'Please provide a password',
           });
         } else {
           this.setState({
@@ -119,7 +119,7 @@ class Login extends Component {
         }
         <Header />
         <div className={Styles.formContainer}>
-          <form className={Styles.loginForm}>
+          <form className={Styles.loginForm} onSubmit={(e) => this.handleLogin(e)}>
             <h1 className={Styles.header}>Login Form</h1>
             <p className={`${error ? Styles.errorMessage : Styles.errorMessageInvisible}`}>{errorMessage}</p>
             <Input
@@ -144,7 +144,7 @@ class Login extends Component {
               error={passwordError}
               errorMessage={passwordErrorMessage}
             />
-            <Button text="submit" style={Styles.btn} handleClick={this.handleLogin} />
+            <input type="submit" value="submit" className={Styles.btn} />
             <h1>{loading}</h1>
           </form>
         </div>

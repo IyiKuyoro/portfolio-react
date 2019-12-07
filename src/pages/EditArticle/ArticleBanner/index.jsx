@@ -2,6 +2,8 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { of } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 
 import ImageService from 'Services/Image';
 import { Notification, NotificationSeverity } from 'HOC/Notifications';
@@ -27,45 +29,45 @@ export default class ArticleBanner extends Component {
       errorMessage: '',
     });
 
-    ImageService.deleteImage(imagePublicId)
-      .then((res) => {
-        if (res.success) {
+    this.imageDeleteSubscription = ImageService.deleteImage(imagePublicId)
+      .pipe(
+        map((res) => res.response),
+        catchError((error) => {
           this.setState({
             loading: false,
-            errorMessage: '',
+            errorMessage: 'Could not delete this image...',
           });
-          updateBannerUrl('', '');
-        } else {
-          throw Error('Error deleting');
-        }
-      })
-      .catch(() => {
+          return of(error);
+        }),
+      )
+      .subscribe(() => {
         this.setState({
           loading: false,
-          errorMessage: 'Could not delete this image...',
+          errorMessage: '',
         });
+        updateBannerUrl('', '');
       });
   }
 
   handleUpload(file) {
     const { updateBannerUrl } = this.props;
 
-    ImageService.uploadImage(file)
-      .then((res) => {
-        if (res.success) {
+    this.imageUploadSubscription = ImageService.uploadImage(file)
+      .pipe(
+        map((res) => res.response),
+        catchError((error) => {
           this.setState({
             loading: false,
+            errorMessage: 'Sorry, could not upload image.',
           });
-          updateBannerUrl(res.data.imageUrl, res.data.publicId);
-        } else {
-          throw Error('Error uploading');
-        }
-      })
-      .catch(() => {
+          return of(error);
+        }),
+      )
+      .subscribe((res) => {
         this.setState({
           loading: false,
-          errorMessage: 'Sorry, could not upload image.',
         });
+        updateBannerUrl(res.data.imageUrl, res.data.publicId);
       });
   }
 
@@ -91,8 +93,8 @@ export default class ArticleBanner extends Component {
           }}
         />
         { loading && <div className={Styles.loader}><div className={Styles.loadingBar} /></div>}
-        { imageUrl === '' && !loading && <label htmlFor="image"><i className={`fas fa-image ${Styles.uploadImage}`} /></label> }
-        { imageUrl === '' || (
+        { !imageUrl && !loading && <label htmlFor="image"><i className={`fas fa-image ${Styles.uploadImage}`} /></label> }
+        { !imageUrl || (
         <i
           onClick={this.handleImageDelete}
           onKeyPress={this.handleImageDelete}
@@ -101,7 +103,7 @@ export default class ArticleBanner extends Component {
           className={`fas fa-trash-alt ${Styles.deleteImage}`}
         />
         ) }
-        { imageUrl === '' || <img className={Styles.image} src={imageUrl} alt="article banner" /> }
+        { !imageUrl || <img className={Styles.image} src={imageUrl} alt="article banner" /> }
         {errorMessage
         && <Notification severity={NotificationSeverity.error} message={errorMessage} />}
       </div>
@@ -109,8 +111,13 @@ export default class ArticleBanner extends Component {
   }
 }
 
+ArticleBanner.defaultProps = {
+  imageUrl: '',
+  imagePublicId: '',
+};
+
 ArticleBanner.propTypes = {
   updateBannerUrl: PropTypes.func.isRequired,
-  imageUrl: PropTypes.string.isRequired,
-  imagePublicId: PropTypes.string.isRequired,
+  imageUrl: PropTypes.string,
+  imagePublicId: PropTypes.string,
 };

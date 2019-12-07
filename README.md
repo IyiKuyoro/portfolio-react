@@ -9,6 +9,7 @@ I used the following language, libraries and tools in building this portfolio.
 - React
 - JavaScript
 - WebPack
+- Cypress
 - SCSS
 - HTML
 - ESLint

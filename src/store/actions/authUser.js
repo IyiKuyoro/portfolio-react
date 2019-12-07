@@ -34,15 +34,20 @@ function noUser() {
   };
 }
 
-export function userLogOut(history) {
-  const forbiddenPaths = ['/write'];
+export function userLogOut(history, redirectUrl = '/', previousPath = '/', errorMessage = undefined) {
+  const forbiddenPaths = [/\/write/, /\/edit\/.+/];
 
   return (dispatch) => {
     localStorage.removeItem('user');
     dispatch(noUser());
-    if (forbiddenPaths.indexOf(history.location.pathname) >= 0) {
-      history.push('/');
-    }
+    forbiddenPaths.forEach((path) => {
+      if (path.test(history.location.pathname) >= 0) {
+        history.push(redirectUrl, {
+          prevPath: previousPath,
+          errorMessage,
+        });
+      }
+    });
   };
 }
 

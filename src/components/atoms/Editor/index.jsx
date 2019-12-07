@@ -64,8 +64,12 @@ export default function Editor(props) {
   );
 }
 
+Editor.defaultProps = {
+  body: '',
+};
+
 Editor.propTypes = {
-  body: PropTypes.string.isRequired,
+  body: PropTypes.string,
   handleBodyChange: PropTypes.func,
   disabled: PropTypes.bool,
 };
