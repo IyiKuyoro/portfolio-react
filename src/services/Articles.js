@@ -23,45 +23,29 @@ export default class ArticlesService {
     });
   }
 
-  static async publishArticle(article, userToken) {
-    const res = await fetch(
-      `${config.backendUrl}/articles`,
-      {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-          authorization: `Bearer ${userToken}`,
-        },
-        body: JSON.stringify(article),
+  static publishArticle(article, userToken) {
+    return ajax({
+      url: `${config.backendUrl}/articles`,
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        authorization: `Bearer ${userToken}`,
       },
-    );
-
-    if (res.status === 401) {
-      throw Error('Your session has expired.');
-    }
-
-    return res.json();
+      body: JSON.stringify(article),
+    });
   }
 
-  static async republishArticle(article, slug, userToken) {
-    const res = await fetch(
-      `${config.backendUrl}/articles/${slug}`,
-      {
-        method: 'PUT',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-          authorization: `Bearer ${userToken}`,
-        },
-        body: JSON.stringify(article),
+  static republishArticle(article, slug, userToken) {
+    return ajax({
+      url: `${config.backendUrl}/articles/${slug}`,
+      method: 'PUT',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        authorization: `Bearer ${userToken}`,
       },
-    );
-
-    if (res.status === 401) {
-      throw Error('Your session has expired.');
-    }
-
-    return res.json();
+      body: JSON.stringify(article),
+    });
   }
 }

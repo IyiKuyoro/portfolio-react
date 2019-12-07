@@ -22,7 +22,7 @@ export default class Articles extends Component {
   }
 
   componentDidMount() {
-    this.articlesSubscription = ArticlesService.getAllArticles()
+    ArticlesService.getAllArticles()
       .pipe(
         catchError((error) => {
           this.setState({
@@ -39,10 +39,6 @@ export default class Articles extends Component {
           loading: false,
         });
       });
-  }
-
-  componentWillUnmount() {
-    this.articlesSubscription.unsubscribe();
   }
 
   render() {

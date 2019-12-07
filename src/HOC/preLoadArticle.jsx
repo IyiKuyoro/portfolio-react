@@ -21,7 +21,7 @@ export default function (Article) {
     componentDidMount() {
       const { match: { params } } = this.props;
 
-      this.article = ArticlesService.getArticleBySlug(params.slug)
+      ArticlesService.getArticleBySlug(params.slug)
         .pipe(
           catchError(this.handleError),
           map((res) => res.response),
@@ -32,10 +32,6 @@ export default function (Article) {
             loading: false,
           });
         });
-    }
-
-    componentWillUnmount() {
-      this.article.unsubscribe();
     }
 
     handleError(error) {

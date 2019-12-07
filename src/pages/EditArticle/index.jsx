@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import { of } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 
 import ArticleService from 'Services/Articles';
 import { userLogOut } from 'Actions/authUser';
@@ -68,12 +70,12 @@ class EditArticle extends Component {
             errorMessage: 'Something went wrong trying to retrieve you last work.',
           });
         });
-      setInterval(this.saveArticle, 5000);
+      this.articleSaveInterval = setInterval(this.saveArticle, 5000);
     }
   }
 
   componentWillUnmount() {
-    clearInterval(this.saveArticle);
+    clearInterval(this.articleSaveInterval);
   }
 
   saveArticle() {
@@ -125,6 +127,19 @@ class EditArticle extends Component {
     });
   }
 
+  handleError(error, history, logUserOut) {
+    if (error.status === 401) {
+      logUserOut(history, '/login', history.location.pathname, 'Your session has expired.');
+    } else {
+      this.setState({
+        errorMessage: error.response.message,
+        errorSeverity: NotificationSeverity.error,
+      });
+    }
+
+    return of(error);
+  }
+
   handleArticlePublish() {
     const { userData: { token }, history, logUserOut } = this.props;
     const {
@@ -139,26 +154,16 @@ class EditArticle extends Component {
       imagePublicId: articleImagePublicId,
     };
 
-    ArticleService.publishArticle(article, token, history, logUserOut)
-      .then((res) => {
+    ArticleService
+      .publishArticle(article, token)
+      .pipe(
+        map((res) => res.response),
+        catchError((error) => this.handleError(error, history, logUserOut)),
+      )
+      .subscribe((res) => {
         if (res.success) {
           deleteArticle();
           history.push(`/read/${res.data.slug}`);
-        } else {
-          this.setState({
-            errorMessage: res.message,
-            errorSeverity: NotificationSeverity.error,
-          });
-        }
-      })
-      .catch((error) => {
-        if (error.message === 'Your session has expired.') {
-          logUserOut(history, '/login', '/write', 'Your session has expired.');
-        } else {
-          this.setState({
-            errorMessage: 'Server error',
-            errorSeverity: NotificationSeverity.error,
-          });
         }
       });
   }
@@ -177,26 +182,15 @@ class EditArticle extends Component {
       imagePublicId: articleImagePublicId || null,
     };
 
-    ArticleService.republishArticle(article, slug, token)
-      .then((res) => {
+    ArticleService
+      .republishArticle(article, slug, token)
+      .pipe(
+        map((res) => res.response),
+        catchError((error) => this.handleError(error, history, logUserOut)),
+      )
+      .subscribe((res) => {
         if (res.success) {
-          deleteArticle();
           history.push(`/read/${slug}`);
-        } else {
-          this.setState({
-            errorMessage: 'Oops! Could not publish that...',
-            errorSeverity: NotificationSeverity.error,
-          });
-        }
-      })
-      .catch((error) => {
-        if (error.message === 'Your session has expired.') {
-          logUserOut(history, '/login', '/write', 'Your session has expired.');
-        } else {
-          this.setState({
-            errorMessage: 'Server error',
-            errorSeverity: NotificationSeverity.error,
-          });
         }
       });
   }
