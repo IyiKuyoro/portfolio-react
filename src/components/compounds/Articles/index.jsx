@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { bool } from 'prop-types';
+import { of } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 
 import LoadingSpinner from 'Atoms/LoadingSpinner';
 import { Notification } from 'HOC/Notifications';
@@ -20,19 +22,27 @@ export default class Articles extends Component {
   }
 
   componentDidMount() {
-    ArticlesService.getAllArticles()
-      .then((res) => {
+    this.articlesSubscription = ArticlesService.getAllArticles()
+      .pipe(
+        catchError((error) => {
+          this.setState({
+            loading: false,
+            error: true,
+          });
+          return of(error);
+        }),
+        map((res) => res.response),
+      )
+      .subscribe((res) => {
         this.setState({
           articlesList: res.data.articles,
           loading: false,
         });
-      })
-      .catch(() => {
-        this.setState({
-          loading: false,
-          error: true,
-        });
       });
+  }
+
+  componentWillUnmount() {
+    this.articlesSubscription.unsubscribe();
   }
 
   render() {
