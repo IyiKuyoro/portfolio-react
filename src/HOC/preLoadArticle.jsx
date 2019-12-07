@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { of } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 
 import ArticlesService from 'Services/Articles';
 import Loading from '../components/compounds/Loading';
@@ -13,31 +15,41 @@ export default function (Article) {
         loading: true,
         article: {},
       };
+      this.handleError = this.handleError.bind(this);
     }
 
     componentDidMount() {
-      const { match: { params }, history } = this.props;
+      const { match: { params } } = this.props;
 
-      ArticlesService.getArticleBySlug(params.slug)
-        .then((res) => {
-          if (!res.success) {
-            history.push('/404', {
-              error: 404,
-              errorMessage: 'I could not find that exact article. Perhaps you can check one of these.',
-            });
-          } else {
-            this.setState({
-              article: res.data,
-              loading: false,
-            });
-          }
-        })
-        .catch(() => {
-          history.push('/error', {
-            error: 500,
-            errorMessage: 'Sorry an error occurred while trying to load that article. Maybe you can try one of these.',
+      this.article = ArticlesService.getArticleBySlug(params.slug)
+        .pipe(
+          catchError(this.handleError),
+          map((res) => res.response),
+        )
+        .subscribe((res) => {
+          this.setState({
+            article: res.data,
+            loading: false,
           });
         });
+    }
+
+    componentWillUnmount() {
+      this.article.unsubscribe();
+    }
+
+    handleError(error) {
+      const { history } = this.props;
+
+      const errorMessage = error.status === 404
+        ? 'I could not find that exact article. Perhaps you can check one of these.'
+        : 'Sorry an error occurred while trying to load that article. Maybe you can try one of these.';
+
+      history.push(error.status === 404 ? '/404' : '/error', {
+        error: error.status,
+        errorMessage,
+      });
+      return of(error);
     }
 
     render() {

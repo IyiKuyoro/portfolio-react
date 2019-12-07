@@ -1,3 +1,5 @@
+import { ajax } from 'rxjs/ajax';
+
 import config from '../config';
 
 export default class ArticlesService {
@@ -15,18 +17,14 @@ export default class ArticlesService {
     return res.json();
   }
 
-  static async getArticleBySlug(slug) {
-    const res = await fetch(
-      `${config.backendUrl}/articles/${slug}`,
-      {
-        method: 'GET',
-        headers: {
-          Accept: 'application/json',
-        },
+  static getArticleBySlug(slug) {
+    return ajax({
+      url: `${config.backendUrl}/articles/${slug}`,
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
       },
-    );
-
-    return res.json();
+    });
   }
 
   static async publishArticle(article, userToken) {
