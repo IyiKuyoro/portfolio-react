@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Suspense, lazy } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
@@ -10,11 +10,13 @@ import { userLogOut } from 'Actions/authUser';
 import Button from 'Atoms/Button';
 import Editor from 'Atoms/Editor';
 import Header from 'Compounds/Header';
+import Loading from 'Compounds/Loading';
 import { saveArticle, getArticle, deleteArticle } from 'IndexDB/articles';
 import { Notification, NotificationSeverity } from 'HOC/Notifications';
 
-import ArticleBanner from './ArticleBanner';
 import Styles from './editArticle.styles.scss';
+
+const ArticleBanner = lazy(() => import('./ArticleBanner'));
 
 class EditArticle extends Component {
   constructor(props) {
@@ -214,11 +216,13 @@ class EditArticle extends Component {
     return (
       <>
         <Header />
-        <ArticleBanner
-          updateBannerUrl={this.handleBannerChange}
-          imageUrl={articleBannerUrl}
-          imagePublicId={articleImagePublicId}
-        />
+        <Suspense fallback={<Loading />}>
+          <ArticleBanner
+            updateBannerUrl={this.handleBannerChange}
+            imageUrl={articleBannerUrl}
+            imagePublicId={articleImagePublicId}
+          />
+        </Suspense>
         <input onChange={this.handleTitleChange} className={Styles.title} type="text" placeholder="Article Title..." value={title} />
         <div className={Styles.articleBody}>
           <Editor body={body} handleBodyChange={this.handleBodyChange} />
