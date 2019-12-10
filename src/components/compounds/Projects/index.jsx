@@ -94,7 +94,7 @@ export default class Projects extends Component {
     return (
       <div className={Styles.projects}>
         <button
-          className={Styles.btn}
+          className={`${Styles.btn} ${Styles.leftBtn}`}
           onClick={() => this.handleChangeButtonClick(false)}
           type="button"
         >
@@ -103,7 +103,7 @@ export default class Projects extends Component {
         <h2 className={Styles.heading}>See some of my open source projects</h2>
         <Project className={projectClassString} project={ProjectList[currentId]} />
         <button
-          className={`${Styles.btn} ${Styles.btnRight}`}
+          className={`${Styles.btn} ${Styles.rightBtn}`}
           onClick={this.handleChangeButtonClick}
           type="button"
         >
