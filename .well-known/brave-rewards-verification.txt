@@ -1,0 +1,4 @@
+This is a Brave Rewards publisher verification file.
+
+Domain: iyikuyoro.dev
+Token: 1f6ada7222a467259073e42a1e9271dcf6860e4951a6c00ee8cb564fb9463892
