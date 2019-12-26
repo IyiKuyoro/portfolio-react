@@ -13,6 +13,7 @@ export default class Projects extends Component {
       projectClassList: [],
     };
     this.handleChangeButtonClick = this.handleChangeButtonClick.bind(this);
+    this.changeProjectAtIntervals = this.changeProjectAtIntervals.bind(this);
   }
 
   componentDidMount() {
@@ -92,7 +93,12 @@ export default class Projects extends Component {
     const projectClassString = projectClassList.join(' ');
 
     return (
-      <div className={Styles.projects}>
+      <div
+        className={Styles.projects}
+        onMouseOver={() => clearInterval(this.projectInterval)}
+        onFocus={() => clearInterval(this.projectInterval)}
+        onMouseLeave={() => this.changeProjectAtIntervals()}
+      >
         <button
           className={`${Styles.btn} ${Styles.leftBtn}`}
           onClick={() => this.handleChangeButtonClick(false)}
