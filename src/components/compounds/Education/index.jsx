@@ -15,17 +15,16 @@ export default class Education extends Component {
     this.interval1 = undefined;
     this.interval2 = undefined;
     this.timeout = undefined;
+    this.stopAnimation = this.stopAnimation.bind(this);
+    this.animateText = this.animateText.bind(this);
   }
 
   componentDidMount() {
-    // Remove add text animation
     this.animateText();
   }
 
   componentWillUnmount() {
-    clearInterval(this.interval1);
-    clearInterval(this.interval2);
-    clearTimeout(this.timeout);
+    this.stopAnimation();
   }
 
   animateText() {
@@ -59,6 +58,12 @@ export default class Education extends Component {
     }, 4000);
   }
 
+  stopAnimation() {
+    clearInterval(this.interval1);
+    clearInterval(this.interval2);
+    clearTimeout(this.timeout);
+  }
+
   render() {
     const { yScroll } = this.props;
     const { currentId, textClassList, iconClassList } = this.state;
@@ -82,7 +87,12 @@ export default class Education extends Component {
     }
 
     return (
-      <div className={Styles.education}>
+      <div
+        className={Styles.education}
+        onMouseEnter={this.stopAnimation}
+        onFocus={this.stopAnimation}
+        onMouseLeave={this.animateText}
+      >
         <div className={Styles.content} style={pStyle}>
           <div className={iconClassString}>
             <i className={`fas ${EduList[currentId].icon} ${Styles.icon}`} />
