@@ -1,7 +1,7 @@
 .handicapButton {
   position: fixed;
-  width: 4em;
-  height: 4em;
+  width: 5em;
+  height: 5em;
   padding: 0;
   border: none;
   background-color: red;
@@ -9,13 +9,15 @@
   box-shadow: 2px 2px 4px 1px #c5c5c5;
   z-index: 2;
   transition:
-    background-color 300ms linear;
+    background-color 300ms linear,
+    box-shadow 300ms linear;
 }
 
 .handicapButton:focus,
 .handicapButton:hover {
   cursor: pointer;
   background-color: #FFFFFF;
+  box-shadow: 0.5px 0.5px 1px 0.25px #c5c5c5;
 }
 
 .handicapIcon {

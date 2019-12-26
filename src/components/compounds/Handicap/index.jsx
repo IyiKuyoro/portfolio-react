@@ -7,16 +7,22 @@ class Handicap extends Component {
     super(props);
     this.state = {
       holdStart: 0,
-      top: 'calc(100% - calc(10px + 4em))',
-      left: 10,
+      top: 'calc(100% - calc(10px + 5em))',
+      left: 20,
     };
     this.hookUpDragElement = this.hookUpDragElement.bind(this);
     this.dragElement = this.dragElement.bind(this);
     this.openMenu = this.openMenu.bind(this);
   }
 
+  componentDidMount() {
+    const el = document.getElementById('handicapButton');
+    el.addEventListener('touchmove', this.dragElement, { passive: false });
+  }
+
   componentWillUnmount() {
     document.onmousemove = null;
+    document.ontouchmove = null;
   }
 
   hookUpDragElement(e) {
@@ -27,9 +33,12 @@ class Handicap extends Component {
   }
 
   dragElement(e) {
+    e.preventDefault();
+    const { clientY, clientX } = e.type === 'touchmove' ? e.touches[0] : e;
+
     this.setState({
-      top: e.clientY - 20,
-      left: e.clientX - 20,
+      top: clientY - 20,
+      left: clientX - 20,
     });
   }
 
@@ -51,6 +60,7 @@ class Handicap extends Component {
 
     return (
       <button
+        id="handicapButton"
         className={Styles.handicapButton}
         type="button"
         aria-label="Accessibility Menu"
