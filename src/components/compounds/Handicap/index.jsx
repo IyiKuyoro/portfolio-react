@@ -1,4 +1,8 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+
+import toggleAnimations from 'Actions/a11y';
 
 import Styles from './handicap.styles.scss';
 
@@ -67,6 +71,7 @@ class Handicap extends Component {
 
   render() {
     const { top, left, menuOpen } = this.state;
+    const { animations, switchAnimations } = this.props;
 
     const position = {
       top,
@@ -98,9 +103,16 @@ class Handicap extends Component {
           className={`${menuOpen ? Styles.handicapMenu : Styles.handicapMenuClosed}`}
           role="menu"
         >
-          <label className={Styles.menuItem} htmlFor="toggle-animations" aria-label="Toggle animations">
+          <label className={`${Styles.menuItem} ${animations && Styles.menuItemSelected}`} htmlFor="toggle-animations" aria-label="Toggle animations">
             <div className={`${Styles.icon} ${Styles.animatedIcon}`} />
-            <input className={`menu-list-item ${Styles.menuItemCheckbox}`} role="menuitemcheckbox" aria-checked="false" id="toggle-animations" type="checkbox" />
+            <input
+              className={`menu-list-item ${Styles.menuItemCheckbox}`}
+              role="menuitemcheckbox"
+              aria-checked={animations}
+              id="toggle-animations"
+              type="checkbox"
+              onChange={() => switchAnimations()}
+            />
           </label>
         </div>
       </div>
@@ -108,4 +120,21 @@ class Handicap extends Component {
   }
 }
 
-export default Handicap;
+Handicap.propTypes = {
+  animations: PropTypes.bool.isRequired,
+  switchAnimations: PropTypes.func.isRequired,
+};
+
+function mapDispatchToProps(dispatch) {
+  return {
+    switchAnimations: () => dispatch(toggleAnimations()),
+  };
+}
+
+function mapStateToProps(state) {
+  return ({
+    animations: state.a11y.animations,
+  });
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Handicap);
