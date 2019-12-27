@@ -1,5 +1,19 @@
-.handicapButton {
+.handicapWrapper {
   position: fixed;
+  z-index: 2;
+  width: fit-content;
+  height: fit-content;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-right: 10px;
+  box-shadow: 2px 2px 4px 1px #c5c5c5;
+  border-radius: 2.5em;
+  background-color: #FFFFFF;
+}
+
+.handicapButton {
+  position: relative;
   width: 5em;
   height: 5em;
   padding: 0;
@@ -7,19 +21,81 @@
   background-color: red;
   border-radius: 50%;
   box-shadow: 2px 2px 4px 1px #c5c5c5;
-  z-index: 2;
   transition:
-    background-color 300ms linear,
-    box-shadow 300ms linear;
+    background-color 200ms linear,
+    box-shadow 200ms linear,
+    border 200ms linear;
+}
+
+.handicapButtonOpen {
+  box-shadow: none;
 }
 
 .handicapButton:focus,
 .handicapButton:hover {
   cursor: pointer;
+  border: solid red;
   background-color: #FFFFFF;
   box-shadow: 0.5px 0.5px 1px 0.25px #c5c5c5;
 }
 
 .handicapIcon {
   font-size: 2em;
+}
+
+.handicapMenu {
+  height: fit-content;
+  width: fit-content;
+  margin-left: 10px;
+}
+
+.menuItem {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 1.3em;
+  height: 1.3em;
+  padding: 0.1em;
+  border-radius: 50%;
+  box-shadow: 2px 2px 4px 1px #c5c5c5;
+  transition:
+    box-shadow 200ms linear;
+}
+
+.menuItem:focus,
+.menuItem:hover {
+  cursor: pointer;
+  box-shadow: 0.5px 0.5px 1px 0.25px #c5c5c5;
+}
+
+.menuItem:focus-within {
+  border: solid red;
+}
+
+.menuItemSelected {
+  box-shadow: inset 2px 2px 4px 1px #c5c5c5;
+  transition:
+    box-shadow 200ms linear;
+}
+
+.menuItemSelected:focus,
+.menuItemSelected:hover {
+  cursor: pointer;
+  box-shadow: inset 0.5px 0.5px 1px 0.25px #c5c5c5;
+}
+
+.icon {
+  width: 0.6em;
+  height: 0.6em;
+}
+
+.animatedIcon {
+  background-size: cover;
+  background-image: url("../../../static/images/book.gif");
+}
+
+.menuItemCheckbox {
+  -webkit-appearance: none;
+  margin: 0;
 }

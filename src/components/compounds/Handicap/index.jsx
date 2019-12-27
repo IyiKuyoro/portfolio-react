@@ -45,7 +45,9 @@ class Handicap extends Component {
   openMenu(e) {
     const { holdStart } = this.state;
 
-    if (e.timeStamp - holdStart > 500) {
+    if (e.timeStamp - holdStart <= 500) {
+      console.log('clicked');
+    } else {
       e.preventDefault();
     }
   }
@@ -59,18 +61,28 @@ class Handicap extends Component {
     };
 
     return (
-      <button
-        id="handicapButton"
-        className={Styles.handicapButton}
-        type="button"
-        aria-label="Accessibility Menu"
-        onMouseDown={(e) => this.hookUpDragElement(e)}
-        onMouseUp={() => { document.onmousemove = null; }}
-        onClick={(e) => this.openMenu(e)}
+      <div
+        className={Styles.handicapWrapper}
         style={position}
       >
-        <i className={`fas fa-wheelchair ${Styles.handicapIcon}`} />
-      </button>
+        <button
+          id="handicapButton"
+          onMouseDown={(e) => this.hookUpDragElement(e)}
+          onMouseUp={() => { document.onmousemove = null; }}
+          onClick={(e) => this.openMenu(e)}
+          className={Styles.handicapButton}
+          type="button"
+          aria-label="Accessibility Menu"
+        >
+          <i className={`fas fa-wheelchair ${Styles.handicapIcon}`} />
+        </button>
+        <div className={Styles.handicapMenu} role="menu">
+          <label className={Styles.menuItem} htmlFor="toggle-animations" aria-label="Toggle animations">
+            <div className={`${Styles.icon} ${Styles.animatedIcon}`} />
+            <input className={Styles.menuItemCheckbox} role="menuitemcheckbox" aria-checked="false" id="toggle-animations" type="checkbox" />
+          </label>
+        </div>
+      </div>
     );
   }
 }

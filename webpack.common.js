@@ -46,6 +46,14 @@ module.exports = {
           }
         ]
       },
+      {
+        test: /\.(png|jpe?g|gif)$/i,
+        use: [
+          {
+            loader: 'file-loader',
+          },
+        ],
+      },
     ],
   },
   resolve: {
@@ -54,7 +62,7 @@ module.exports = {
       Atoms: path.resolve(__dirname, 'src/components/atoms'),
       Components: path.resolve(__dirname, 'src/components'),
       Compounds: path.resolve(__dirname, 'src/components/compounds'),
-      Images: path.resolve(__dirname, 'src/static/index.html'),
+      Images: path.resolve(__dirname, 'src/static/images'),
       Pages: path.resolve(__dirname, 'src/pages'),
       Actions: path.resolve(__dirname, 'src/store/actions'),
       HOC: path.resolve(__dirname, 'src/HOC'),
