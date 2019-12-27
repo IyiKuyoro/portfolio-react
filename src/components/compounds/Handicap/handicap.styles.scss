@@ -12,6 +12,10 @@
   background-color: #FFFFFF;
 }
 
+.handicapWrapperClosed {
+  padding-right: 0;
+}
+
 .handicapButton {
   position: relative;
   width: 5em;
@@ -21,6 +25,14 @@
   background-color: red;
   border-radius: 50%;
   box-shadow: 2px 2px 4px 1px #c5c5c5;
+  -webkit-transition:
+    background-color 200ms linear,
+    box-shadow 200ms linear,
+    border 200ms linear;
+  -moz-transition:
+    background-color 200ms linear,
+    box-shadow 200ms linear,
+    border 200ms linear;
   transition:
     background-color 200ms linear,
     box-shadow 200ms linear,
@@ -33,6 +45,7 @@
 
 .handicapButton:focus,
 .handicapButton:hover {
+  outline: none;
   cursor: pointer;
   border: solid red;
   background-color: #FFFFFF;
@@ -49,16 +62,28 @@
   margin-left: 10px;
 }
 
+.handicapMenuClosed {
+  width: 0;
+  padding: 0;
+  visibility: hidden;
+}
+
 .menuItem {
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
   width: 1.3em;
+  min-width: 40px;
+  min-height: 40px;
   height: 1.3em;
   padding: 0.1em;
   border-radius: 50%;
   box-shadow: 2px 2px 4px 1px #c5c5c5;
+  -webkit-transition:
+    box-shadow 200ms linear;
+  -moz-transition:
+    box-shadow 200ms linear;
   transition:
     box-shadow 200ms linear;
 }
@@ -75,6 +100,10 @@
 
 .menuItemSelected {
   box-shadow: inset 2px 2px 4px 1px #c5c5c5;
+  -webkit-transition:
+    box-shadow 200ms linear;
+  -moz-transition:
+    box-shadow 200ms linear;
   transition:
     box-shadow 200ms linear;
 }
@@ -97,5 +126,10 @@
 
 .menuItemCheckbox {
   -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border: none;
+  width: 0;
+  height: 0;
   margin: 0;
 }
