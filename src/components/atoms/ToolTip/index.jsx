@@ -11,8 +11,12 @@ function ToolTip(props) {
   );
 }
 
+ToolTip.defaultProps = {
+  fontSizeStyle: '',
+};
+
 ToolTip.propTypes = {
-  fontSizeStyle: PropTypes.string.isRequired,
+  fontSizeStyle: PropTypes.string,
   text: PropTypes.string.isRequired,
   toolTipPosition: PropTypes.objectOf(PropTypes.number.isRequired).isRequired,
 };
