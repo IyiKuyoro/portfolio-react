@@ -1,11 +1,7 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
-
-import toggleAnimations from 'Actions/a11y';
-import HandicapMenuItem from './HandicapMenuItem';
 
 import Styles from './handicap.styles.scss';
+import HandicapMenuList from './HandicapMenuList';
 
 class Handicap extends Component {
   constructor(props) {
@@ -72,7 +68,6 @@ class Handicap extends Component {
 
   render() {
     const { top, left, menuOpen } = this.state;
-    const { animations, switchAnimations } = this.props;
 
     const position = {
       top,
@@ -100,39 +95,12 @@ class Handicap extends Component {
         >
           <i className={`fas fa-wheelchair ${Styles.handicapIcon}`} />
         </button>
-        <div
-          className={`${menuOpen ? Styles.handicapMenu : Styles.handicapMenuClosed}`}
-          role="menu"
-        >
-          <HandicapMenuItem
-            id="toggle-animations"
-            iconStyle={Styles.animatedIcon}
-            ariaLabel="Toggle animations"
-            menuItem={animations}
-            switchAnimations={switchAnimations}
-            handleChange={switchAnimations}
-          />
-        </div>
+        <HandicapMenuList
+          menuOpen={menuOpen}
+        />
       </div>
     );
   }
 }
 
-Handicap.propTypes = {
-  animations: PropTypes.bool.isRequired,
-  switchAnimations: PropTypes.func.isRequired,
-};
-
-function mapDispatchToProps(dispatch) {
-  return {
-    switchAnimations: () => dispatch(toggleAnimations()),
-  };
-}
-
-function mapStateToProps(state) {
-  return ({
-    animations: state.a11y.animations,
-  });
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Handicap);
+export default Handicap;

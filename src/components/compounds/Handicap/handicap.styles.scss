@@ -55,20 +55,3 @@
 .handicapIcon {
   font-size: 2em;
 }
-
-.handicapMenu {
-  height: fit-content;
-  width: fit-content;
-  margin-left: 10px;
-}
-
-.handicapMenuClosed {
-  width: 0;
-  padding: 0;
-  visibility: hidden;
-}
-
-.animatedIcon {
-  background-size: cover;
-  background-image: url("../../../static/images/book.gif");
-}
