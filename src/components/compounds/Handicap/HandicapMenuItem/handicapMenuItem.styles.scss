@@ -1,0 +1,60 @@
+.menuItem {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 1.3em;
+  min-width: 40px;
+  min-height: 40px;
+  height: 1.3em;
+  padding: 0.1em;
+  border-radius: 50%;
+  box-shadow: 2px 2px 4px 1px #c5c5c5;
+  -webkit-transition:
+    box-shadow 200ms linear;
+  -moz-transition:
+    box-shadow 200ms linear;
+  transition:
+    box-shadow 200ms linear;
+}
+
+.menuItem:focus,
+.menuItem:hover {
+  cursor: pointer;
+  box-shadow: 0.5px 0.5px 1px 0.25px #c5c5c5;
+}
+
+.menuItem:focus-within {
+  border: solid red;
+}
+
+.menuItemSelected {
+  box-shadow: inset 2px 2px 4px 1px #c5c5c5;
+  -webkit-transition:
+    box-shadow 200ms linear;
+  -moz-transition:
+    box-shadow 200ms linear;
+  transition:
+    box-shadow 200ms linear;
+}
+
+.menuItemSelected:focus,
+.menuItemSelected:hover {
+  cursor: pointer;
+  box-shadow: inset 0.5px 0.5px 1px 0.25px #c5c5c5;
+}
+
+.icon {
+  width: 0.6em;
+  height: 0.6em;
+}
+
+.menuItemCheckbox {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border: none;
+  width: 0;
+  height: 0;
+  margin: 0;
+}

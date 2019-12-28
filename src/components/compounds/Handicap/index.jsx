@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import toggleAnimations from 'Actions/a11y';
+import HandicapMenuItem from './HandicapMenuItem';
 
 import Styles from './handicap.styles.scss';
 
@@ -103,17 +104,14 @@ class Handicap extends Component {
           className={`${menuOpen ? Styles.handicapMenu : Styles.handicapMenuClosed}`}
           role="menu"
         >
-          <label className={`${Styles.menuItem} ${animations && Styles.menuItemSelected}`} htmlFor="toggle-animations" aria-label="Toggle animations">
-            <div className={`${Styles.icon} ${Styles.animatedIcon}`} />
-            <input
-              className={`menu-list-item ${Styles.menuItemCheckbox}`}
-              role="menuitemcheckbox"
-              aria-checked={animations}
-              id="toggle-animations"
-              type="checkbox"
-              onChange={() => switchAnimations()}
-            />
-          </label>
+          <HandicapMenuItem
+            id="toggle-animations"
+            iconStyle={Styles.animatedIcon}
+            ariaLabel="Toggle animations"
+            menuItem={animations}
+            switchAnimations={switchAnimations}
+            handleChange={switchAnimations}
+          />
         </div>
       </div>
     );
