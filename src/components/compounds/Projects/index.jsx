@@ -1,16 +1,19 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 import Project from './Project';
 import Styles from './projects.styles.scss';
 import ProjectList from './ProjectsList.json';
 
-export default class Projects extends Component {
+class Projects extends Component {
   constructor(props) {
     super(props);
     this.projectInterval = null;
     this.state = {
       currentId: 0,
       projectClassList: [],
+      animate: true,
     };
     this.handleChangeButtonClick = this.handleChangeButtonClick.bind(this);
     this.changeProjectAtIntervals = this.changeProjectAtIntervals.bind(this);
@@ -63,15 +66,20 @@ export default class Projects extends Component {
     }, 600);
   }
 
-  nextProject(forward = true) {
-    // Pull project off screen
-    this.slideProjectOut(forward);
+  nextProject(forward = true, clicked = false) {
+    const { animations } = this.props;
+    const { animate } = this.state;
 
-    // Change Project
-    this.changeProject(forward);
+    if (clicked || (animations && animate)) {
+      // Pull project off screen
+      this.slideProjectOut(forward);
 
-    // Bring project back
-    this.slideProjectIn(forward);
+      // Change Project
+      this.changeProject(forward);
+
+      // Bring project back
+      this.slideProjectIn(forward);
+    }
   }
 
   // Reset the project switching interval
@@ -84,7 +92,7 @@ export default class Projects extends Component {
 
   // Handle project change button click
   handleChangeButtonClick(forward = true) {
-    this.nextProject(forward);
+    this.nextProject(forward, true);
     this.resetInterval();
   }
 
@@ -95,9 +103,9 @@ export default class Projects extends Component {
     return (
       <div
         className={Styles.projects}
-        onMouseOver={() => clearInterval(this.projectInterval)}
-        onFocus={() => clearInterval(this.projectInterval)}
-        onMouseLeave={() => this.changeProjectAtIntervals()}
+        onMouseOver={() => this.setState({ animate: false })}
+        onFocus={() => this.setState({ animate: false })}
+        onMouseLeave={() => this.setState({ animate: true })}
       >
         <button
           className={`${Styles.btn} ${Styles.leftBtn}`}
@@ -120,3 +128,15 @@ export default class Projects extends Component {
     );
   }
 }
+
+Projects.propTypes = {
+  animations: PropTypes.bool.isRequired,
+};
+
+function mapStateToProps(state) {
+  return ({
+    animations: state.a11y.animations,
+  });
+}
+
+export default connect(mapStateToProps)(Projects);
