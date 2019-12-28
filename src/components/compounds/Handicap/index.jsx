@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import ToolTip from 'Atoms/ToolTip';
+
 import Styles from './handicap.styles.scss';
 import HandicapMenuList from './HandicapMenuList';
 
@@ -11,10 +13,16 @@ class Handicap extends Component {
       top: 'calc(100% - calc(10px + 2.5em))',
       left: 20,
       menuOpen: false,
+      hover: false,
+      toolTipPosition: {
+        top: 0,
+        left: 0,
+      },
     };
     this.hookUpDragElement = this.hookUpDragElement.bind(this);
     this.dragElement = this.dragElement.bind(this);
     this.toggleMenu = this.toggleMenu.bind(this);
+    this.handleMouseOver = this.handleMouseOver.bind(this);
   }
 
   componentDidMount() {
@@ -44,6 +52,16 @@ class Handicap extends Component {
     });
   }
 
+  handleMouseOver(e) {
+    this.setState({
+      hover: true,
+      toolTipPosition: {
+        top: e.clientY,
+        left: e.clientX,
+      },
+    });
+  }
+
   toggleMenu(e) {
     const { holdStart, menuOpen } = this.state;
 
@@ -67,7 +85,9 @@ class Handicap extends Component {
   }
 
   render() {
-    const { top, left, menuOpen } = this.state;
+    const {
+      top, left, menuOpen, hover, toolTipPosition,
+    } = this.state;
 
     const position = {
       top,
@@ -81,6 +101,8 @@ class Handicap extends Component {
       >
         <button
           id="handicapButton"
+          onMouseEnter={(e) => this.handleMouseOver(e)}
+          onMouseLeave={() => this.setState({ hover: false })}
           onMouseDown={(e) => this.hookUpDragElement(e)}
           onMouseUp={() => { document.onmousemove = null; }}
           onClick={(e) => this.toggleMenu(e)}
@@ -93,6 +115,7 @@ class Handicap extends Component {
           type="button"
           aria-label={`Accessibility menu ${menuOpen ? 'close' : 'open'}`}
         >
+          {hover && <ToolTip text="Accessibility Menu" toolTipPosition={toolTipPosition} />}
           <i className={`fas fa-wheelchair ${Styles.handicapIcon}`} />
         </button>
         <HandicapMenuList
