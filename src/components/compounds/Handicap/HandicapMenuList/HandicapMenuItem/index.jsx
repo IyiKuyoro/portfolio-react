@@ -41,6 +41,7 @@ function HandicapMenuItem(props) {
       aria-label={ariaLabel}
       onMouseEnter={(e) => handleMouseEnter(e, setToolTip)}
       onMouseLeave={() => handleMouseLeave(setToolTip)}
+      onTouchEnd={() => handleMouseLeave(setToolTip)}
     >
       {toolTip.hover && (
       <ToolTip
