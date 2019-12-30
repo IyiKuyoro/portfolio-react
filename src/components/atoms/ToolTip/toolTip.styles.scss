@@ -1,0 +1,15 @@
+.tooltip {
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  font-size: 1.1em;
+  border-radius: 6px;
+  padding: 5px 10px;
+  position: fixed;
+  z-index: 2;
+  margin-left: 20px;
+  opacity: 1;
+  -webkit-transition: opacity 300s;
+  -moz-transition: opacity 300s;
+  transition: opacity 300s;
+}

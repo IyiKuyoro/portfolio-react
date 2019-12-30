@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 import Styles from './education.styles.scss';
 import EduList from './EducationList.json';
 
-export default class Education extends Component {
+class Education extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -15,29 +16,24 @@ export default class Education extends Component {
     this.interval1 = undefined;
     this.interval2 = undefined;
     this.timeout = undefined;
+    this.stopAnimation = this.stopAnimation.bind(this);
+    this.animateText = this.animateText.bind(this);
+    this.changeCurrentId = this.changeCurrentId.bind(this);
+    this.changeDisplayedItem = this.changeDisplayedItem.bind(this);
   }
 
   componentDidMount() {
-    // Remove add text animation
     this.animateText();
   }
 
   componentWillUnmount() {
-    clearInterval(this.interval1);
-    clearInterval(this.interval2);
-    clearTimeout(this.timeout);
+    this.stopAnimation();
   }
 
-  animateText() {
-    this.interval1 = setInterval(() => {
-      this.setState({
-        textClassList: [Styles.textWrapper],
-        iconClassList: [Styles.iconWrapper],
-      });
-    }, 3000);
+  changeCurrentId() {
+    const { animations } = this.props;
 
-    // Change text
-    this.interval2 = setInterval(() => {
+    if (animations) {
       const { currentId } = this.state;
       // Run change text animation
       this.setState({
@@ -56,7 +52,35 @@ export default class Education extends Component {
           });
         }
       }, 500);
+    }
+  }
+
+  changeDisplayedItem() {
+    const { animations } = this.props;
+
+    if (animations) {
+      this.setState({
+        textClassList: [Styles.textWrapper],
+        iconClassList: [Styles.iconWrapper],
+      });
+    }
+  }
+
+  animateText() {
+    this.interval1 = setInterval(() => {
+      this.changeDisplayedItem();
+    }, 3000);
+
+    // Change text
+    this.interval2 = setInterval(() => {
+      this.changeCurrentId();
     }, 4000);
+  }
+
+  stopAnimation() {
+    clearInterval(this.interval1);
+    clearInterval(this.interval2);
+    clearTimeout(this.timeout);
   }
 
   render() {
@@ -82,7 +106,12 @@ export default class Education extends Component {
     }
 
     return (
-      <div className={Styles.education}>
+      <div
+        className={Styles.education}
+        onMouseEnter={this.stopAnimation}
+        onFocus={this.stopAnimation}
+        onMouseLeave={this.animateText}
+      >
         <div className={Styles.content} style={pStyle}>
           <div className={iconClassString}>
             <i className={`fas ${EduList[currentId].icon} ${Styles.icon}`} />
@@ -97,5 +126,14 @@ export default class Education extends Component {
 }
 
 Education.propTypes = {
+  animations: PropTypes.bool.isRequired,
   yScroll: PropTypes.number.isRequired,
 };
+
+function mapStateToProps(state) {
+  return ({
+    animations: state.a11y.animations,
+  });
+}
+
+export default connect(mapStateToProps)(Education);

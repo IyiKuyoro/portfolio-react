@@ -8,6 +8,7 @@ import articleWriteEditGuard from 'HOC/ArticleWriteEditGuard';
 import noAuthCheck from 'HOC/noAuthCheck';
 import preLoadArticle from 'HOC/preLoadArticle';
 import Loading from 'Compounds/Loading';
+import Handicap from 'Compounds/Handicap';
 
 import { resetUser } from './store/actions/authUser';
 
@@ -28,6 +29,7 @@ class App extends Component {
     return (
       <Router>
         <Suspense fallback={<Loading />}>
+          <Handicap />
           <UserMenu />
           <Switch>
             <Route exact path="/" component={Home} />

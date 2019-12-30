@@ -53,6 +53,9 @@ export default class Hero extends Component {
           </p>
         </div>
         <img
+          onMouseOver={() => clearInterval(this.animationInterval)}
+          onFocus={() => clearInterval(this.animationInterval)}
+          onMouseLeave={() => this.hookupShuffling()}
           className={Styles.langImage}
           src={stacks[currentStack].imageUrl}
           alt={stacks[currentStack].name}
