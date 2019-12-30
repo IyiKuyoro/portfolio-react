@@ -111,6 +111,7 @@ class Handicap extends Component {
               this.toggleMenu(e);
             }
           }}
+          onTouchEnd={() => this.setState({ hover: false })}
           className={`${Styles.handicapButton} ${menuOpen && Styles.handicapButtonOpen}`}
           type="button"
           aria-label={`Accessibility menu ${menuOpen ? 'close' : 'open'}`}
