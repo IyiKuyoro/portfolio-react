@@ -67,5 +67,5 @@ Card.propTypes = {
 
 
 Card.defaultProps = {
-  backgroundImage: 'https://res.cloudinary.com/iyikuyoro/image/upload/v1551336637/portfolio%20assets/patrick-fore-381200-unsplash.jpg',
+  backgroundImage: 'https://res.cloudinary.com/iyikuyoro/image/upload/v1577840819/portfolio-assets/patrick-fore-381200-unsplash.jpg',
 };

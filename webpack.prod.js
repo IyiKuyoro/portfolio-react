@@ -4,6 +4,7 @@ const TerserPlugin = require('terser-webpack-plugin');
 const WorkboxPlugin = require('workbox-webpack-plugin');
 
 const common = require('./webpack.common.js');
+const runtimeCaching = require('./webpackRuntimeCachingConfig');
 
 module.exports = merge(common, {
   mode: 'production',
@@ -58,6 +59,8 @@ module.exports = merge(common, {
     new WorkboxPlugin.GenerateSW({
       clientsClaim: true,
       skipWaiting: true,
+      runtimeCaching,
+      exclude: [/\.css$/, /\.js$/],
     }),
   ],
   optimization: {
