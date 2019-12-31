@@ -23,3 +23,42 @@ html {
 .ck .ck-editor__nested-editable.ck-editor__nested-editable_focused, .ck .ck-editor__nested-editable:focus {
   color: black;
 }
+
+#sw-notification {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 90%;
+  min-height: 60px;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  background-color: #e5e5e5;
+  color: #000000;
+  box-shadow: 1px 3px 20px 1px #a5a5a5;
+  padding: 0 5%;
+  animation: show-notification 500ms;
+  z-index: 3;
+}
+
+@keyframes show-notification {
+  0% { top: -300px }
+  100% { top: 0 }
+}
+
+#sw-notification-text {
+  font-size: 0.8em;
+}
+
+#sw-refresh-btn {
+  background-color: #FFFFFF;
+  border: none;
+  min-width: 100px;
+  height: 45px;
+  font-size: 0.6em;
+}
+
+#sw-refresh-btn:hover,
+#sw-refresh-btn:focus {
+  cursor: pointer;
+}
