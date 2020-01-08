@@ -12,19 +12,6 @@ module.exports = [{
     },
   },
 }, {
-  urlPattern: new RegExp('^https://iyikuyoro-be.herokuapp.com/api/v1/'),
-  handler: 'StaleWhileRevalidate',
-  options: {
-    cacheableResponse: {
-      statuses: [0, 200, 201],
-    },
-    cacheName: 'app-cache',
-    expiration: {
-      maxEntries: 5,
-      maxAgeSeconds: 60 * 60 * 24,
-    },
-  },
-}, {
   urlPattern: new RegExp('^https://www.youtube.com/'),
   handler: 'CacheFirst',
   options: {

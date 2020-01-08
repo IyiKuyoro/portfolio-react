@@ -17,11 +17,13 @@ if ('serviceWorker' in navigator) {
         console.log('SW registration failed: ', registrationError);
       });
 
-    navigator.serviceWorker.controller.onstatechange = (e) => {
-      if (e.target.state === 'redundant') {
-        displayNotificationPage();
-      }
-    };
+    if (navigator.serviceWorker.controller) {
+      navigator.serviceWorker.controller.onstatechange = (e) => {
+        if (e.target.state === 'redundant') {
+          displayNotificationPage();
+        }
+      };
+    }
   });
 }
 
