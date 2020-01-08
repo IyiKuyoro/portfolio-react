@@ -4,6 +4,12 @@
   display: flex;
 }
 
+@media (prefers-color-scheme: dark) {
+  .header {
+    background-color: #88EAFF;
+  }
+}
+
 .headerWrapper {
   width: 90%;
   display: flex;

@@ -5,18 +5,24 @@
 }
 
 .anchor {
-  text-decoration: none;
+  text-decoration: underline;
   color: #000000;
 }
 
 .anchor:hover,
 .anchor:focus {
   cursor: pointer;
-  color: rgb(88, 224, 255);
 }
 
 .text {
   margin: 5px 0;
   width: 100%;
   text-align: center;
+}
+
+@media (prefers-color-scheme: dark) {
+  .footer {
+    background: #88EAFF;
+    color:  #000000;
+  }
 }
