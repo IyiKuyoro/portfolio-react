@@ -57,7 +57,7 @@
   {
     "id": 11,
     "name": "Cypress",
-    "imageUrl": "https://res.cloudinary.com/iyikuyoro/image/upload/v1568902032/portfolio-assets/cypress.jpg"
+    "imageUrl": "https://res.cloudinary.com/iyikuyoro/image/upload/v1578591706/portfolio-assets/cypress.png"
   },
   {
     "id": 12,
@@ -87,11 +87,11 @@
   {
     "id": 17,
     "name": "slack",
-    "imageUrl": "https://res.cloudinary.com/iyikuyoro/image/upload/v1568933550/portfolio-assets/slack.jpg"
+    "imageUrl": "https://res.cloudinary.com/iyikuyoro/image/upload/v1578591700/portfolio-assets/slack.png"
   },
   {
     "id": 18,
     "name": "heroku",
-    "imageUrl": "https://res.cloudinary.com/iyikuyoro/image/upload/v1568934092/portfolio-assets/heroku.png"
+    "imageUrl": "https://res.cloudinary.com/iyikuyoro/image/upload/v1578591695/portfolio-assets/heroku.png"
   }
 ]
