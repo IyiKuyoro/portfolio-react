@@ -62,7 +62,7 @@ module.exports = merge(common, {
       clientsClaim: true,
       skipWaiting: true,
       runtimeCaching,
-      exclude: [/\.css$/, /\.js$/],
+      exclude: [/\.css$/, /\.js$/, /\.html$/],
     }),
   ],
   optimization: {
