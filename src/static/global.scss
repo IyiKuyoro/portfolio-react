@@ -1,6 +1,14 @@
+@use './styles/colors' as color;
+
 body {
   font-family: 'Catamaran', sans-serif;
   font-size: calc(1em + 1vw);
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    @include color.dark;
+  }
 }
 
 body,

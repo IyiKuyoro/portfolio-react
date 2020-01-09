@@ -1,0 +1,10 @@
+$background-color: #ffffff;
+$foreground-color: #000000;
+
+$dark-background-color: #212121;
+$dark-foreground-color: #ffffff;
+
+@mixin dark {
+  background-color: $dark-background-color;
+  color: $dark-foreground-color;
+}

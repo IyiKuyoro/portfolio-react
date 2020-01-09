@@ -9,7 +9,7 @@
   height: 1.3em;
   padding: 0.1em;
   border-radius: 50%;
-  box-shadow: 2px 2px 4px 1px #c5c5c5;
+  box-shadow: 2px 2px 2px 0px #c5c5c5;
   -webkit-transition:
     box-shadow 200ms linear;
   -moz-transition:
@@ -21,7 +21,7 @@
 .menuItem:focus,
 .menuItem:hover {
   cursor: pointer;
-  box-shadow: 0.5px 0.5px 1px 0.25px #c5c5c5;
+  box-shadow: 0.5px 0.5px 1px -0.25px #c5c5c5;
 }
 
 .menuItem:focus-within {
@@ -29,7 +29,7 @@
 }
 
 .menuItemSelected {
-  box-shadow: inset 2px 2px 4px 1px #c5c5c5;
+  box-shadow: inset 2px 2px 2px 0px #c5c5c5;
   -webkit-transition:
     box-shadow 200ms linear;
   -moz-transition:
