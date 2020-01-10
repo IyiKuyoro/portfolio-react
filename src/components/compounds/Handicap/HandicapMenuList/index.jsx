@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import toggleAnimations from 'Actions/a11y';
 
-import HandicapMenuItem from './HandicapMenuItem';
+import HandicapMenuCheckbox from './HandicapMenuItem';
 import Styles from './handicapMenuList.styles.scss';
 
 function HandicapMenuList(props) {
@@ -15,10 +15,26 @@ function HandicapMenuList(props) {
       className={`${menuOpen ? Styles.handicapMenu : Styles.handicapMenuClosed}`}
       role="menu"
     >
-      <HandicapMenuItem
+      <HandicapMenuCheckbox
         id="toggle-animations"
         iconStyle={Styles.animatedIcon}
-        ariaLabel="Toggle animations"
+        ariaLabel="Toggle Animations"
+        menuItem={animations}
+        handleChange={switchAnimations}
+      />
+      <HandicapMenuCheckbox
+        id="decrease-text-size"
+        icon="minus"
+        type="button"
+        ariaLabel="Decrease Text Size"
+        menuItem={animations}
+        handleChange={switchAnimations}
+      />
+      <HandicapMenuCheckbox
+        id="increase-text-size"
+        icon="plus"
+        type="button"
+        ariaLabel="Increase Text Size"
         menuItem={animations}
         handleChange={switchAnimations}
       />

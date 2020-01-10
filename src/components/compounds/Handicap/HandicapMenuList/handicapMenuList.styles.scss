@@ -2,12 +2,18 @@
   height: fit-content;
   width: fit-content;
   margin-left: 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 
 .handicapMenuClosed {
   width: 0;
   padding: 0;
   visibility: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 
 .animatedIcon {

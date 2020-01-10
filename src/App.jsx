@@ -5,7 +5,8 @@ import { func } from 'prop-types';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import {
   faWheelchair, faTimesCircle, faImage, faTrashAlt,
-  faGraduationCap, faCertificate, faMedal,
+  faGraduationCap, faCertificate, faMedal, faPlus,
+  faMinus,
 } from '@fortawesome/free-solid-svg-icons';
 
 import Home from 'Pages/Home';
@@ -20,7 +21,8 @@ import { resetUser } from './store/actions/authUser';
 // Loading font-awesome icons
 library.add(
   faWheelchair, faTimesCircle, faImage, faTrashAlt,
-  faGraduationCap, faCertificate, faMedal,
+  faGraduationCap, faCertificate, faMedal, faPlus,
+  faMinus,
 );
 
 const UserMenu = lazy(() => import('Compounds/UserMenu'));
