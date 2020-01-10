@@ -2,6 +2,11 @@ import React, { Component, Suspense, lazy } from 'react';
 import { connect } from 'react-redux';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { func } from 'prop-types';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import {
+  faWheelchair, faTimesCircle, faImage, faTrashAlt,
+  faGraduationCap, faCertificate, faMedal,
+} from '@fortawesome/free-solid-svg-icons';
 
 import Home from 'Pages/Home';
 import articleWriteEditGuard from 'HOC/ArticleWriteEditGuard';
@@ -11,6 +16,12 @@ import Loading from 'Compounds/Loading';
 import Handicap from 'Compounds/Handicap';
 
 import { resetUser } from './store/actions/authUser';
+
+// Loading font-awesome icons
+library.add(
+  faWheelchair, faTimesCircle, faImage, faTrashAlt,
+  faGraduationCap, faCertificate, faMedal,
+);
 
 const UserMenu = lazy(() => import('Compounds/UserMenu'));
 const NotFound = lazy(() => import('Pages/404'));

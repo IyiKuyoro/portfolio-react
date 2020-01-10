@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import Styles from './education.styles.scss';
 import EduList from './EducationList.json';
@@ -114,7 +115,7 @@ class Education extends Component {
       >
         <div className={Styles.content} style={pStyle}>
           <div className={iconClassString}>
-            <i className={`fas ${EduList[currentId].icon} ${Styles.icon}`} />
+            <FontAwesomeIcon icon={EduList[currentId].icon} className={Styles.icon} />
           </div>
           <div className={textClassString}>
             <p className={Styles.text}>{EduList[currentId].text}</p>

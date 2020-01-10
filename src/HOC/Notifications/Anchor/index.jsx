@@ -1,5 +1,6 @@
 import React from 'react';
 import { string } from 'prop-types';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import Styles from './anchorNotifications.styles.scss';
 
@@ -22,7 +23,7 @@ export default function AnchorNotification(props) {
   return (
     <div className={style}>
       <button className={Styles.closeButton} type="button">
-        <i className="far fa-times-circle" />
+        <FontAwesomeIcon icon="times-circle" />
       </button>
       <p className={Styles.message}>{message}</p>
     </div>

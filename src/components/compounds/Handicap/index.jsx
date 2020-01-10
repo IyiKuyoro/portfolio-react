@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import ToolTip from 'Atoms/ToolTip';
 
@@ -117,7 +118,7 @@ class Handicap extends Component {
           aria-label={`Accessibility menu ${menuOpen ? 'close' : 'open'}`}
         >
           {hover && <ToolTip text="Accessibility Menu" toolTipPosition={toolTipPosition} />}
-          <i className={`fas fa-wheelchair ${Styles.handicapIcon}`} />
+          <FontAwesomeIcon className={Styles.handicapIcon} icon="wheelchair" />
         </button>
         <HandicapMenuList
           menuOpen={menuOpen}

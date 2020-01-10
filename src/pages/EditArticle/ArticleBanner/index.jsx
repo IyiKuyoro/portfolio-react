@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import ImageService from 'Services/Image';
 import { Notification, NotificationSeverity } from 'HOC/Notifications';
@@ -93,14 +94,15 @@ export default class ArticleBanner extends Component {
           }}
         />
         { loading && <div className={Styles.loader}><div className={Styles.loadingBar} /></div>}
-        { !imageUrl && !loading && <label htmlFor="image"><i className={`fas fa-image ${Styles.uploadImage}`} /></label> }
+        { !imageUrl && !loading && <label htmlFor="image"><FontAwesomeIcon className="Styles.uploadImage" icon="image" /></label> }
         { !imageUrl || (
-        <i
+        <FontAwesomeIcon
           onClick={this.handleImageDelete}
           onKeyPress={this.handleImageDelete}
+          className="Styles.deleteImage"
+          icon="trash-alt"
           role="button"
           tabIndex="0"
-          className={`fas fa-trash-alt ${Styles.deleteImage}`}
         />
         ) }
         { !imageUrl || <img className={Styles.image} src={imageUrl} alt="article banner" /> }
