@@ -26,7 +26,7 @@ function HandicapMenuItem(props) {
   const {
     ariaLabel, id, iconStyle,
     menuItem, handleChange,
-    icon, type,
+    icon, type, toggleMenu,
   } = props;
   const [toolTip, setToolTip] = useState({
     hover: false,
@@ -35,6 +35,11 @@ function HandicapMenuItem(props) {
       left: 0,
     },
   });
+
+  function activateMenu(e) {
+    handleChange(e);
+    toggleMenu(e);
+  }
 
   if (type === 'checkbox') {
     return (
@@ -59,8 +64,20 @@ function HandicapMenuItem(props) {
           className={`menu-list-item ${Styles.menuItemCheckbox}`}
           aria-checked={menuItem}
           id={id}
-          type="checkbox"
-          onChange={handleChange}
+          role="menuitemcheckbox"
+          onClick={(e) => {
+            // Had to separate the real click from enter/space bar somehow
+            if (e.detail >= 1) {
+              handleChange(e);
+            }
+          }}
+          onKeyPress={(e) => {
+            if (e.charCode === 13) {
+              activateMenu(e);
+            } else if (e.charCode === 32) {
+              handleChange(e);
+            }
+          }}
         />
       </label>
     );
@@ -71,7 +88,21 @@ function HandicapMenuItem(props) {
       className={`menu-list-item ${Styles.menuItemButton} ${Styles.menuItem} ${menuItem && Styles.menuItemSelected}`}
       id={id}
       type="button"
-      onChange={handleChange}
+      role="menuitem"
+      aria-label={ariaLabel}
+      onClick={(e) => {
+        // Had to separate the real click from enter/space bar somehow
+        if (e.detail >= 1) {
+          handleChange(e);
+        }
+      }}
+      onKeyPress={(e) => {
+        if (e.charCode === 13) {
+          activateMenu(e);
+        } else if (e.charCode === 32) {
+          handleChange(e);
+        }
+      }}
       onMouseEnter={(e) => handleMouseEnter(e, setToolTip)}
       onMouseLeave={() => handleMouseLeave(setToolTip)}
       onTouchEnd={() => handleMouseLeave(setToolTip)}
@@ -97,6 +128,7 @@ HandicapMenuItem.propTypes = {
   menuItem: PropTypes.bool.isRequired,
   handleChange: PropTypes.func.isRequired,
   type: PropTypes.string,
+  toggleMenu: PropTypes.func.isRequired,
 };
 
 HandicapMenuItem.defaultProps = {

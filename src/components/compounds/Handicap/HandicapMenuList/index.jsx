@@ -8,7 +8,7 @@ import HandicapMenuCheckbox from './HandicapMenuItem';
 import Styles from './handicapMenuList.styles.scss';
 
 function HandicapMenuList(props) {
-  const { animations, switchAnimations, menuOpen } = props;
+  const { animations, switchAnimations, menuOpen, toggleMenu } = props;
 
   return (
     <div
@@ -21,6 +21,7 @@ function HandicapMenuList(props) {
         ariaLabel="Toggle Animations"
         menuItem={animations}
         handleChange={switchAnimations}
+        toggleMenu={toggleMenu}
       />
       <HandicapMenuCheckbox
         id="decrease-text-size"
@@ -29,6 +30,7 @@ function HandicapMenuList(props) {
         ariaLabel="Decrease Text Size"
         menuItem={animations}
         handleChange={switchAnimations}
+        toggleMenu={toggleMenu}
       />
       <HandicapMenuCheckbox
         id="increase-text-size"
@@ -37,6 +39,7 @@ function HandicapMenuList(props) {
         ariaLabel="Increase Text Size"
         menuItem={animations}
         handleChange={switchAnimations}
+        toggleMenu={toggleMenu}
       />
     </div>
   );
@@ -46,6 +49,7 @@ HandicapMenuList.propTypes = {
   menuOpen: PropTypes.bool.isRequired,
   animations: PropTypes.bool.isRequired,
   switchAnimations: PropTypes.func.isRequired,
+  toggleMenu: PropTypes.func.isRequired,
 };
 
 function mapDispatchToProps(dispatch) {
