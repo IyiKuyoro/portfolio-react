@@ -27,6 +27,7 @@ function HandicapMenuItem(props) {
     ariaLabel, id, iconStyle,
     menuItem, handleChange,
     icon, type, toggleMenu,
+    changeFocus,
   } = props;
   const [toolTip, setToolTip] = useState({
     hover: false,
@@ -41,82 +42,57 @@ function HandicapMenuItem(props) {
     toggleMenu(e);
   }
 
-  if (type === 'checkbox') {
-    return (
-      <label
-        className={`${Styles.menuItem} ${menuItem && Styles.menuItemSelected}`}
-        htmlFor={id}
-        aria-label={ariaLabel}
-        onMouseEnter={(e) => handleMouseEnter(e, setToolTip)}
-        onMouseLeave={() => handleMouseLeave(setToolTip)}
-        onTouchEnd={() => handleMouseLeave(setToolTip)}
-      >
-        {toolTip.hover && (
-        <ToolTip
-          fontSizeStyle={Styles.toolTipFontSize}
-          text={ariaLabel}
-          toolTipPosition={toolTip.position}
-        />
-        )}
-        {iconStyle && <div className={`${Styles.icon} ${iconStyle}`} />}
-        {!iconStyle && <FontAwesomeIcon icon={icon} className={Styles.icon} />}
-        <input
-          className={`menu-list-item ${Styles.menuItemCheckbox}`}
-          aria-checked={menuItem}
-          id={id}
-          role="menuitemcheckbox"
-          onClick={(e) => {
-            // Had to separate the real click from enter/space bar somehow
-            if (e.detail >= 1) {
-              handleChange(e);
-            }
-          }}
-          onKeyPress={(e) => {
-            if (e.charCode === 13) {
-              activateMenu(e);
-            } else if (e.charCode === 32) {
-              handleChange(e);
-            }
-          }}
-        />
-      </label>
-    );
-  }
-
   return (
-    <button
-      className={`menu-list-item ${Styles.menuItemButton} ${Styles.menuItem} ${menuItem && Styles.menuItemSelected}`}
-      id={id}
-      type="button"
-      role="menuitem"
+    <label
+      className={`${Styles.menuItem} ${menuItem && Styles.menuItemSelected}`}
+      htmlFor={id}
       aria-label={ariaLabel}
-      onClick={(e) => {
-        // Had to separate the real click from enter/space bar somehow
-        if (e.detail >= 1) {
-          handleChange(e);
-        }
-      }}
-      onKeyPress={(e) => {
-        if (e.charCode === 13) {
-          activateMenu(e);
-        } else if (e.charCode === 32) {
-          handleChange(e);
-        }
-      }}
       onMouseEnter={(e) => handleMouseEnter(e, setToolTip)}
       onMouseLeave={() => handleMouseLeave(setToolTip)}
       onTouchEnd={() => handleMouseLeave(setToolTip)}
     >
       {toolTip.hover && (
-        <ToolTip
-          fontSizeStyle={Styles.toolTipFontSize}
-          text={ariaLabel}
-          toolTipPosition={toolTip.position}
-        />
+      <ToolTip
+        fontSizeStyle={Styles.toolTipFontSize}
+        text={ariaLabel}
+        toolTipPosition={toolTip.position}
+      />
       )}
       {iconStyle && <div className={`${Styles.icon} ${iconStyle}`} />}
       {!iconStyle && <FontAwesomeIcon icon={icon} className={Styles.icon} />}
-    </button>
+      <input
+        className={`menu-list-item ${Styles.menuItemCheckbox}`}
+        aria-checked={menuItem}
+        id={id}
+        type={type}
+        role={type === 'checkbox' ? 'menuitemcheckbox' : 'menuitem'}
+        tabIndex="-1"
+        onClick={(e) => {
+          // Had to separate the real click from enter/space bar somehow
+          if (e.screenX >= 1) {
+            handleChange(e);
+          }
+        }}
+        onKeyPress={(e) => {
+          e.preventDefault();
+          if (e.charCode === 13) {
+            activateMenu(e);
+          } else if (e.charCode === 32) {
+            handleChange(e);
+          }
+        }}
+        onKeyDown={(e) => {
+          if (e.keyCode >= 37 && e.keyCode <= 40) {
+            changeFocus(e.keyCode);
+            e.preventDefault();
+          } else if (e.keyCode === 9) {
+            toggleMenu(e);
+          } else if (e.keyCode === 27) {
+            toggleMenu(e);
+          }
+        }}
+      />
+    </label>
   );
 }
 
@@ -125,16 +101,18 @@ HandicapMenuItem.propTypes = {
   id: PropTypes.string.isRequired,
   icon: PropTypes.string,
   iconStyle: PropTypes.string,
-  menuItem: PropTypes.bool.isRequired,
+  menuItem: PropTypes.bool,
   handleChange: PropTypes.func.isRequired,
   type: PropTypes.string,
   toggleMenu: PropTypes.func.isRequired,
+  changeFocus: PropTypes.func.isRequired,
 };
 
 HandicapMenuItem.defaultProps = {
   iconStyle: '',
   icon: '',
   type: 'checkbox',
+  menuItem: true,
 };
 
 export default HandicapMenuItem;

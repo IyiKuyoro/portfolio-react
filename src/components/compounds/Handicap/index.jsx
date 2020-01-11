@@ -68,7 +68,7 @@ class Handicap extends Component {
 
     if (
       (e.type === 'click' && (e.timeStamp - holdStart <= 500))
-      || e.type === 'keypress' || e.type === 'change'
+      || e.type !== 'click'
     ) {
       this.setState({
         menuOpen: !menuOpen,

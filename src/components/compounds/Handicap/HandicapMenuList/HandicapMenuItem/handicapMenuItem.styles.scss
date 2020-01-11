@@ -21,25 +21,9 @@
     box-shadow 200ms linear;
 }
 
-.menuItemButton {
-  min-width: 50px;
-  min-height: 50px;
-}
-
-.menuItemButton:hover {
-  cursor: pointer;
-}
-
-.menuItemButton:focus {
-  outline: none;
-}
-
-.menuItem:first-of-type {
-  margin-left: 0;
-}
-
 .menuItem:focus,
 .menuItem:hover {
+  outline: none;
   cursor: pointer;
   box-shadow: 0.5px 0.5px 1px -0.25px #c5c5c5;
 }
@@ -67,11 +51,15 @@
 .icon {
   width: 1em;
   height: 1em;
+  font-size: 13px;
 }
 
 .menuItemCheckbox {
   -webkit-appearance: none;
   -moz-appearance: none;
+  position: fixed;
+  top: -1000px;
+  left: -1000px;
   border: none;
   width: 0;
   height: 0;
