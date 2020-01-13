@@ -112,7 +112,7 @@ HandicapMenuItem.defaultProps = {
   iconStyle: '',
   icon: '',
   type: 'checkbox',
-  menuItem: true,
+  menuItem: false,
 };
 
 export default HandicapMenuItem;
