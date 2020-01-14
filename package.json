@@ -50,7 +50,8 @@
     "redux": "^4.0.4",
     "redux-thunk": "^2.3.0",
     "rxjs": "^6.5.3",
-    "time_past": "^2.0.1"
+    "time_past": "^2.0.1",
+    "webpack-bundle-analyzer": "^3.6.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.6.0",

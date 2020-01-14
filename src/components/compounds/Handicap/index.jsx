@@ -67,8 +67,8 @@ class Handicap extends Component {
     const { holdStart, menuOpen } = this.state;
 
     if (
-      (e.type !== 'keypress' && (e.timeStamp - holdStart <= 500))
-      || e.type === 'keypress'
+      (e.type === 'click' && (e.timeStamp - holdStart <= 500))
+      || e.type !== 'click'
     ) {
       this.setState({
         menuOpen: !menuOpen,
@@ -79,6 +79,8 @@ class Handicap extends Component {
         setTimeout(() => {
           document.getElementsByClassName('menu-list-item')[0].focus();
         }, 10);
+      } else {
+        document.getElementById('handicapButton').focus();
       }
     } else {
       e.preventDefault();
@@ -115,13 +117,16 @@ class Handicap extends Component {
           onTouchEnd={() => this.setState({ hover: false })}
           className={`${Styles.handicapButton} ${menuOpen && Styles.handicapButtonOpen}`}
           type="button"
-          aria-label={`Accessibility menu ${menuOpen ? 'close' : 'open'}`}
+          aria-expanded={menuOpen}
+          aria-haspopup="menu"
+          aria-label="Accessibility"
         >
           {hover && <ToolTip text="Accessibility Menu" toolTipPosition={toolTipPosition} />}
           <FontAwesomeIcon className={Styles.handicapIcon} icon="wheelchair" />
         </button>
         <HandicapMenuList
           menuOpen={menuOpen}
+          toggleMenu={(e) => this.toggleMenu(e)}
         />
       </div>
     );
