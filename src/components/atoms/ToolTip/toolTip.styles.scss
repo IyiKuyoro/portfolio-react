@@ -13,3 +13,15 @@
   -moz-transition: opacity 300s;
   transition: opacity 300s;
 }
+
+@media (hover: none) and (pointer: coarse) {
+  .tooltip {
+    display: none;
+  }
+}
+
+@media (hover: none) and (pointer: fine) {
+  .tooltip {
+    display: none;
+  }
+}
