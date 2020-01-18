@@ -1,7 +1,7 @@
 import React, { Component, Suspense, lazy } from 'react';
 import { connect } from 'react-redux';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { func } from 'prop-types';
+import { func, bool } from 'prop-types';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import {
   faWheelchair, faTimesCircle, faImage, faTrashAlt,
@@ -39,11 +39,13 @@ class App extends Component {
   }
 
   render() {
+    const { isAuthenticated } = this.props;
+
     return (
       <Router>
         <Suspense fallback={<Loading />}>
           <Handicap />
-          <UserMenu />
+          {isAuthenticated && <UserMenu />}
           <Switch>
             <Route exact path="/" component={Home} />
             <Route path="/login" component={noAuthCheck(Login)} />
@@ -60,12 +62,15 @@ class App extends Component {
 
 App.propTypes = {
   createSetUserAction: func.isRequired,
+  isAuthenticated: bool.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
   createSetUserAction: () => dispatch(resetUser()),
 });
 
-const mapStateToProps = () => ({});
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.authUser.isAuthenticated,
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
