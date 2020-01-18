@@ -7,14 +7,19 @@ export default function Project(props) {
   const { project, className } = props;
 
   return (
-    <div className={`${className} ${Styles.project}`}>
+    <div
+      className={`${className} ${Styles.project}`}
+      role="group"
+      aria-roledescription="slide"
+      aria-labelledby="project-slide"
+    >
       <img
         className={Styles.image}
         src={project.imageUrl}
-        alt={project.name}
+        alt={project.imagealt}
       />
       <div className={Styles.text}>
-        <h3 className={Styles.name}>{project.name}</h3>
+        <h3 id="project-slide" className={Styles.name}>{project.name}</h3>
         <p className={Styles.description}>{project.description}</p>
       </div>
     </div>
@@ -27,6 +32,7 @@ Project.propTypes = {
     id: PropTypes.number,
     name: PropTypes.string.isRequired,
     imageUrl: PropTypes.string.isRequired,
+    imagealt: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
   }).isRequired,
 };
