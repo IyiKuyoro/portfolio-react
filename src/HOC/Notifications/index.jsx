@@ -17,16 +17,15 @@ export const NotificationSeverity = {
 
 export function Notification(props) {
   const {
-    message,
     type,
     severity,
   } = props;
 
   let notification = {};
   if (type === NotificationType.anchor) {
-    notification = <AnchorNotification severity={severity} message={message} />;
+    notification = <AnchorNotification severity={severity} />;
   } else {
-    notification = <ModalNotification severity={severity} message={message} />;
+    notification = <ModalNotification severity={severity} />;
   }
 
   return (notification);
@@ -34,7 +33,6 @@ export function Notification(props) {
 
 Notification.propTypes = {
   type: string,
-  message: string.isRequired,
   severity: string,
 };
 

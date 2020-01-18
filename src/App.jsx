@@ -13,6 +13,7 @@ import Home from 'Pages/Home';
 import articleWriteEditGuard from 'HOC/ArticleWriteEditGuard';
 import noAuthCheck from 'HOC/noAuthCheck';
 import preLoadArticle from 'HOC/preLoadArticle';
+import { Notification } from 'HOC/Notifications';
 import Loading from 'Compounds/Loading';
 import Handicap from 'Compounds/Handicap';
 
@@ -39,7 +40,7 @@ class App extends Component {
   }
 
   render() {
-    const { isAuthenticated } = this.props;
+    const { isAuthenticated, error } = this.props;
 
     return (
       <Router>
@@ -54,6 +55,7 @@ class App extends Component {
             <Route exact path="/edit/:slug" component={preLoadArticle(articleWriteEditGuard(EditArticle))} />
             <Route component={NotFound} />
           </Switch>
+          {error && <Notification />}
         </Suspense>
       </Router>
     );
@@ -63,6 +65,7 @@ class App extends Component {
 App.propTypes = {
   createSetUserAction: func.isRequired,
   isAuthenticated: bool.isRequired,
+  error: bool.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
@@ -71,6 +74,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const mapStateToProps = (state) => ({
   isAuthenticated: state.authUser.isAuthenticated,
+  error: state.notifications.error,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
