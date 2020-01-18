@@ -78,7 +78,7 @@ function HandicapMenuList(props) {
         <HandicapMenuCheckbox
           id="a11y-menu-item-1"
           iconStyle={Styles.animatedIcon}
-          ariaLabel="Toggle Animations"
+          ariaLabel="Toggle Slide Rotation"
           menuItem={animations}
           handleChange={switchAnimations}
           toggleMenu={(e) => {
