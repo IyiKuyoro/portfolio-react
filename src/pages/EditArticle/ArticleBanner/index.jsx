@@ -5,38 +5,37 @@ import PropTypes from 'prop-types';
 import { of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { connect } from 'react-redux';
 
+import { addNotification } from 'Actions/notifications';
 import ImageService from 'Services/Image';
-import { Notification, NotificationSeverity } from 'HOC/Notifications';
 
 import Styles from './articleBanner.styles.scss';
 
-export default class ArticleBanner extends Component {
+class ArticleBanner extends Component {
   constructor(props) {
     super(props);
     this.state = {
       loading: false,
-      errorMessage: '',
     };
     this.handleUpload = this.handleUpload.bind(this);
     this.handleImageDelete = this.handleImageDelete.bind(this);
   }
 
   handleImageDelete() {
-    const { updateBannerUrl, imagePublicId } = this.props;
+    const { updateBannerUrl, imagePublicId, addNotificationMessage } = this.props;
 
     this.setState({
       loading: true,
-      errorMessage: '',
     });
 
     this.imageDeleteSubscription = ImageService.deleteImage(imagePublicId)
       .pipe(
         map((res) => res.response),
         catchError((error) => {
+          addNotificationMessage('Could not delete this image...');
           this.setState({
             loading: false,
-            errorMessage: 'Could not delete this image...',
           });
           return of(error);
         }),
@@ -44,22 +43,21 @@ export default class ArticleBanner extends Component {
       .subscribe(() => {
         this.setState({
           loading: false,
-          errorMessage: '',
         });
         updateBannerUrl('', '');
       });
   }
 
   handleUpload(file) {
-    const { updateBannerUrl } = this.props;
+    const { updateBannerUrl, addNotificationMessage } = this.props;
 
     this.imageUploadSubscription = ImageService.uploadImage(file)
       .pipe(
         map((res) => res.response),
         catchError((error) => {
+          addNotificationMessage('Sorry, could not upload image.');
           this.setState({
             loading: false,
-            errorMessage: 'Sorry, could not upload image.',
           });
           return of(error);
         }),
@@ -73,9 +71,7 @@ export default class ArticleBanner extends Component {
   }
 
   render() {
-    const {
-      loading, errorMessage,
-    } = this.state;
+    const { loading } = this.state;
     const { imageUrl } = this.props;
 
     return (
@@ -106,8 +102,6 @@ export default class ArticleBanner extends Component {
         />
         ) }
         { !imageUrl || <img className={Styles.image} src={imageUrl} alt="article banner" /> }
-        {errorMessage
-        && <Notification severity={NotificationSeverity.error} message={errorMessage} />}
       </div>
     );
   }
@@ -122,4 +116,17 @@ ArticleBanner.propTypes = {
   updateBannerUrl: PropTypes.func.isRequired,
   imageUrl: PropTypes.string,
   imagePublicId: PropTypes.string,
+  addNotificationMessage: PropTypes.func.isRequired,
 };
+
+function mapStateToProps() {
+  return { };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    addNotificationMessage: (message) => dispatch(addNotification(message)),
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ArticleBanner);
