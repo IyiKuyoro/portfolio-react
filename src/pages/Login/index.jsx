@@ -23,9 +23,11 @@ class Login extends Component {
     };
 
     const {
+      history,
       history: {
         location: {
           state,
+          path,
         },
       },
       addNotificationMessage,
@@ -33,6 +35,13 @@ class Login extends Component {
 
     if (state && state.errorMessage) {
       addNotificationMessage(state.errorMessage);
+      // Remove the error message.
+      history.replace(
+        path,
+        {
+          prevPath: state.prevPath,
+        },
+      );
     }
 
     this.editUserName = this.editUserName.bind(this);
@@ -167,7 +176,9 @@ Login.propTypes = {
     push: PropTypes.func.isRequired,
     location: PropTypes.shape({
       state: PropTypes.objectOf(PropTypes.string),
+      path: PropTypes.objectOf(PropTypes.string),
     }).isRequired,
+    replace: PropTypes.func.isRequired,
   }).isRequired,
   addNotificationMessage: PropTypes.func.isRequired,
 };

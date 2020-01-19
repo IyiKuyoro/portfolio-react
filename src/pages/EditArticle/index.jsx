@@ -156,7 +156,7 @@ class EditArticle extends Component {
       .publishArticle(article, token)
       .pipe(
         map((res) => res.response),
-        catchError((error) => EditArticle.handleError(error, history, logUserOut)),
+        catchError((error) => this.handleError(error, history, logUserOut)),
       )
       .subscribe((res) => {
         if (res.success) {
@@ -184,7 +184,7 @@ class EditArticle extends Component {
       .republishArticle(article, slug, token)
       .pipe(
         map((res) => res.response),
-        catchError((error) => EditArticle.handleError(error, history, logUserOut)),
+        catchError((error) => this.handleError(error, history, logUserOut)),
       )
       .subscribe((res) => {
         if (res.success) {
