@@ -74,7 +74,7 @@ export function authenticateUser(postData, history) {
         } else {
           localStorage.setItem('user', JSON.stringify(res.data));
           dispatch(setUser(res.data));
-          if (state.errorMessage) {
+          if (state.prevPath) {
             push(state.prevPath);
           } else {
             push('/');
