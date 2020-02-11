@@ -21,7 +21,7 @@ function UserMenu(props) {
         if (e.keyCode === 27) toggleUserMenu();
       }}
       role="button"
-      tabIndex="0"
+      tabIndex="-1"
       className={`${Styles.wrapper} ${userMenuOpen ? Styles.visible : Styles.invisible}`}
     >
       <div className={Styles.menuList}>
@@ -40,6 +40,10 @@ UserMenu.propTypes = {
   logUserOut: PropTypes.func.isRequired,
   history: PropTypes.shape({}).isRequired,
 };
+
+function tabMenu() {
+  // Handle tabbing in menu
+}
 
 function mapDispatchToProps(dispatch) {
   return {
