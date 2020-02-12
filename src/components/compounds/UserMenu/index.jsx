@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
@@ -9,8 +9,14 @@ import Styles from './usermenu.styles.scss';
 
 function UserMenu(props) {
   const {
-    userMenuOpen, toggleUserMenu, logUserOut, history,
+    toggleUserMenu, logUserOut, history,
   } = props;
+
+  useEffect(() => {
+    const writeBtn = document.getElementById('write-btn');
+
+    writeBtn.focus();
+  }, []);
 
   return (
     <div
@@ -22,20 +28,19 @@ function UserMenu(props) {
       }}
       role="button"
       tabIndex="-1"
-      className={`${Styles.wrapper} ${userMenuOpen ? Styles.visible : Styles.invisible}`}
+      className={Styles.wrapper}
     >
       <div className={Styles.menuList}>
-        <Link to="/write" className={Styles.menuItemLink} type="button">
+        <Link id="write-btn" to="/write" className={Styles.menuItemLink} type="button">
           <div>Write</div>
         </Link>
-        <button onClick={() => logUserOut(history)} className={Styles.menuItem} type="button">Logout</button>
+        <button id="logout" onClick={() => logUserOut(history)} className={Styles.menuItem} type="button">Logout</button>
       </div>
     </div>
   );
 }
 
 UserMenu.propTypes = {
-  userMenuOpen: PropTypes.bool.isRequired,
   toggleUserMenu: PropTypes.func.isRequired,
   logUserOut: PropTypes.func.isRequired,
   history: PropTypes.shape({}).isRequired,

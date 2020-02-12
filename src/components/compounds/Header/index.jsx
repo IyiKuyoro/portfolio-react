@@ -12,6 +12,11 @@ import Styles from './header.styles.scss';
 //   window.location = 'https://iyikuyoro-be.herokuapp.com/api/v1/files/cv';
 // }
 
+function openUserMenu(toggleUserMenu) {
+  toggleUserMenu();
+  // Set focus on first element
+}
+
 function Header(props) {
   const { isAuthenticated, toggleUserMenu } = props;
 
@@ -25,10 +30,10 @@ function Header(props) {
           <Avatar
             sizeStyle={Styles.avatarSize}
             handleClick={() => {
-              toggleUserMenu();
+              openUserMenu(toggleUserMenu);
             }}
             handleKeyPress={() => {
-              toggleUserMenu();
+              openUserMenu(toggleUserMenu);
             }}
           />
           ) }

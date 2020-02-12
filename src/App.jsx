@@ -16,6 +16,7 @@ import preLoadArticle from 'HOC/preLoadArticle';
 import { Notification } from 'HOC/Notifications';
 import Loading from 'Compounds/Loading';
 import Handicap from 'Compounds/Handicap';
+import UserMenu from 'Compounds/UserMenu';
 
 import { resetUser } from './store/actions/authUser';
 
@@ -26,7 +27,6 @@ library.add(
   faMinus,
 );
 
-const UserMenu = lazy(() => import('Compounds/UserMenu'));
 const NotFound = lazy(() => import('Pages/404'));
 const Article = lazy(() => import('Pages/Article'));
 const EditArticle = lazy(() => import('Pages/EditArticle'));
@@ -40,13 +40,13 @@ class App extends Component {
   }
 
   render() {
-    const { isAuthenticated, error } = this.props;
+    const { userMenuOpen, error } = this.props;
 
     return (
       <Router>
         <Suspense fallback={<Loading />}>
           <Handicap />
-          {isAuthenticated && <UserMenu />}
+          { userMenuOpen && <UserMenu />}
           <Switch>
             <Route exact path="/" component={Home} />
             <Route path="/login" component={noAuthCheck(Login)} />
@@ -64,8 +64,8 @@ class App extends Component {
 
 App.propTypes = {
   createSetUserAction: func.isRequired,
-  isAuthenticated: bool.isRequired,
   error: bool.isRequired,
+  userMenuOpen: bool.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
@@ -75,6 +75,7 @@ const mapDispatchToProps = (dispatch) => ({
 const mapStateToProps = (state) => ({
   isAuthenticated: state.authUser.isAuthenticated,
   error: state.notifications.error,
+  userMenuOpen: state.controls.userMenuOpen,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
