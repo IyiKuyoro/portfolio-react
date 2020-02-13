@@ -31,9 +31,6 @@ function Header(props) {
             handleClick={() => {
               openUserMenu(toggleUserMenu);
             }}
-            handleKeyPress={() => {
-              openUserMenu(toggleUserMenu);
-            }}
           />
           ) }
         </div>
