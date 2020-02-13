@@ -14,7 +14,6 @@ import Styles from './header.styles.scss';
 
 function openUserMenu(toggleUserMenu) {
   toggleUserMenu();
-  // Set focus on first element
 }
 
 function Header(props) {
@@ -24,7 +23,7 @@ function Header(props) {
     <div className={Styles.header}>
       <div className={Styles.headerWrapper}>
         <Link className={Styles.homeLink} to="/"><h1 className={Styles.title}>Opeoluwa Iyi-Kuyoro</h1></Link>
-        <div className={Styles.menuControls}>
+        <div id="user-menu-btn" className={Styles.menuControls}>
           {/* <Button handleClick={handleGetCV} /> */}
           { isAuthenticated && (
           <Avatar

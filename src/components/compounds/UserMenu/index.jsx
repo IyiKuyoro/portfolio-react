@@ -7,15 +7,40 @@ import toggleMenu from 'Actions/controls';
 import { userLogOut } from 'Actions/authUser';
 import Styles from './usermenu.styles.scss';
 
+function setFocusOn(itemNumber) {
+  const menuItem = document.getElementById(`menu-btn-${itemNumber}`);
+
+  menuItem.focus();
+}
+
+function handleKeyPress(e, toggleUserMenu) {
+  if (e.keyCode === 27) { // Handle escape key press
+    toggleUserMenu();
+  } else if (e.keyCode === 9) { // Handle tab key press
+    const userMenuChildren = document.getElementById('menu-list').children;
+
+    const firstElement = userMenuChildren[0];
+    const lastElement = userMenuChildren[userMenuChildren.length - 1];
+
+    if (e.shiftKey && (document.activeElement === firstElement)) {
+      e.preventDefault();
+      lastElement.focus();
+    }
+
+    if (!e.shiftKey && document.activeElement === lastElement) {
+      e.preventDefault();
+      firstElement.focus();
+    }
+  }
+}
+
 function UserMenu(props) {
   const {
     toggleUserMenu, logUserOut, history,
   } = props;
 
   useEffect(() => {
-    const writeBtn = document.getElementById('write-btn');
-
-    writeBtn.focus();
+    setFocusOn(1);
   }, []);
 
   return (
@@ -23,18 +48,16 @@ function UserMenu(props) {
       onClick={() => {
         toggleUserMenu();
       }}
-      onKeyDown={(e) => {
-        if (e.keyCode === 27) toggleUserMenu();
-      }}
+      onKeyDown={(e) => handleKeyPress(e, toggleUserMenu)}
       role="button"
       tabIndex="-1"
       className={Styles.wrapper}
     >
-      <div className={Styles.menuList}>
-        <Link id="write-btn" to="/write" className={Styles.menuItemLink} type="button">
+      <div id="menu-list" className={Styles.menuList}>
+        <Link id="menu-btn-1" to="/write" className={Styles.menuItemLink} type="button">
           <div>Write</div>
         </Link>
-        <button id="logout" onClick={() => logUserOut(history)} className={Styles.menuItem} type="button">Logout</button>
+        <button id="menu-btn-2" onClick={() => logUserOut(history)} className={Styles.menuItem} type="button">Logout</button>
       </div>
     </div>
   );
@@ -45,10 +68,6 @@ UserMenu.propTypes = {
   logUserOut: PropTypes.func.isRequired,
   history: PropTypes.shape({}).isRequired,
 };
-
-function tabMenu() {
-  // Handle tabbing in menu
-}
 
 function mapDispatchToProps(dispatch) {
   return {
