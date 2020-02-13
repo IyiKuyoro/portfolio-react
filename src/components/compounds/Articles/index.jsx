@@ -1,16 +1,17 @@
 import React, { Component } from 'react';
-import { bool } from 'prop-types';
+import { bool, func } from 'prop-types';
 import { of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
+import { connect } from 'react-redux';
 
+import { addNotification } from 'Actions/notifications';
 import LoadingSpinner from 'Atoms/LoadingSpinner';
-import { Notification } from 'HOC/Notifications';
 import ArticlesService from 'Services/Articles';
 
 import ArticleCards from './ArticleCards';
 import Styles from './articles.styles.scss';
 
-export default class Articles extends Component {
+class Articles extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -22,9 +23,12 @@ export default class Articles extends Component {
   }
 
   componentDidMount() {
+    const { addNotificationMessage } = this.props;
+
     ArticlesService.getAllArticles()
       .pipe(
         catchError((error) => {
+          addNotificationMessage('Could not load articles...');
           this.setState({
             loading: false,
             error: true,
@@ -60,7 +64,6 @@ export default class Articles extends Component {
           />
           )}
         </div>
-        {error && <Notification message="Could not load articles..." />}
       </>
     );
   }
@@ -68,8 +71,21 @@ export default class Articles extends Component {
 
 Articles.propTypes = {
   noHeading: bool,
+  addNotificationMessage: func.isRequired,
 };
 
 Articles.defaultProps = {
   noHeading: false,
 };
+
+function mapStateToProps() {
+  return { };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    addNotificationMessage: (message) => dispatch(addNotification(message)),
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Articles);

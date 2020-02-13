@@ -12,6 +12,10 @@ import Styles from './header.styles.scss';
 //   window.location = 'https://iyikuyoro-be.herokuapp.com/api/v1/files/cv';
 // }
 
+function openUserMenu(toggleUserMenu) {
+  toggleUserMenu();
+}
+
 function Header(props) {
   const { isAuthenticated, toggleUserMenu } = props;
 
@@ -19,16 +23,13 @@ function Header(props) {
     <div className={Styles.header}>
       <div className={Styles.headerWrapper}>
         <Link className={Styles.homeLink} to="/"><h1 className={Styles.title}>Opeoluwa Iyi-Kuyoro</h1></Link>
-        <div className={Styles.menuControls}>
+        <div id="user-menu-btn" className={Styles.menuControls}>
           {/* <Button handleClick={handleGetCV} /> */}
           { isAuthenticated && (
           <Avatar
             sizeStyle={Styles.avatarSize}
             handleClick={() => {
-              toggleUserMenu();
-            }}
-            handleKeyPress={() => {
-              toggleUserMenu();
+              openUserMenu(toggleUserMenu);
             }}
           />
           ) }

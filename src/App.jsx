@@ -1,7 +1,7 @@
 import React, { Component, Suspense, lazy } from 'react';
 import { connect } from 'react-redux';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { func } from 'prop-types';
+import { func, bool } from 'prop-types';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import {
   faWheelchair, faTimesCircle, faImage, faTrashAlt,
@@ -13,8 +13,10 @@ import Home from 'Pages/Home';
 import articleWriteEditGuard from 'HOC/ArticleWriteEditGuard';
 import noAuthCheck from 'HOC/noAuthCheck';
 import preLoadArticle from 'HOC/preLoadArticle';
+import { Notification } from 'HOC/Notifications';
 import Loading from 'Compounds/Loading';
 import Handicap from 'Compounds/Handicap';
+import UserMenu from 'Compounds/UserMenu';
 
 import { resetUser } from './store/actions/authUser';
 
@@ -25,7 +27,6 @@ library.add(
   faMinus,
 );
 
-const UserMenu = lazy(() => import('Compounds/UserMenu'));
 const NotFound = lazy(() => import('Pages/404'));
 const Article = lazy(() => import('Pages/Article'));
 const EditArticle = lazy(() => import('Pages/EditArticle'));
@@ -39,11 +40,13 @@ class App extends Component {
   }
 
   render() {
+    const { userMenuOpen, error } = this.props;
+
     return (
       <Router>
         <Suspense fallback={<Loading />}>
           <Handicap />
-          <UserMenu />
+          { userMenuOpen && <UserMenu />}
           <Switch>
             <Route exact path="/" component={Home} />
             <Route path="/login" component={noAuthCheck(Login)} />
@@ -52,6 +55,7 @@ class App extends Component {
             <Route exact path="/edit/:slug" component={preLoadArticle(articleWriteEditGuard(EditArticle))} />
             <Route component={NotFound} />
           </Switch>
+          {error && <Notification />}
         </Suspense>
       </Router>
     );
@@ -60,12 +64,18 @@ class App extends Component {
 
 App.propTypes = {
   createSetUserAction: func.isRequired,
+  error: bool.isRequired,
+  userMenuOpen: bool.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
   createSetUserAction: () => dispatch(resetUser()),
 });
 
-const mapStateToProps = () => ({});
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.authUser.isAuthenticated,
+  error: state.notifications.error,
+  userMenuOpen: state.controls.userMenuOpen,
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

@@ -4,9 +4,9 @@ import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import { authenticateUser } from 'Actions/authUser';
+import { addNotification } from 'Actions/notifications';
 import Input from 'Components/atoms/InputFields';
 import Header from 'Components/compounds/Header';
-import { Notification, NotificationSeverity } from 'HOC/Notifications';
 
 import Styles from './login.styles.scss';
 
@@ -21,6 +21,29 @@ class Login extends Component {
       passwordError: false,
       passwordErrorMessage: '',
     };
+
+    const {
+      history,
+      history: {
+        location: {
+          state,
+          path,
+        },
+      },
+      addNotificationMessage,
+    } = props;
+
+    if (state && state.errorMessage) {
+      addNotificationMessage(state.errorMessage);
+      // Remove the error message.
+      history.replace(
+        path,
+        {
+          prevPath: state.prevPath,
+        },
+      );
+    }
+
     this.editUserName = this.editUserName.bind(this);
     this.editPassword = this.editPassword.bind(this);
     this.handleLogin = this.handleLogin.bind(this);
@@ -95,12 +118,8 @@ class Login extends Component {
       loading,
       errorMessage,
       error,
-      history: {
-        location: {
-          state,
-        },
-      },
     } = this.props;
+
     const {
       userName,
       password,
@@ -112,11 +131,6 @@ class Login extends Component {
 
     return (
       <div>
-        {
-          state
-          && state.errorMessage
-          && <Notification severity={NotificationSeverity.error} message={state.errorMessage} />
-        }
         <Header />
         <div className={Styles.formContainer}>
           <form className={Styles.loginForm} onSubmit={(e) => this.handleLogin(e)}>
@@ -162,12 +176,16 @@ Login.propTypes = {
     push: PropTypes.func.isRequired,
     location: PropTypes.shape({
       state: PropTypes.objectOf(PropTypes.string),
+      path: PropTypes.objectOf(PropTypes.string),
     }).isRequired,
+    replace: PropTypes.func.isRequired,
   }).isRequired,
+  addNotificationMessage: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
   createLoginAction: (loginData, history) => dispatch(authenticateUser(loginData, history)),
+  addNotificationMessage: (message) => dispatch(addNotification(message)),
 });
 
 const mapStateToProps = (state) => ({

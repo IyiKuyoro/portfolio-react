@@ -7,12 +7,12 @@ import { catchError, map } from 'rxjs/operators';
 
 import ArticleService from 'Services/Articles';
 import { userLogOut } from 'Actions/authUser';
+import { addNotification } from 'Actions/notifications';
 import Button from 'Atoms/Button';
 import Editor from 'Atoms/Editor';
 import Header from 'Compounds/Header';
 import Loading from 'Compounds/Loading';
 import { saveArticle, getArticle, deleteArticle } from 'IndexDB/articles';
-import { Notification, NotificationSeverity } from 'HOC/Notifications';
 
 import Styles from './editArticle.styles.scss';
 
@@ -35,8 +35,6 @@ class EditArticle extends Component {
       category: article.category,
       slug: article.slug,
       changed: false,
-      errorMessage: '',
-      errorSeverity: NotificationSeverity.caution,
       publishedArticle: /\/edit\/.+/.test(pathname),
     });
     this.handleBannerChange = this.handleBannerChange.bind(this);
@@ -52,6 +50,7 @@ class EditArticle extends Component {
   componentDidMount() {
     const {
       history: { location },
+      addNotificationMessage,
     } = this.props;
 
     if (!/\/edit\/.+/.test(location.pathname)) {
@@ -68,9 +67,7 @@ class EditArticle extends Component {
           }
         })
         .catch(() => {
-          this.setState({
-            errorMessage: 'Something went wrong trying to retrieve you last work.',
-          });
+          addNotificationMessage('Something went wrong trying to retrieve you last work.');
         });
       this.articleSaveInterval = setInterval(this.saveArticle, 5000);
     }
@@ -130,13 +127,12 @@ class EditArticle extends Component {
   }
 
   handleError(error, history, logUserOut) {
+    const { addNotificationMessage } = this.props;
+
     if (error.status === 401) {
       logUserOut(history, '/login', history.location.pathname, 'Your session has expired.');
     } else {
-      this.setState({
-        errorMessage: error.response.message,
-        errorSeverity: NotificationSeverity.error,
-      });
+      addNotificationMessage(error.response.message);
     }
 
     return of(error);
@@ -210,7 +206,7 @@ class EditArticle extends Component {
   render() {
     const {
       title, articleBannerUrl, articleImagePublicId,
-      body, errorMessage, errorSeverity, category, publishedArticle,
+      body, category, publishedArticle,
     } = this.state;
 
     return (
@@ -227,8 +223,6 @@ class EditArticle extends Component {
         <div className={Styles.articleBody}>
           <Editor body={body} handleBodyChange={this.handleBodyChange} />
         </div>
-        {errorMessage
-        && <Notification severity={errorSeverity} message={errorMessage} />}
         <div className={Styles.buttons}>
           <input id="tech-btn" onChange={() => this.handleCategoryChange('tech')} className={`${Styles.categoryRadio} ${Styles.tech}`} type="radio" name="category" checked={category === 'tech'} />
           <input id="inspiration-btn" onChange={() => this.handleCategoryChange('inspirational')} className={`${Styles.categoryRadio} ${Styles.inspirational}`} type="radio" name="category" checked={category === 'inspirational'} />
@@ -291,6 +285,7 @@ EditArticle.propTypes = {
     updatedAt: PropTypes.string.isRequired,
     slug: PropTypes.string.isRequired,
   }),
+  addNotificationMessage: PropTypes.func.isRequired,
 };
 
 function mapDispatchToProps(dispatch) {
@@ -298,6 +293,7 @@ function mapDispatchToProps(dispatch) {
     logUserOut: (history, redirectUrl, previousUrl, errorMessage) => dispatch(
       userLogOut(history, redirectUrl, previousUrl, errorMessage),
     ),
+    addNotificationMessage: (message) => dispatch(addNotification(message)),
   };
 }
 

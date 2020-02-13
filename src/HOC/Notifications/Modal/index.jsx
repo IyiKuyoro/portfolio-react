@@ -1,14 +1,24 @@
 import React, { Component } from 'react';
-import { string } from 'prop-types';
+import { string, bool, func } from 'prop-types';
+import { connect } from 'react-redux';
+
+import { removeNotification } from 'Actions/notifications';
 
 import Styles from './modalNotifications.styles.scss';
 
-export default class ModalNotification extends Component {
+class ModalNotification extends Component {
   constructor(props) {
     super(props);
     this.state = {
       open: true,
     };
+
+    if (props.error) {
+      setInterval(() => {
+        props.removeErrorMessage();
+      }, 9000);
+    }
+
     this.handleClick = this.handleClick.bind(this);
   }
 
@@ -19,7 +29,7 @@ export default class ModalNotification extends Component {
   }
 
   render() {
-    const { message, severity } = this.props;
+    const { errorMessage, severity } = this.props;
     const { open } = this.state;
     let style = Styles.modal;
 
@@ -46,7 +56,7 @@ export default class ModalNotification extends Component {
         className={open ? Styles.overlay : Styles.noOverlay}
       >
         <div className={style}>
-          <p className={Styles.message}>{message}</p>
+          <p className={Styles.message}>{errorMessage}</p>
           <button
             onClick={this.handleClick}
             type="button"
@@ -61,6 +71,23 @@ export default class ModalNotification extends Component {
 }
 
 ModalNotification.propTypes = {
-  message: string.isRequired,
+  error: bool.isRequired,
+  errorMessage: string.isRequired,
   severity: string.isRequired,
+  removeErrorMessage: func.isRequired,
 };
+
+function mapStateToProps(state) {
+  return {
+    error: state.notifications.error,
+    errorMessage: state.notifications.errorMessage,
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    removeErrorMessage: () => dispatch(removeNotification()),
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ModalNotification);

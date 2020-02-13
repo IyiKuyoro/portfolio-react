@@ -4,7 +4,7 @@ import { string, func } from 'prop-types';
 import Styles from './avatar.styles.scss';
 
 export default function Avatar(props) {
-  const { sizeStyle, handleClick, handleKeyPress } = props;
+  const { sizeStyle, handleClick } = props;
 
   const styleString = `${sizeStyle} ${Styles.avatar}`;
   const image = 'https://res.cloudinary.com/iyikuyoro/image/upload/v1572195552/portfolio-assets/profile-img.png';
@@ -13,7 +13,6 @@ export default function Avatar(props) {
     <button
       type="button"
       onClick={handleClick}
-      onKeyDown={handleKeyPress}
       className={styleString}
     >
       <img
@@ -28,5 +27,4 @@ export default function Avatar(props) {
 Avatar.propTypes = {
   sizeStyle: string.isRequired,
   handleClick: func.isRequired,
-  handleKeyPress: func.isRequired,
 };

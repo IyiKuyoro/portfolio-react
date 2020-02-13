@@ -101,7 +101,9 @@ class Projects extends Component {
     const projectClassString = projectClassList.join(' ');
 
     return (
-      <div
+      <section
+        aria-label="projects region"
+        aria-roledescription="carousel"
         className={Styles.projects}
         onMouseOver={() => this.setState({ animate: false })}
         onFocus={() => this.setState({ animate: false })}
@@ -111,6 +113,7 @@ class Projects extends Component {
           className={`${Styles.btn} ${Styles.leftBtn}`}
           onClick={() => this.handleChangeButtonClick(false)}
           type="button"
+          aria-label="projects previous slide"
         >
           {}
         </button>
@@ -120,11 +123,12 @@ class Projects extends Component {
           className={`${Styles.btn} ${Styles.rightBtn}`}
           onClick={this.handleChangeButtonClick}
           type="button"
+          aria-label="projects next slide"
         >
           {}
         </button>
         <a href="https://github.com/IyiKuyoro" className={Styles.link}>...psst there is more on GitHub</a>
-      </div>
+      </section>
     );
   }
 }

@@ -6,14 +6,6 @@
   right: 0;
 }
 
-.visible {
-  display: block;
-}
-
-.invisible {
-  display: none;
-}
-
 // .triangle {
 //   width: 0;
 //   height: 0;
@@ -63,9 +55,8 @@
   margin: auto;
 }
 
-
-
-.menuItem:focus {
+.menuItem:focus,
+.menuItemLink:focus {
   outline: none;
   background: rgb(88, 224, 255);
   border: 1px solid rgb(196, 244, 255);
