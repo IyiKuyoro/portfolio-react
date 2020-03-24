@@ -11,7 +11,7 @@
     "build": "npm run clear && webpack --config webpack.prod.js && cp netlify_redirects.txt dist/_redirects && cp -r .well-known dist/.well-known",
     "clear": "rm -rf dist",
     "cypress:open": "cypress open",
-    "dev": "NODE_ENV=development webpack-dev-server --mode development --open --hot",
+    "dev": "SET NODE_ENV=development && webpack-dev-server --mode development --open --hot",
     "e2e:test": "concurrently \"npm run test:server\" \"npm run cypress:open\"",
     "start": "http-server dist",
     "test:server": "NODE_ENV=development webpack-dev-server --mode development"

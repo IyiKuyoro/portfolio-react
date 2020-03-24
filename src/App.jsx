@@ -6,7 +6,7 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import {
   faWheelchair, faTimesCircle, faImage, faTrashAlt,
   faGraduationCap, faCertificate, faMedal, faPlus,
-  faMinus,
+  faMinus, faEnvelope,
 } from '@fortawesome/free-solid-svg-icons';
 
 import Home from 'Pages/Home';
@@ -24,7 +24,7 @@ import { resetUser } from './store/actions/authUser';
 library.add(
   faWheelchair, faTimesCircle, faImage, faTrashAlt,
   faGraduationCap, faCertificate, faMedal, faPlus,
-  faMinus,
+  faMinus, faEnvelope,
 );
 
 const NotFound = lazy(() => import('Pages/404'));

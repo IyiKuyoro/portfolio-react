@@ -1,22 +1,20 @@
 import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import Styles from './footer.styles.scss';
 
 export default function Footer() {
   return (
     <footer className={Styles.footer}>
-      <p className={Styles.text}>
-        <strong>Email</strong>
-        : opeoluwa.iyikuyoro@gmail.com
-      </p>
-      <p className={Styles.text}>
-        <strong>Twitter</strong>
-        <a className={Styles.anchor} href="https://twitter.com/IyiKuyoro">: @iyikuyoro</a>
-      </p>
-      <p className={Styles.text}>
-        <strong>LinkedIn</strong>
-        <a className={Styles.anchor} href="https://www.linkedin.com/in/iyikuyoro/">: Iyi-Kuyoro</a>
-      </p>
+      <a className={Styles.anchor} href="mailto:opeoluwa.iyikuyoro@gmail.com" aria-label="mail Opeoluwa">
+        <FontAwesomeIcon icon="envelope" />
+      </a>
+      <a className={Styles.anchor} href="https://twitter.com/IyiKuyoro" aria-label="Twitter">
+        <i class="fab fa-twitter"></i>
+      </a>
+      <a className={Styles.anchor} href="https://www.linkedin.com/in/iyikuyoro/" aria-label="LinkedIn">
+        <i class="fab fa-linkedin-in"></i>
+      </a>
     </footer>
   );
 }
