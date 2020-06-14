@@ -4,27 +4,55 @@
     "name": "CKEditor Cloudinary Image Upload Adapter",
     "description": "I built this node library to help upload embedded rich text images from CKEditor to cloudinary on the fly.",
     "imageUrl": "https://res.cloudinary.com/iyikuyoro/image/upload/v1569007460/portfolio-assets/npm.png",
-    "imagealt": "npm logo"
+    "imagealt": "npm logo",
+    "link": "https://github.com/IyiKuyoro/ckeditor-cloudinary-image-adapter"
   },
   {
     "id": 1,
     "name": "SBMK",
     "description": "I have done quite a bit of work with the slack API building bots and apps that automate processes in workspaces. This Slack Block Message Kit library helps you build slack message components with some validations.",
     "imageUrl": "https://res.cloudinary.com/iyikuyoro/image/upload/v1569007460/portfolio-assets/npm.png",
-    "imagealt": "npm logo"
+    "imagealt": "npm logo",
+    "link": "https://github.com/IyiKuyoro/slack-block-msg-kit"
   },
   {
     "id": 3,
     "name": "Tiddy",
     "description": "I got tired of telling folks to post their messages in the right channels on slack, so I built this tool that moves messages automatically based on user reactions after a little setup.",
     "imageUrl": "https://res.cloudinary.com/iyikuyoro/image/upload/v1578591700/portfolio-assets/slack.png",
-    "imagealt": "slack logo"
+    "imagealt": "slack logo",
+    "link": "https://tiddy.herokuapp.com/"
   },
   {
     "id": 4,
     "name": "Kid Math",
     "description": "When I was starting out a few years ago, I built this simply arithmetic game for kids.",
     "imageUrl": "https://res.cloudinary.com/iyikuyoro/image/upload/v1569007931/portfolio-assets/net.jpg",
-    "imagealt": "dot net logo"
+    "imagealt": "dot net logo",
+    "link": "https://github.com/IyiKuyoro/KidMath"
+  },
+  {
+    "id": 5,
+    "name": "Puff-Puff",
+    "description": "Puff-Puff is an improvement over the CKEditor Image upload adapter. This package enables the upload of images to a custom server.",
+    "imageUrl": "https://res.cloudinary.com/iyikuyoro/image/upload/v1569007460/portfolio-assets/npm.png",
+    "imagealt": "npm logo",
+    "link": "https://github.com/IyiKuyoro/Puff-Puff"
+  },
+  {
+    "id": 6,
+    "name": "Sudoku Solver",
+    "description": "As part of my tinkering with Azure Serverless Functions, I built a sudoku solver using python and an algorithm I wrote.",
+    "imageUrl": "https://res.cloudinary.com/iyikuyoro/image/upload/v1592164779/portfolio-assets/azure_serverless_functions-removebg-preview.png",
+    "imagealt": "Azure serverless function logo",
+    "link": "https://github.com/IyiKuyoro/AlgoEndpoints-Azure-Serverless-Functions-"
+  },
+  {
+    "id": 7,
+    "name": "CKEditor5 Code Snippet Plugin",
+    "description": "This plugin helps your create a code block or snippet in your rich text.",
+    "imageUrl": "https://res.cloudinary.com/iyikuyoro/image/upload/v1569007460/portfolio-assets/npm.png",
+    "imagealt": "npm logo",
+    "link": "https://www.npmjs.com/package/ckeditor5-code-snippet-plugin"
   }
 ]
