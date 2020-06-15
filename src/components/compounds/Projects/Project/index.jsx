@@ -7,9 +7,10 @@ export default function Project(props) {
   const { project, className } = props;
 
   return (
-    <div
+    <a
+      href={project.link}
+      target="blank"
       className={`${className} ${Styles.project}`}
-      role="group"
       aria-roledescription="slide"
       aria-labelledby="project-slide"
     >
@@ -22,7 +23,7 @@ export default function Project(props) {
         <h3 id="project-slide" className={Styles.name}>{project.name}</h3>
         <p className={Styles.description}>{project.description}</p>
       </div>
-    </div>
+    </a>
   );
 }
 
@@ -34,5 +35,6 @@ Project.propTypes = {
     imageUrl: PropTypes.string.isRequired,
     imagealt: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
+    link: PropTypes.string.isRequired,
   }).isRequired,
 };

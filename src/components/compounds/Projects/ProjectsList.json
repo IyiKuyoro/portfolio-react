@@ -54,5 +54,13 @@
     "imageUrl": "https://res.cloudinary.com/iyikuyoro/image/upload/v1569007460/portfolio-assets/npm.png",
     "imagealt": "npm logo",
     "link": "https://www.npmjs.com/package/ckeditor5-code-snippet-plugin"
+  },
+  {
+    "id": 8,
+    "name": "Match",
+    "description": "A while ago, I built this simple memory game to test my knowledge of vanilla JavaScript, HTML and CSS",
+    "imageUrl": "https://res.cloudinary.com/iyikuyoro/image/upload/v1592181788/portfolio-assets/Screen_Shot_2020-06-14_at_8.42.54_PM.png",
+    "imagealt": "memory game board",
+    "link": "https://iyikuyoro.github.io/Memory-Game/game.html"
   }
 ]
