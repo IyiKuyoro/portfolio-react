@@ -13,15 +13,15 @@ function SudokuSolver() {
       <Header />
       <div className={Styles.background}>
         <div className={Styles.board}>
-          <RowOfNine sudokuBoard={sudokuBoard} dispatchChange={dispatch} row="0" />
-          <RowOfNine sudokuBoard={sudokuBoard} dispatchChange={dispatch} row="1" />
-          <RowOfNine sudokuBoard={sudokuBoard} dispatchChange={dispatch} row="2" />
-          <RowOfNine sudokuBoard={sudokuBoard} dispatchChange={dispatch} row="3" />
-          <RowOfNine sudokuBoard={sudokuBoard} dispatchChange={dispatch} row="4" />
-          <RowOfNine sudokuBoard={sudokuBoard} dispatchChange={dispatch} row="5" />
-          <RowOfNine sudokuBoard={sudokuBoard} dispatchChange={dispatch} row="6" />
-          <RowOfNine sudokuBoard={sudokuBoard} dispatchChange={dispatch} row="7" />
-          <RowOfNine sudokuBoard={sudokuBoard} dispatchChange={dispatch} row="8" />
+          <RowOfNine sudokuBoard={sudokuBoard} changeDispatch={dispatch} row="0" />
+          <RowOfNine sudokuBoard={sudokuBoard} changeDispatch={dispatch} row="1" />
+          <RowOfNine sudokuBoard={sudokuBoard} changeDispatch={dispatch} row="2" />
+          <RowOfNine sudokuBoard={sudokuBoard} changeDispatch={dispatch} row="3" />
+          <RowOfNine sudokuBoard={sudokuBoard} changeDispatch={dispatch} row="4" />
+          <RowOfNine sudokuBoard={sudokuBoard} changeDispatch={dispatch} row="5" />
+          <RowOfNine sudokuBoard={sudokuBoard} changeDispatch={dispatch} row="6" />
+          <RowOfNine sudokuBoard={sudokuBoard} changeDispatch={dispatch} row="7" />
+          <RowOfNine sudokuBoard={sudokuBoard} changeDispatch={dispatch} row="8" />
         </div>
       </div>
     </div>
