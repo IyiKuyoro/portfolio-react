@@ -31,6 +31,7 @@ const NotFound = lazy(() => import('Pages/404'));
 const Article = lazy(() => import('Pages/Article'));
 const EditArticle = lazy(() => import('Pages/EditArticle'));
 const Login = lazy(() => import('Pages/Login'));
+const SudokuSolver = lazy(() => import('Pages/SudokuSolver'));
 
 class App extends Component {
   constructor(props) {
@@ -53,6 +54,7 @@ class App extends Component {
             <Route exact path="/read/:slug" component={preLoadArticle(Article)} />
             <Route exact path="/write" component={articleWriteEditGuard(EditArticle)} />
             <Route exact path="/edit/:slug" component={preLoadArticle(articleWriteEditGuard(EditArticle))} />
+            <Route exact path="/sudoku-solver" component={SudokuSolver} />
             <Route component={NotFound} />
           </Switch>
           {error && <Notification />}

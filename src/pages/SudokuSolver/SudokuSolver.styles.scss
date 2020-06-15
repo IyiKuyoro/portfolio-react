@@ -1,0 +1,24 @@
+.background {
+    width: 100vw;
+    height: calc(100vh - 7.5vh);
+    background: linear-gradient(122.01deg, #C0F0FF 3.38%, #FFFFFF 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.board {
+    width: min(50vw, 80vh);
+    height: min(50vw, 80vh);
+    min-width: 300px;
+    min-height: 300px;
+    max-width: 600px;
+    max-height: 600px;
+    background: #FFFFFF;
+    box-shadow: 8px 8px 8px #8E8E8E;
+    border-radius: 5px;
+    border-right: 1px solid #C5F1FF;
+    border-bottom: 1px solid #C5F1FF;
+    display: flex;
+    flex-wrap: wrap;
+}
