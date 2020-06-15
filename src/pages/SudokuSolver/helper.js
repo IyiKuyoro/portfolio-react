@@ -7,10 +7,10 @@
  */
 function getGroupRegion(row, col) {
   let minRow = Math.floor(row / 3) * 2;
-  minRow = minRow === 0 ? 0 : minRow + 1;
+  minRow = minRow === 0 ? 0 : minRow + (1 * Math.floor(col / 3));
 
   let minCol = Math.floor(col / 3) * 2;
-  minCol = minCol === 0 ? 0 : minCol + 1;
+  minCol = minCol === 0 ? 0 : minCol + (1 * Math.floor(col / 3));
 
   return {
     minRow,
@@ -23,9 +23,9 @@ function getGroupRegion(row, col) {
 /**
  * Validate that a number can be placed in the cell
  *
- * @param  {} row
- * @param  {} col
- * @param  {} state
+ * @param  {number} row The row where new value is to be places
+ * @param  {number} col The column where new value is to be placed
+ * @param  {number[][]} state The state of the matrix
  */
 function validateCellValue(row, col, val, state) {
   const region = getGroupRegion(row, col);
@@ -37,33 +37,25 @@ function validateCellValue(row, col, val, state) {
     const verticalScanRow = i;
     const verticalScanCol = col;
 
+    // Check that same value cannot be found in row
     if (horizontalScanCol !== col) {
       if (state[horizontalScanRow][horizontalScanCol] === val && val !== 0) {
         found.push([horizontalScanRow, horizontalScanCol]);
       }
     }
+    // Check that same value cannot be found in col
     if (verticalScanRow !== row) {
       if (state[verticalScanRow][verticalScanCol] === val && val !== 0) {
         found.push([verticalScanRow, verticalScanCol]);
       }
     }
 
+    // Check that same value cannot be found in 3 X 3 matrix
     const r = region.minRow + Math.floor(i / 3);
-    const c = region.minRow + i - (Math.floor(i / 3) * 3);
-    // if (i <= 2) {
-    //   r = region.minRow;
-    //   c = region.minCol + i;
-    // } else if (i <= 5) {
-    //   r = region.minRow + 1;
-    //   c = region.minCol + i - 3;
-    // } else {
-    //   r = region.minRow + 2;
-    //   c = region.minCol + i - 6;
-    // }
-
+    const c = region.minCol + i - (Math.floor(i / 3) * 3);
     if (r !== row && c !== col) {
       if (state[r][c] === val && val !== 0) {
-        found.push([r][c]);
+        found.push([r, c]);
       }
     }
   }
@@ -71,10 +63,44 @@ function validateCellValue(row, col, val, state) {
   return found;
 }
 
+/**
+ * Change a value in the matrix
+ *
+ * @param  {number} row The matrix row
+ * @param  {number} col The matrix column
+ * @param  {number} newValue The new value to be in the matrix cell
+ * @param  {number[][]} state The previous state
+ */
 function changeValue(row, col, newValue, state) {
   state[row][col] = newValue;
 
   return state;
+}
+
+/**
+ * Modify the state value
+ *
+ * @param  {number[][]} state The previous state
+ * @param  {object} payload An object containing the row and column of the value to be modified
+ * @param  {number[][]} newState A copy of the previous state
+ * @param  {boolean} isIncrease=true Is the value to be increased or decreased
+ */
+function modifyValue(state, payload, newState, isIncrease = true) {
+  let newValue;
+  if (isIncrease) {
+    newValue = state[payload.row][payload.col] < 9
+      ? state[payload.row][payload.col] + 1
+      : 0;
+  } else {
+    newValue = state[payload.row][payload.col] > 0
+      ? state[payload.row][payload.col] - 1
+      : 9;
+  }
+  const found = validateCellValue(payload.row, payload.col, newValue, newState);
+  found.forEach((item) => {
+    changeValue(item[0], item[1], 0, newState);
+  });
+  return changeValue(payload.row, payload.col, newValue, newState);
 }
 
 export const initialState = [
@@ -89,32 +115,31 @@ export const initialState = [
   [0, 0, 0, 0, 0, 0, 0, 0, 0],
 ];
 
+/**
+ * Change the state based on the action type
+ *
+ * @param  {number[][]} state The previous state
+ * @param  {object} action An object containing the payload and action
+ * @returns {number[][]} The new state
+ */
 export function reducer(state, action) {
   const { type, payload } = action;
+  const newState = [
+    [...state[0]],
+    [...state[1]],
+    [...state[2]],
+    [...state[3]],
+    [...state[4]],
+    [...state[5]],
+    [...state[6]],
+    [...state[7]],
+    [...state[8]],
+  ];
 
   switch (type) {
     case 'increment':
-      if (state[payload.row][payload.col] < 9) {
-        const newValue = state[payload.row][payload.col] + 1;
-        const found = validateCellValue(payload.row, payload.col, newValue, state);
-        found.forEach((item) => {
-          changeValue(item[0], item[1], 0, state);
-        });
-        return changeValue(payload.row, payload.col, newValue, state);
-      }
-
-      state[payload.row][payload.col] = 0;
-      return state;
+      return modifyValue(state, payload, newState);
     default:
-      if (state[payload.group][payload.cell] > 0) {
-        const newValue = state[payload.row][payload.col] - 1;
-        const found = validateCellValue(payload.row, payload.col, newValue, state);
-        found.forEach((item) => {
-          changeValue(item[0], item[1], 0, state);
-        });
-        return changeValue(payload.row, payload.col, newValue, state);
-      }
-      state[payload.row][payload.col] = 9;
-      return state;
+      return modifyValue(state, payload, newState, false);
   }
 }
