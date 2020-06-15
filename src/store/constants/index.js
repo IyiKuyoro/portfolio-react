@@ -6,3 +6,8 @@ export const TOGGLE_MENU = 'TOGGLE_MENU';
 export const TOGGLE_ANIMATIONS = 'TOGGLE_ANIMATIONS';
 export const REMOVE_NOTIFICATION = 'REMOVE_NOTIFICATIONS';
 export const ADD_NOTIFICATION = 'ADD_NOTIFICATIONS';
+
+// None Redux Constants
+export const INCREASE_CELL = 'increment';
+export const DECREASE_CELL = 'decrement';
+export const CHANGE_CELL = 'change';

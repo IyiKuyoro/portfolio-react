@@ -1,3 +1,5 @@
+import { INCREASE_CELL, DECREASE_CELL } from '../../store/constants';
+
 /**
  * Get the region or 3 X 3 cells the current selected cell falls into
  *
@@ -85,13 +87,13 @@ function changeValue(row, col, newValue, state) {
  * @param  {number[][]} newState A copy of the previous state
  * @param  {boolean} isIncrease=true Is the value to be increased or decreased
  */
-function modifyValue(state, payload, newState, isIncrease = true) {
-  let newValue;
-  if (isIncrease) {
+function modifyValue(state, payload, newState, type, value) {
+  let newValue = value;
+  if (type === 'increment') {
     newValue = state[payload.row][payload.col] < 9
       ? state[payload.row][payload.col] + 1
       : 0;
-  } else {
+  } else if (type === 'decrement') {
     newValue = state[payload.row][payload.col] > 0
       ? state[payload.row][payload.col] - 1
       : 9;
@@ -137,9 +139,11 @@ export function reducer(state, action) {
   ];
 
   switch (type) {
-    case 'increment':
-      return modifyValue(state, payload, newState);
+    case INCREASE_CELL:
+      return modifyValue(state, payload, newState, type);
+    case DECREASE_CELL:
+      return modifyValue(state, payload, newState, type);
     default:
-      return modifyValue(state, payload, newState, false);
+      return modifyValue(state, payload, newState, type, payload.value);
   }
 }
