@@ -50,7 +50,7 @@
   {
     "id": 7,
     "name": "CKEditor5 Code Snippet Plugin",
-    "description": "This plugin helps your create a code block or snippet in your rich text.",
+    "description": "This plugin helps you create a code block or snippet in your rich text.",
     "imageUrl": "https://res.cloudinary.com/iyikuyoro/image/upload/v1569007460/portfolio-assets/npm.png",
     "imagealt": "npm logo",
     "link": "https://www.npmjs.com/package/ckeditor5-code-snippet-plugin"
