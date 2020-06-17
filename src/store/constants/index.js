@@ -11,3 +11,4 @@ export const ADD_NOTIFICATION = 'ADD_NOTIFICATIONS';
 export const INCREASE_CELL = 'increment';
 export const DECREASE_CELL = 'decrement';
 export const CHANGE_CELL = 'change';
+export const REPLACE_BOARD = 'replace';

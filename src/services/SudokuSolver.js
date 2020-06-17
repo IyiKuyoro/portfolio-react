@@ -1,6 +1,6 @@
 import { ajax } from 'rxjs/ajax';
 
-export default class SudokuSolver {
+export default class SudokuSolverService {
   static solveBoard(board) {
     return ajax({
       url: 'https://iyikuyoroalgofunc.azurewebsites.net/api/SudokuFunction',
@@ -8,7 +8,9 @@ export default class SudokuSolver {
       headers: {
         Accept: 'application/json',
       },
-      body: JSON.stringify(board),
+      body: JSON.stringify({
+        board,
+      }),
     });
   }
 }
