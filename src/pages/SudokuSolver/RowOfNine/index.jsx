@@ -17,7 +17,7 @@ function RowOfNine(props) {
           row={row}
           col={col}
           changeDispatch={changeDispatch}
-          cellValue={sudokuBoard[row][col] || ''}
+          cellValue={sudokuBoard[row][col] || 0}
         />
       ))}
     </div>
