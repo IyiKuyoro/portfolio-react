@@ -39,9 +39,9 @@ function Cell(props) {
 }
 
 Cell.propTypes = {
-  cellValue: PropTypes.number.isRequired,
+  cellValue: PropTypes.string.isRequired,
   changeDispatch: PropTypes.func.isRequired,
-  row: PropTypes.number.isRequired,
+  row: PropTypes.string.isRequired,
   col: PropTypes.number.isRequired,
   classString: PropTypes.string.isRequired,
 };

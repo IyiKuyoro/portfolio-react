@@ -12,6 +12,7 @@ function RowOfNine(props) {
     <div className={Styles.nineRow}>
       {cols.map((col) => (
         <Cell
+          key={col}
           classString={Styles.num}
           row={row}
           col={col}
@@ -28,7 +29,7 @@ RowOfNine.propTypes = {
     PropTypes.arrayOf(PropTypes.number.isRequired).isRequired
   ).isRequired,
   changeDispatch: PropTypes.func.isRequired,
-  row: PropTypes.number.isRequired,
+  row: PropTypes.string.isRequired,
 };
 
 export default RowOfNine;

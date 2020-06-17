@@ -70,4 +70,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(() => {}, mapDispatchToProps)(SudokuSolver);
+export default connect(() => ({}), mapDispatchToProps)(SudokuSolver);
