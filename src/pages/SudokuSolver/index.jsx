@@ -54,7 +54,7 @@ function SudokuSolver(props) {
           <RowOfNine sudokuBoard={sudokuBoard} changeDispatch={dispatch} row="7" />
           <RowOfNine sudokuBoard={sudokuBoard} changeDispatch={dispatch} row="8" />
         </div>
-        <button onClick={() => handleProblemSubmit(sudokuBoard)} type="button">Solve</button>
+        <button className={Styles.solve} onClick={() => handleProblemSubmit(sudokuBoard)} type="button">Solve</button>
       </div>
     </div>
   );
