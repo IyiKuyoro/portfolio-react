@@ -7,6 +7,7 @@ import { addNotification } from 'Actions/notifications';
 import Header from 'Compounds/Header';
 
 import RowOfNine from './RowOfNine';
+import LoadingOverlay from './LoadingOverlay';
 import { reducer, initialState, convertToString } from './helper';
 import SudokuSolverService from '../../services/SudokuSolver';
 import { REPLACE_BOARD } from '../../store/constants';
@@ -18,7 +19,8 @@ function handleError(error, addNotificationMessage) {
   return of(error);
 }
 
-function handleProblemSubmit(board, addNotificationMessage, dispatch) {
+function handleProblemSubmit(board, addNotificationMessage, dispatch, setLoading) {
+  setLoading(true);
   SudokuSolverService
     .solveBoard(convertToString(board))
     .pipe(
@@ -26,6 +28,7 @@ function handleProblemSubmit(board, addNotificationMessage, dispatch) {
       catchError((error) => handleError(error, addNotificationMessage)),
     )
     .subscribe((res) => {
+      setLoading(false);
       if (res.success) {
         dispatch({
           type: REPLACE_BOARD,
@@ -69,6 +72,7 @@ function SudokuSolver(props) {
   const { addNotificationMessage } = props;
   const [sudokuBoard, dispatch] = useReducer(reducer, initialState);
   const [currentFocus, setCurrentFocus] = useState([0, 0, false]);
+  const [loading, setLoading] = useState(false);
   const btnRef = useRef(null);
   const noOfRows = [0, 1, 2, 3, 4, 5, 6, 7, 8];
 
@@ -91,11 +95,18 @@ function SudokuSolver(props) {
               currentFocus={currentFocus}
             />
           ))}
+          {loading && <LoadingOverlay />}
         </div>
         <button
+          disabled={loading}
           ref={btnRef}
           className={Styles.solve}
-          onClick={() => handleProblemSubmit(sudokuBoard, addNotificationMessage, dispatch)}
+          onClick={() => handleProblemSubmit(
+            sudokuBoard,
+            addNotificationMessage,
+            dispatch,
+            setLoading,
+          )}
           type="button"
         >
           Solve
