@@ -84,7 +84,6 @@ function SudokuSolver(props) {
           role="grid"
           tabIndex="0"
           className={Styles.board}
-          onFocus={() => setCurrentFocus([currentFocus[0], currentFocus[1], false])}
           onKeyDown={(event) => handleKeyDown(event, currentFocus, setCurrentFocus, btnRef)}
         >
           {noOfRows.map((item) => (

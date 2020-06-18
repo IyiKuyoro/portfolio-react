@@ -5,6 +5,7 @@ import { INCREASE_CELL, DECREASE_CELL, CHANGE_CELL } from '../../../../store/con
 
 function handleClick(event, dispatch, row, col, isRightClick, setCurrentFocus) {
   event.preventDefault();
+  event.stopPropagation();
 
   setCurrentFocus([row, col, false]);
   if (isRightClick) {
