@@ -93,6 +93,7 @@ function SudokuSolver(props) {
               changeDispatch={dispatch}
               row={item}
               currentFocus={currentFocus}
+              setCurrentFocus={setCurrentFocus}
             />
           ))}
           {loading && <LoadingOverlay />}

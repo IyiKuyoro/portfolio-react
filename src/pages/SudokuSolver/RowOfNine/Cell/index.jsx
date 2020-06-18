@@ -3,9 +3,10 @@ import PropTypes from 'prop-types';
 
 import { INCREASE_CELL, DECREASE_CELL, CHANGE_CELL } from '../../../../store/constants';
 
-function handleClick(event, dispatch, row, col, isRightClick = false) {
+function handleClick(event, dispatch, row, col, isRightClick, setCurrentFocus) {
   event.preventDefault();
 
+  setCurrentFocus([row, col, false]);
   if (isRightClick) {
     dispatch({ type: DECREASE_CELL, payload: { row, col } });
   } else {
@@ -23,7 +24,7 @@ function Cell(props) {
   const {
     cellValue, changeDispatch,
     row, col, classString,
-    currentFocus,
+    currentFocus, setCurrentFocus,
   } = props;
 
   const cellRef = useRef(null);
@@ -37,8 +38,8 @@ function Cell(props) {
     <button
       ref={cellRef}
       onKeyPress={(event) => handleKeyPress(event, changeDispatch, row, col)}
-      onContextMenu={(event) => handleClick(event, changeDispatch, row, col, true)}
-      onClick={(event) => handleClick(event, changeDispatch, row, col)}
+      onContextMenu={(event) => handleClick(event, changeDispatch, row, col, true, setCurrentFocus)}
+      onClick={(event) => handleClick(event, changeDispatch, row, col, false, setCurrentFocus)}
       className={classString}
       type="button"
       role="gridcell"
@@ -56,6 +57,7 @@ Cell.propTypes = {
   col: PropTypes.number.isRequired,
   classString: PropTypes.string.isRequired,
   currentFocus: PropTypes.arrayOf(PropTypes.number.isRequired).isRequired,
+  setCurrentFocus: PropTypes.func.isRequired,
 };
 
 export default Cell;
