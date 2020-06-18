@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 
 import { INCREASE_CELL, DECREASE_CELL, CHANGE_CELL } from '../../../../store/constants';
 
-function handleClick(event, dispatch, row, col, isRightClick = false) {
+function handleClick(event, dispatch, row, col, isRightClick, setCurrentFocus) {
   event.preventDefault();
+  event.stopPropagation();
 
+  setCurrentFocus([row, col, 0]);
   if (isRightClick) {
     dispatch({ type: DECREASE_CELL, payload: { row, col } });
   } else {
@@ -21,19 +23,30 @@ function handleKeyPress(event, dispatch, row, col) {
 
 function Cell(props) {
   const {
-    cellValue, changeDispatch, row, col, classString,
+    cellValue, changeDispatch,
+    row, col, classString,
+    currentFocus, setCurrentFocus,
   } = props;
+
+  const cellRef = useRef(null);
+  useEffect(() => {
+    if (!currentFocus[2] && (currentFocus[0] === row && currentFocus[1] === col)) {
+      cellRef.current.focus();
+    }
+  }, [currentFocus]);
 
   return (
     <button
+      ref={cellRef}
       onKeyPress={(event) => handleKeyPress(event, changeDispatch, row, col)}
-      onContextMenu={(event) => handleClick(event, changeDispatch, row, col, true)}
-      onClick={(event) => handleClick(event, changeDispatch, row, col)}
+      onContextMenu={(event) => handleClick(event, changeDispatch, row, col, true, setCurrentFocus)}
+      onClick={(event) => handleClick(event, changeDispatch, row, col, false, setCurrentFocus)}
       className={classString}
       type="button"
-      aria-label={`Row ${row} column ${col} ${cellValue}`}
+      role="gridcell"
+      aria-label={`Row ${row} column ${col}. Value is ${cellValue}`}
     >
-      { cellValue }
+      { cellValue || '' }
     </button>
   );
 }
@@ -44,6 +57,8 @@ Cell.propTypes = {
   row: PropTypes.number.isRequired,
   col: PropTypes.number.isRequired,
   classString: PropTypes.string.isRequired,
+  currentFocus: PropTypes.arrayOf(PropTypes.number.isRequired).isRequired,
+  setCurrentFocus: PropTypes.func.isRequired,
 };
 
 export default Cell;

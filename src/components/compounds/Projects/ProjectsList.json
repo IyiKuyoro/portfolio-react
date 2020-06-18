@@ -45,7 +45,7 @@
     "description": "As part of my tinkering with Azure Serverless Functions, I built a sudoku solver using python and an algorithm I wrote.",
     "imageUrl": "https://res.cloudinary.com/iyikuyoro/image/upload/v1592164779/portfolio-assets/azure_serverless_functions-removebg-preview.png",
     "imagealt": "Azure serverless function logo",
-    "link": "https://github.com/IyiKuyoro/AlgoEndpoints-Azure-Serverless-Functions-"
+    "link": "https://iyikuyoro.dev/sudoku-solver"
   },
   {
     "id": 7,

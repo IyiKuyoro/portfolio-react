@@ -1,4 +1,4 @@
-import { INCREASE_CELL, DECREASE_CELL } from '../../store/constants';
+import { INCREASE_CELL, DECREASE_CELL, REPLACE_BOARD } from '../../store/constants';
 
 /**
  * Get the region or 3 X 3 cells the current selected cell falls into
@@ -143,7 +143,28 @@ export function reducer(state, action) {
       return modifyValue(state, payload, newState, type);
     case DECREASE_CELL:
       return modifyValue(state, payload, newState, type);
+    case REPLACE_BOARD:
+      return payload;
     default:
       return modifyValue(state, payload, newState, type, payload.value);
   }
+}
+
+export function convertToString(board) {
+  let resString = '[[';
+
+  for (let r = 0; r < board.length; r += 1) {
+    if (r !== 0) {
+      resString += '],[';
+    }
+    for (let c = 0; c < board[0].length; c += 1) {
+      if (c !== board[0].length) {
+        resString += `${board[r][c]},`;
+      } else {
+        resString += `${board[r][c]}`;
+      }
+    }
+  }
+
+  return `${resString}]]`;
 }
