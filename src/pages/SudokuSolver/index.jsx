@@ -19,25 +19,6 @@ function handleError(error, addNotificationMessage) {
   return of(error);
 }
 
-function handleProblemSubmit(board, addNotificationMessage, dispatch, setLoading) {
-  setLoading(true);
-  SudokuSolverService
-    .solveBoard(convertToString(board))
-    .pipe(
-      map((res) => res.response),
-      catchError((error) => handleError(error, addNotificationMessage)),
-    )
-    .subscribe((res) => {
-      setLoading(false);
-      if (res.success) {
-        dispatch({
-          type: REPLACE_BOARD,
-          payload: res.data,
-        });
-      }
-    });
-}
-
 function handleKeyDown(event, currentFocus, setCurrentFocus, btnRef) {
   let r = currentFocus[0];
   let c = currentFocus[1];
@@ -76,6 +57,25 @@ function SudokuSolver(props) {
   const btnRef = useRef(null);
   const noOfRows = [0, 1, 2, 3, 4, 5, 6, 7, 8];
 
+  function handleProblemSubmit(board) {
+    setLoading(true);
+    SudokuSolverService
+      .solveBoard(convertToString(board))
+      .pipe(
+        map((res) => res.response),
+        catchError((error) => handleError(error, addNotificationMessage)),
+      )
+      .subscribe((res) => {
+        setLoading(false);
+        if (res.success) {
+          dispatch({
+            type: REPLACE_BOARD,
+            payload: res.data,
+          });
+        }
+      });
+  }
+
   return (
     <div>
       <Header />
@@ -103,9 +103,6 @@ function SudokuSolver(props) {
           className={Styles.solve}
           onClick={() => handleProblemSubmit(
             sudokuBoard,
-            addNotificationMessage,
-            dispatch,
-            setLoading,
           )}
           type="button"
         >
