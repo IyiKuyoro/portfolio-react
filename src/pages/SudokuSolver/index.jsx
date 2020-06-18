@@ -14,7 +14,7 @@ import { REPLACE_BOARD } from '../../store/constants';
 import Styles from './SudokuSolver.styles.scss';
 
 function handleError(error, addNotificationMessage) {
-  addNotificationMessage(error.response.message);
+  addNotificationMessage(error.response ? error.response.message : 'Server error.');
 
   return of(error);
 }
@@ -22,7 +22,7 @@ function handleError(error, addNotificationMessage) {
 function handleKeyDown(event, currentFocus, setCurrentFocus, btnRef) {
   let r = currentFocus[0];
   let c = currentFocus[1];
-  let ignore = false;
+  let ignore = 0;
 
   switch (event.keyCode) {
     case (37):
@@ -39,7 +39,7 @@ function handleKeyDown(event, currentFocus, setCurrentFocus, btnRef) {
       break;
     case (9):
       event.preventDefault();
-      ignore = true;
+      ignore = 1;
       btnRef.current.focus();
       break;
     default:
@@ -52,7 +52,7 @@ function handleKeyDown(event, currentFocus, setCurrentFocus, btnRef) {
 function SudokuSolver(props) {
   const { addNotificationMessage } = props;
   const [sudokuBoard, dispatch] = useReducer(reducer, initialState);
-  const [currentFocus, setCurrentFocus] = useState([0, 0, false]);
+  const [currentFocus, setCurrentFocus] = useState([0, 0, 0]);
   const [loading, setLoading] = useState(false);
   const btnRef = useRef(null);
   const noOfRows = [0, 1, 2, 3, 4, 5, 6, 7, 8];
@@ -63,7 +63,10 @@ function SudokuSolver(props) {
       .solveBoard(convertToString(board))
       .pipe(
         map((res) => res.response),
-        catchError((error) => handleError(error, addNotificationMessage)),
+        catchError((error) => {
+          setLoading(false);
+          handleError(error, addNotificationMessage);
+        }),
       )
       .subscribe((res) => {
         setLoading(false);
@@ -88,6 +91,7 @@ function SudokuSolver(props) {
         >
           {noOfRows.map((item) => (
             <RowOfNine
+              key={item}
               sudokuBoard={sudokuBoard}
               changeDispatch={dispatch}
               row={item}

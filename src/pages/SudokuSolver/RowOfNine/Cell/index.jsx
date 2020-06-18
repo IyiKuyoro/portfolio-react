@@ -7,7 +7,7 @@ function handleClick(event, dispatch, row, col, isRightClick, setCurrentFocus) {
   event.preventDefault();
   event.stopPropagation();
 
-  setCurrentFocus([row, col, false]);
+  setCurrentFocus([row, col, 0]);
   if (isRightClick) {
     dispatch({ type: DECREASE_CELL, payload: { row, col } });
   } else {
