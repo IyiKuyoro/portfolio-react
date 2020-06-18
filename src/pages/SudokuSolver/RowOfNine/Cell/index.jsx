@@ -22,15 +22,16 @@ function handleKeyPress(event, dispatch, row, col) {
 function Cell(props) {
   const {
     cellValue, changeDispatch,
-    row, col, classString, isFocus,
+    row, col, classString,
+    currentFocus,
   } = props;
 
   const cellRef = useRef(null);
   useEffect(() => {
-    if ((row === 0 && col === 0) || isFocus) {
+    if (!currentFocus[2] && (currentFocus[0] === row && currentFocus[1] === col)) {
       cellRef.current.focus();
     }
-  }, []);
+  }, [currentFocus]);
 
   return (
     <button
@@ -40,7 +41,8 @@ function Cell(props) {
       onClick={(event) => handleClick(event, changeDispatch, row, col)}
       className={classString}
       type="button"
-      aria-label={`Row ${row} column ${col} ${cellValue}`}
+      role="gridcell"
+      aria-label={`Row ${row} column ${col}. Value is ${cellValue}`}
     >
       { cellValue || '' }
     </button>
@@ -53,11 +55,7 @@ Cell.propTypes = {
   row: PropTypes.number.isRequired,
   col: PropTypes.number.isRequired,
   classString: PropTypes.string.isRequired,
-  isFocus: PropTypes.bool,
-};
-
-Cell.defaultProps = {
-  isFocus: false,
+  currentFocus: PropTypes.arrayOf(PropTypes.number.isRequired).isRequired,
 };
 
 export default Cell;

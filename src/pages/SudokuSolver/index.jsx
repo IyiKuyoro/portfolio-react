@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react';
+import React, { useReducer, useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { of } from 'rxjs';
@@ -35,26 +35,65 @@ function handleProblemSubmit(board, addNotificationMessage, dispatch) {
     });
 }
 
+function handleKeyDown(event, currentFocus, setCurrentFocus, btnRef) {
+  let r = currentFocus[0];
+  let c = currentFocus[1];
+  let ignore = false;
+
+  switch (event.keyCode) {
+    case (37):
+      c = c - 1 < 0 ? 8 : c - 1;
+      break;
+    case (38):
+      r = r - 1 < 0 ? 8 : r - 1;
+      break;
+    case (39):
+      c = c + 1 > 8 ? 0 : c + 1;
+      break;
+    case (40):
+      r = r + 1 > 8 ? 0 : r + 1;
+      break;
+    case (9):
+      event.preventDefault();
+      ignore = true;
+      btnRef.current.focus();
+      break;
+    default:
+      // Do Nothing
+  }
+
+  setCurrentFocus([r, c, ignore]);
+}
+
 function SudokuSolver(props) {
   const { addNotificationMessage } = props;
   const [sudokuBoard, dispatch] = useReducer(reducer, initialState);
+  const [currentFocus, setCurrentFocus] = useState([0, 0, false]);
+  const btnRef = useRef(null);
+  const noOfRows = [0, 1, 2, 3, 4, 5, 6, 7, 8];
 
   return (
     <div>
       <Header />
       <div className={Styles.background}>
-        <div className={Styles.board}>
-          <RowOfNine sudokuBoard={sudokuBoard} changeDispatch={dispatch} row={0} />
-          <RowOfNine sudokuBoard={sudokuBoard} changeDispatch={dispatch} row={1} />
-          <RowOfNine sudokuBoard={sudokuBoard} changeDispatch={dispatch} row={2} />
-          <RowOfNine sudokuBoard={sudokuBoard} changeDispatch={dispatch} row={3} />
-          <RowOfNine sudokuBoard={sudokuBoard} changeDispatch={dispatch} row={4} />
-          <RowOfNine sudokuBoard={sudokuBoard} changeDispatch={dispatch} row={5} />
-          <RowOfNine sudokuBoard={sudokuBoard} changeDispatch={dispatch} row={6} />
-          <RowOfNine sudokuBoard={sudokuBoard} changeDispatch={dispatch} row={7} />
-          <RowOfNine sudokuBoard={sudokuBoard} changeDispatch={dispatch} row={8} />
+        <div
+          role="grid"
+          tabIndex="0"
+          className={Styles.board}
+          onFocus={() => setCurrentFocus([currentFocus[0], currentFocus[1], false])}
+          onKeyDown={(event) => handleKeyDown(event, currentFocus, setCurrentFocus, btnRef)}
+        >
+          {noOfRows.map((item) => (
+            <RowOfNine
+              sudokuBoard={sudokuBoard}
+              changeDispatch={dispatch}
+              row={item}
+              currentFocus={currentFocus}
+            />
+          ))}
         </div>
         <button
+          ref={btnRef}
           className={Styles.solve}
           onClick={() => handleProblemSubmit(sudokuBoard, addNotificationMessage, dispatch)}
           type="button"
