@@ -9,7 +9,6 @@ export default function Project(props) {
   return (
     <a
       href={project.link}
-      target="blank"
       className={`${className} ${Styles.project}`}
       aria-roledescription="slide"
       aria-labelledby="project-slide"
