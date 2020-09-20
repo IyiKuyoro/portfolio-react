@@ -1,3 +1,5 @@
+/* eslint-disable no-alert */
+/* eslint-disable no-console */
 export function saveUser(userInfo) {
   return new Promise((resolve, reject) => {
     const storedInfo = {

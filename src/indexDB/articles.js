@@ -1,3 +1,5 @@
+/* eslint-disable no-alert */
+/* eslint-disable no-console */
 function upgradeNeeded(openRequest) {
   const db = openRequest.result;
   if (!db.objectStoreNames.contains('articles')) {
