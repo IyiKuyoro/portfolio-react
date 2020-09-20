@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Atom: Button (ST) Button calls handler method when clicked 1`] = `
+<button
+  className="btn"
+  onClick={[MockFunction]}
+  type="button"
+>
+  Click Me
+</button>
+`;
+
+exports[`Atom: Button (ST) Button calls handler method when clicked 2`] = `
+<button
+  className="btn"
+  onClick={
+    [MockFunction] {
+      "calls": Array [
+        Array [],
+      ],
+      "results": Array [
+        Object {
+          "type": "return",
+          "value": undefined,
+        },
+      ],
+    }
+  }
+  type="button"
+>
+  Click Me
+</button>
+`;

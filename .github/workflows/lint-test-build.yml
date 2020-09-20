@@ -1,0 +1,73 @@
+name: Lint-Test-Build
+
+defaults:
+  run:
+    shell: bash
+
+on:
+  push:
+    branches:
+      - master
+      - develop
+  pull_request:
+    branches:
+      - master
+      - develop
+
+jobs:
+  lint:
+    name: Lint code base
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Merge
+        if: ${{ github.event_name == 'pull_request' }}
+        run: |
+          git merge ${github.base_ref}
+          git commit
+
+  test:
+    name: Test code base
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Merge
+        if: ${{ github.event_name == 'pull_request' }}
+        run: |
+          git merge ${github.base_ref}
+          git commit
+
+      - name: Install
+        run: |
+          npm ci
+          npm run install
+
+      - name: test
+        run: npm test
+
+  build:
+    name: Build distribution code
+    runs-on: ubuntu-latest
+    needs: [lint, test]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Merge
+        if: ${{ github.event_name == 'pull_request' }}
+        run: |
+          git merge ${github.base_ref}
+          git commit
+
+      - name: Install
+        run: |
+          npm ci
+          npm run install
+
+      - name: Build
+        run: npm run build
