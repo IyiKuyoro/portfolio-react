@@ -23,12 +23,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Merge
-        if: ${{ github.event_name == 'pull_request' }}
-        run: |
-          git merge ${github.base_ref}
-          git commit
-
       - name: Install
         run: |
           npm ci
@@ -43,12 +37,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-
-      - name: Merge
-        if: ${{ github.event_name == 'pull_request' }}
-        run: |
-          git merge ${github.base_ref}
-          git commit
 
       - name: Install
         run: |
@@ -65,12 +53,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-
-      - name: Merge
-        if: ${{ github.event_name == 'pull_request' }}
-        run: |
-          git merge ${github.base_ref}
-          git commit
 
       - name: Install
         run: |
