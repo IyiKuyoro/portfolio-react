@@ -1,5 +1,6 @@
 .header {
   min-height: 40px;
+  max-height: 70px;
   height: 7.5vh;
   background: #E5E5E5;
   display: flex;
@@ -13,6 +14,7 @@
 
 .headerWrapper {
   width: 90%;
+  max-width: 1500px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
