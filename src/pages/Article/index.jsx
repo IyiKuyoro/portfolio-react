@@ -49,7 +49,7 @@ function Article(props) {
   }, '').trim();
 
   return (
-    <div>
+    <div className={Styles.articlePage}>
       <Header />
       {canEdit(authorsIds, id) && <Button style={Styles.btn} text="Edit" handleClick={() => handleEditArticle(article, history)} />}
       {imageUrl && <img className={Styles.image} src={imageUrl} alt="article banner" />}

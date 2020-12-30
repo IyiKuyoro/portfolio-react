@@ -70,3 +70,9 @@ html {
 #sw-refresh-btn:focus {
   cursor: pointer;
 }
+
+@media screen and (min-width: 1500px) {
+  body {
+     font-size: 35px;
+  }
+}
